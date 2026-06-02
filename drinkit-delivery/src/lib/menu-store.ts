@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { DEFAULT_MENU } from "@/data/menu-defaults";
 import { uniqueSlug } from "@/lib/slug";
+import { getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
 import type {
   Category,
   CategoryInput,
@@ -12,6 +13,8 @@ import type {
 } from "@/types/menu";
 
 const MENU_FILE = path.join(process.cwd(), "data", "menu.json");
+const APP_STATE_TABLE = "app_state";
+const MENU_STATE_KEY = "menu";
 
 async function ensureStore() {
   const dir = path.dirname(MENU_FILE);
@@ -25,6 +28,45 @@ async function ensureStore() {
       JSON.stringify(DEFAULT_MENU, null, 2),
       "utf-8",
     );
+  }
+}
+
+async function readMenuFromSupabase(): Promise<MenuData | null> {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from(APP_STATE_TABLE)
+    .select("value")
+    .eq("key", MENU_STATE_KEY)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(`Supabase menu read failed: ${error.message}`);
+  }
+
+  const value = (data as { value?: unknown } | null)?.value;
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  return normalizeMenu(value as Partial<MenuData>);
+}
+
+async function writeMenuToSupabase(menu: MenuData) {
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return;
+
+  const { error } = await supabase.from(APP_STATE_TABLE).upsert(
+    {
+      key: MENU_STATE_KEY,
+      value: menu,
+    },
+    { onConflict: "key" },
+  );
+
+  if (error) {
+    throw new Error(`Supabase menu write failed: ${error.message}`);
   }
 }
 
@@ -79,12 +121,24 @@ function normalizeMenu(data: Partial<MenuData>): MenuData {
 }
 
 async function writeMenu(menu: MenuData) {
+  if (isSupabaseEnabled()) {
+    await writeMenuToSupabase(menu);
+    return;
+  }
+
   const dir = path.dirname(MENU_FILE);
   await fs.mkdir(dir, { recursive: true });
   await fs.writeFile(MENU_FILE, JSON.stringify(menu, null, 2), "utf-8");
 }
 
 export async function getMenu(): Promise<MenuData> {
+  if (isSupabaseEnabled()) {
+    const supabaseMenu = await readMenuFromSupabase();
+    if (supabaseMenu) return supabaseMenu;
+    await writeMenu(DEFAULT_MENU);
+    return DEFAULT_MENU;
+  }
+
   await ensureStore();
   const raw = await fs.readFile(MENU_FILE, "utf-8");
   try {

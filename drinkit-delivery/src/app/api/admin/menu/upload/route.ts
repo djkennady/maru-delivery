@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 import { isAuthorizedAdmin } from "@/lib/admin-auth";
+import { isSupabaseEnabled } from "@/lib/supabase-server";
 
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "menu");
 
@@ -15,6 +16,16 @@ const ALLOWED_TYPES = new Set([
 export async function POST(request: Request) {
   if (!isAuthorizedAdmin(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (isSupabaseEnabled()) {
+    return NextResponse.json(
+      {
+        error:
+          "В облачном режиме загрузка файлов на диск недоступна. Используйте прямую ссылку на изображение.",
+      },
+      { status: 400 },
+    );
   }
 
   try {

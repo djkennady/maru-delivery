@@ -1,5 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
+import { getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
 
 export type SbpPaymentStatus = "pending" | "paid" | "expired";
 
@@ -15,6 +16,7 @@ export interface SbpPaymentSession {
 }
 
 const SBP_FILE = path.join(process.cwd(), "data", "sbp-payments.json");
+const SBP_TABLE = "sbp_payment_sessions";
 
 async function ensureStore() {
   const dir = path.dirname(SBP_FILE);
@@ -27,6 +29,31 @@ async function ensureStore() {
 }
 
 async function readSessions(): Promise<SbpPaymentSession[]> {
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return [];
+
+    const { data, error } = await supabase
+      .from(SBP_TABLE)
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(`Supabase SBP read failed: ${error.message}`);
+    }
+
+    return (data ?? []).map((row) => ({
+      id: row.id,
+      amount: row.amount,
+      phone: row.phone,
+      status: row.status,
+      qrPayload: row.qr_payload,
+      createdAt: row.created_at,
+      expiresAt: row.expires_at,
+      paidAt: row.paid_at ?? undefined,
+    }));
+  }
+
   await ensureStore();
   const raw = await fs.readFile(SBP_FILE, "utf-8");
   const parsed = JSON.parse(raw) as SbpPaymentSession[];
@@ -34,6 +61,7 @@ async function readSessions(): Promise<SbpPaymentSession[]> {
 }
 
 async function writeSessions(sessions: SbpPaymentSession[]) {
+  if (isSupabaseEnabled()) return;
   await ensureStore();
   await fs.writeFile(SBP_FILE, JSON.stringify(sessions, null, 2), "utf-8");
 }
@@ -61,7 +89,6 @@ export async function createSbpSession(
     throw new Error("Invalid amount");
   }
 
-  const sessions = await readSessions();
   const now = Date.now();
   const id = createSessionId();
   const session: SbpPaymentSession = {
@@ -74,12 +101,79 @@ export async function createSbpSession(
     expiresAt: new Date(now + 15 * 60 * 1000).toISOString(),
   };
 
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return session;
+
+    const { error } = await supabase.from(SBP_TABLE).insert({
+      id: session.id,
+      amount: session.amount,
+      phone: session.phone,
+      status: session.status,
+      qr_payload: session.qrPayload,
+      created_at: session.createdAt,
+      expires_at: session.expiresAt,
+      paid_at: null,
+    });
+
+    if (error) {
+      throw new Error(`Supabase SBP create failed: ${error.message}`);
+    }
+
+    return session;
+  }
+
+  const sessions = await readSessions();
   sessions.unshift(session);
   await writeSessions(sessions.slice(0, 100));
   return session;
 }
 
 export async function getSbpSession(id: string): Promise<SbpPaymentSession | null> {
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return null;
+
+    const { data, error } = await supabase
+      .from(SBP_TABLE)
+      .select("*")
+      .eq("id", id)
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(`Supabase SBP fetch failed: ${error.message}`);
+    }
+    if (!data) return null;
+
+    const session: SbpPaymentSession = {
+      id: data.id,
+      amount: data.amount,
+      phone: data.phone,
+      status: data.status,
+      qrPayload: data.qr_payload,
+      createdAt: data.created_at,
+      expiresAt: data.expires_at,
+      paidAt: data.paid_at ?? undefined,
+    };
+
+    if (
+      session.status === "pending" &&
+      new Date(session.expiresAt).getTime() < Date.now()
+    ) {
+      const { error: updateError } = await supabase
+        .from(SBP_TABLE)
+        .update({ status: "expired" })
+        .eq("id", id);
+
+      if (updateError) {
+        throw new Error(`Supabase SBP expire update failed: ${updateError.message}`);
+      }
+      session.status = "expired";
+    }
+
+    return session;
+  }
+
   const sessions = await readSessions();
   const session = sessions.find((item) => item.id === id);
   if (!session) return null;
@@ -98,6 +192,39 @@ export async function getSbpSession(id: string): Promise<SbpPaymentSession | nul
 }
 
 export async function confirmSbpSession(id: string): Promise<SbpPaymentSession | null> {
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return null;
+
+    const current = await getSbpSession(id);
+    if (!current) return null;
+    if (current.status === "expired" || current.status === "paid") return current;
+
+    const paidAt = new Date().toISOString();
+    const { data, error } = await supabase
+      .from(SBP_TABLE)
+      .update({ status: "paid", paid_at: paidAt })
+      .eq("id", id)
+      .select("*")
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(`Supabase SBP confirm failed: ${error.message}`);
+    }
+    if (!data) return null;
+
+    return {
+      id: data.id,
+      amount: data.amount,
+      phone: data.phone,
+      status: data.status,
+      qrPayload: data.qr_payload,
+      createdAt: data.created_at,
+      expiresAt: data.expires_at,
+      paidAt: data.paid_at ?? undefined,
+    };
+  }
+
   const sessions = await readSessions();
   const index = sessions.findIndex((item) => item.id === id);
   if (index === -1) return null;

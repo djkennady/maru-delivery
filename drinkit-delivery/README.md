@@ -11,6 +11,44 @@ npm run dev
 
 Откройте [http://localhost:3000](http://localhost:3000)
 
+## Полноценное хранение в продакшене (Netlify + Supabase)
+
+Приложение автоматически работает в двух режимах:
+
+- **Supabase режим** (рекомендуется для Netlify): если заданы `SUPABASE_URL` и `SUPABASE_SERVICE_ROLE_KEY`
+- **Файловый режим** (локально): если переменные Supabase не заданы, данные хранятся в `data/*.json`
+
+### 1) Создайте таблицы в Supabase
+
+Выполните SQL из файла:
+
+```sql
+supabase/schema.sql
+```
+
+### 2) Настройте Netlify (важно)
+
+В **Site configuration → Build & deploy → Build settings**:
+
+- **Base directory**: `drinkit-delivery`
+- **Build command**: `npm run build`
+- **Publish directory**: оставьте пустым (или `.next`) — используется `@netlify/plugin-nextjs`
+
+В корне репозитория уже есть `netlify.toml` с этими настройками.
+
+### 3) Добавьте переменные окружения в Netlify
+
+```env
+ADMIN_PASSWORD=maru-admin
+SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+```
+
+### 4) Важно про картинки меню
+
+В облачном режиме загрузка файлов на диск (`/api/admin/menu/upload`) отключена, потому что файловая система Netlify не постоянная.
+Для фото блюд указывайте **прямой URL** изображения в форме товара.
+
 ## Возможности
 
 - Каталог с категориями: новинки, кофе, чай, холодные, еда, десерты
@@ -40,7 +78,7 @@ npm run dev
 3. Нажмите **Добавить**, заполните название, цену, категорию и фото
 4. Изменения сразу появляются на главной странице
 
-Меню хранится в `data/menu.json`. Загруженные фото сохраняются в `public/uploads/menu/`.
+Локально меню хранится в `data/menu.json`. В продакшене (при включенном Supabase) меню и заказы хранятся в БД.
 
 ## Тестовые карты
 
