@@ -1,6 +1,10 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
+import {
+  assertPersistentStorageAvailable,
+  getSupabaseServerClient,
+  isSupabaseEnabled,
+} from "@/lib/supabase-server";
 import type { NewOrderInput, OrderRecord, OrderStatus } from "@/types/user";
 
 const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
@@ -95,6 +99,8 @@ async function writeOrders(orders: OrderRecord[]) {
 }
 
 export async function createOrder(input: NewOrderInput): Promise<OrderRecord> {
+  assertPersistentStorageAvailable();
+
   const record: OrderRecord = {
     ...input,
     id: `order-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
@@ -114,11 +120,12 @@ export async function createOrder(input: NewOrderInput): Promise<OrderRecord> {
       address: record.address,
       comment: record.comment ?? null,
       items: record.items,
-      subtotal: record.subtotal,
-      delivery_fee: record.deliveryFee,
-      gift_discount: record.giftDiscount ?? null,
+      subtotal: Math.round(record.subtotal),
+      delivery_fee: Math.round(record.deliveryFee),
+      gift_discount:
+        record.giftDiscount == null ? null : Math.round(record.giftDiscount),
       applied_gift: record.appliedGift ?? null,
-      total: record.total,
+      total: Math.round(record.total),
       status: record.status,
       payment_status: record.paymentStatus,
       payment_method: record.paymentMethod,

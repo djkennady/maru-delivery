@@ -2,7 +2,11 @@ import { promises as fs } from "fs";
 import path from "path";
 import { DEFAULT_MENU } from "@/data/menu-defaults";
 import { uniqueSlug } from "@/lib/slug";
-import { getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
+import {
+  assertPersistentStorageAvailable,
+  getSupabaseServerClient,
+  isSupabaseEnabled,
+} from "@/lib/supabase-server";
 import type {
   Category,
   CategoryInput,
@@ -125,6 +129,8 @@ async function writeMenu(menu: MenuData) {
     await writeMenuToSupabase(menu);
     return;
   }
+
+  assertPersistentStorageAvailable();
 
   const dir = path.dirname(MENU_FILE);
   await fs.mkdir(dir, { recursive: true });

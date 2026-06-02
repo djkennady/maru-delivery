@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
+import { assertPersistentStorageAvailable, getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
 
 export type SbpPaymentStatus = "pending" | "paid" | "expired";
 
@@ -85,6 +85,8 @@ export async function createSbpSession(
   amount: number,
   phone: string,
 ): Promise<SbpPaymentSession> {
+  assertPersistentStorageAvailable();
+
   if (amount <= 0) {
     throw new Error("Invalid amount");
   }

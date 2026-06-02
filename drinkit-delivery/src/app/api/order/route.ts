@@ -36,8 +36,11 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ order });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Не удалось сохранить заказ";
+    console.error("[api/order POST]", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -51,7 +54,10 @@ export async function GET(request: Request) {
 
     const orders = await getOrdersByPhone(phone);
     return NextResponse.json({ orders });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Не удалось загрузить заказы";
+    console.error("[api/order GET]", message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

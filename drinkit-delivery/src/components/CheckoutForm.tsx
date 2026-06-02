@@ -247,9 +247,13 @@ export function CheckoutForm() {
       }),
     });
 
-    if (!res.ok) throw new Error("failed");
-
-    const data = (await res.json()) as { order: OrderRecord };
+    const data = (await res.json()) as { order?: OrderRecord; error?: string };
+    if (!res.ok) {
+      throw new Error(data.error ?? "Не удалось сохранить заказ");
+    }
+    if (!data.order) {
+      throw new Error("Не удалось сохранить заказ");
+    }
     if (selectedGift) {
       useGift(selectedGift.id, data.order.id);
     }
@@ -314,8 +318,12 @@ export function CheckoutForm() {
         });
         return;
       }
-    } catch {
-      setError("Не удалось оформить заказ. Попробуйте ещё раз.");
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Не удалось оформить заказ. Попробуйте ещё раз.",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -350,8 +358,12 @@ export function CheckoutForm() {
         cardLast4: "----",
         cardBrand: "СБП",
       });
-    } catch {
-      setError("Не удалось оформить заказ. Попробуйте ещё раз.");
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Не удалось оформить заказ. Попробуйте ещё раз.",
+      );
     } finally {
       setSubmitting(false);
     }

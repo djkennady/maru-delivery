@@ -13,6 +13,18 @@ export function isSupabaseEnabled(): boolean {
   return Boolean(getEnv("SUPABASE_URL") && getEnv("SUPABASE_SERVICE_ROLE_KEY"));
 }
 
+export function isCloudRuntime(): boolean {
+  return process.env.NETLIFY === "true" || process.env.VERCEL === "1";
+}
+
+export function assertPersistentStorageAvailable() {
+  if (isCloudRuntime() && !isSupabaseEnabled()) {
+    throw new Error(
+      "Хранилище не настроено. Добавьте SUPABASE_URL и SUPABASE_SERVICE_ROLE_KEY в Netlify и сделайте redeploy.",
+    );
+  }
+}
+
 export function getSupabaseServerClient() {
   if (!isSupabaseEnabled()) {
     return null;
