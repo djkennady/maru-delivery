@@ -1,0 +1,22 @@
+[
+  {
+    "id": "sbp-1779881491370-d3tope",
+    "amount": 1600,
+    "phone": "+79655886691",
+    "status": "paid",
+    "qrPayload": "ST00012|Name=МАРУ|PersonalAcc=40817810000000000000|Sum=160000|Purpose=Заказ MARU sbp-1779881491370-d3tope",
+    "createdAt": "2026-05-27T11:31:31.370Z",
+    "expiresAt": "2026-05-27T11:46:31.370Z",
+    "paidAt": "2026-05-27T11:31:37.531Z"
+  },
+  {
+    "id": "sbp-1779807093175-s9wf4k",
+    "amount": 1400,
+    "phone": "+79655886691",
+    "status": "paid",
+    "qrPayload": "ST00012|Name=МАРУ|PersonalAcc=40817810000000000000|Sum=140000|Purpose=Заказ MARU sbp-1779807093175-s9wf4k",
+    "createdAt": "2026-05-26T14:51:33.175Z",
+    "expiresAt": "2026-05-26T15:06:33.175Z",
+    "paidAt": "2026-05-26T14:51:59.229Z"
+  }
+]

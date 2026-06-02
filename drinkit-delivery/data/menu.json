@@ -1,0 +1,296 @@
+{
+  "categories": [
+    {
+      "id": "new",
+      "name": "Новинки",
+      "imageUrl": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "id": "coffee",
+      "name": "Кофе",
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "id": "tea",
+      "name": "Чай",
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "id": "cold",
+      "name": "Холодные",
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "id": "food",
+      "name": "Еда",
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "id": "desserts",
+      "name": "Десерты",
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=800"
+    }
+  ],
+  "products": [
+    {
+      "id": "raf-vanilla",
+      "categoryId": "new",
+      "name": "Раф ваниль",
+      "description": "Нежный кофе со сливками и ванильным сиропом",
+      "emoji": "☕",
+      "basePrice": 290,
+      "sizes": {
+        "s": 250,
+        "m": 290,
+        "l": 330
+      },
+      "customizable": true,
+      "tags": [
+        "new",
+        "hit"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "matcha-latte",
+      "categoryId": "new",
+      "name": "Матча латте",
+      "description": "Японский зелёный чай с молоком",
+      "emoji": "🍵",
+      "basePrice": 320,
+      "sizes": {
+        "s": 280,
+        "m": 320,
+        "l": 360
+      },
+      "customizable": true,
+      "tags": [
+        "new"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "espresso",
+      "categoryId": "coffee",
+      "name": "Эспрессо",
+      "description": "Классический двойной шот",
+      "emoji": "☕",
+      "basePrice": 150,
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "americano",
+      "categoryId": "coffee",
+      "name": "Американо",
+      "description": "Эспрессо с горячей водой",
+      "emoji": "☕",
+      "basePrice": 190,
+      "sizes": {
+        "s": 170,
+        "m": 190,
+        "l": 220
+      },
+      "customizable": true,
+      "tags": [
+        "hit"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "cappuccino",
+      "categoryId": "coffee",
+      "name": "Капучино",
+      "description": "Эспрессо, молоко и плотная пенка",
+      "emoji": "☕",
+      "basePrice": 250,
+      "sizes": {
+        "s": 220,
+        "m": 250,
+        "l": 290
+      },
+      "customizable": true,
+      "tags": [
+        "hit"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "flat-white",
+      "categoryId": "coffee",
+      "name": "Флэт уайт",
+      "description": "Двойной эспрессо и barista-молоко",
+      "emoji": "☕",
+      "basePrice": 270,
+      "sizes": {
+        "s": 250,
+        "m": 270,
+        "l": 310
+      },
+      "customizable": true,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "latte",
+      "categoryId": "coffee",
+      "name": "Латте",
+      "description": "Мягкий кофе с большим количеством молока",
+      "emoji": "☕",
+      "basePrice": 260,
+      "sizes": {
+        "s": 230,
+        "m": 260,
+        "l": 300
+      },
+      "customizable": true,
+      "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "black-tea",
+      "categoryId": "tea",
+      "name": "Чёрный чай",
+      "description": "Цейлон, можно с лимоном",
+      "emoji": "🫖",
+      "basePrice": 180,
+      "sizes": {
+        "m": 180,
+        "l": 210
+      },
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "herbal-tea",
+      "categoryId": "tea",
+      "name": "Травяной чай",
+      "description": "Мята, ромашка, имбирь",
+      "emoji": "🌿",
+      "basePrice": 200,
+      "sizes": {
+        "m": 200,
+        "l": 230
+      },
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "iced-latte",
+      "categoryId": "cold",
+      "name": "Айс латте",
+      "description": "Охлаждённый латте со льдом",
+      "emoji": "🧊",
+      "basePrice": 290,
+      "sizes": {
+        "m": 290,
+        "l": 330
+      },
+      "customizable": true,
+      "tags": [
+        "hit"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "lemonade",
+      "categoryId": "cold",
+      "name": "Лимонад",
+      "description": "Домашний, с мятой и лаймом",
+      "emoji": "🍋",
+      "basePrice": 240,
+      "sizes": {
+        "m": 240,
+        "l": 280
+      },
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "smoothie",
+      "categoryId": "cold",
+      "name": "Смузи",
+      "description": "Ягодный или тропический",
+      "emoji": "🥤",
+      "basePrice": 350,
+      "sizes": {
+        "m": 350,
+        "l": 390
+      },
+      "customizable": false,
+      "tags": [
+        "new"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "croissant",
+      "categoryId": "food",
+      "name": "Круассан",
+      "description": "Сливочный, выпекаем каждое утро",
+      "emoji": "🥐",
+      "basePrice": 190,
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/3491546/pexels-photo-3491546.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "sandwich",
+      "categoryId": "food",
+      "name": "Сэндвич",
+      "description": "Курица, авокадо, соус",
+      "emoji": "🥪",
+      "basePrice": 320,
+      "customizable": false,
+      "tags": [
+        "hit"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "bowl",
+      "categoryId": "food",
+      "name": "Боул",
+      "description": "Рис, овощи, соус терияки",
+      "emoji": "🥗",
+      "basePrice": 420,
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "cheesecake",
+      "categoryId": "desserts",
+      "name": "Чизкейк",
+      "description": "Классический нью-йоркский",
+      "emoji": "🍰",
+      "basePrice": 280,
+      "customizable": false,
+      "tags": [
+        "hit"
+      ],
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "brownie",
+      "categoryId": "desserts",
+      "name": "Брауни",
+      "description": "Шоколадный, с орехами",
+      "emoji": "🍫",
+      "basePrice": 220,
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "cookie",
+      "categoryId": "desserts",
+      "name": "Печенье",
+      "description": "Двойное шоколадное",
+      "emoji": "🍪",
+      "basePrice": 120,
+      "customizable": false,
+      "imageUrl": "https://images.pexels.com/photos/2890000/pexels-photo-2890000.jpeg?auto=compress&cs=tinysrgb&w=600"
+    }
+  ],
+  "settings": {
+    "deliveryFee": 149,
+    "freeDeliveryFrom": 800,
+    "estimatedMinutes": "25–40"
+  }
+}

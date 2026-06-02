@@ -1,0 +1,437 @@
+[
+  {
+    "id": "order-1780345439470-nehw9",
+    "createdAt": "2026-06-01T20:23:59.470Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский проспект 62",
+    "comment": "Подарок: −10% на заказ",
+    "items": [
+      {
+        "id": "1780344183456-42frqh8",
+        "productId": "matcha-latte",
+        "quantity": 3,
+        "options": {
+          "size": "l",
+          "milk": "oat"
+        },
+        "unitPrice": 400
+      },
+      {
+        "id": "1780344209655-kne3p69",
+        "productId": "raf-vanilla",
+        "quantity": 3,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 330
+      },
+      {
+        "id": "1780345409775-yxrqwsg",
+        "productId": "raf-vanilla",
+        "quantity": 1,
+        "options": {
+          "size": "l",
+          "milk": "oat"
+        },
+        "unitPrice": 370
+      },
+      {
+        "id": "1780345421724-4mxxkev",
+        "productId": "bowl",
+        "quantity": 2,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 420
+      }
+    ],
+    "subtotal": 3400,
+    "deliveryFee": 0,
+    "giftDiscount": 340,
+    "appliedGift": {
+      "id": "legacy-2026-06-300-2",
+      "title": "−10% на заказ",
+      "emoji": "✨",
+      "discount": 340
+    },
+    "total": 3060,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1780345439447-ook8jq"
+  },
+  {
+    "id": "order-1780343906024-pvum7",
+    "createdAt": "2026-06-01T19:58:26.024Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский проспект 62",
+    "comment": "Подарок: Десерт на выбор (Чизкейк)",
+    "items": [
+      {
+        "id": "1780343574265-3r9bf6l",
+        "productId": "raf-vanilla",
+        "quantity": 4,
+        "options": {
+          "size": "l",
+          "milk": "oat"
+        },
+        "unitPrice": 370
+      },
+      {
+        "id": "gift-item-legacy-2026-06-2000-0",
+        "productId": "cheesecake",
+        "quantity": 1,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 0
+      }
+    ],
+    "subtotal": 1480,
+    "deliveryFee": 0,
+    "total": 1480,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1780343905995-mi4268"
+  },
+  {
+    "id": "order-1780343548836-68chi",
+    "createdAt": "2026-06-01T19:52:28.836Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский проспект 62",
+    "comment": "",
+    "items": [
+      {
+        "id": "1780343530716-1jhvwfj",
+        "productId": "cheesecake",
+        "quantity": 5,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 280
+      }
+    ],
+    "subtotal": 1400,
+    "deliveryFee": 0,
+    "total": 1400,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1780343548829-807ohu"
+  },
+  {
+    "id": "order-1780310022178-tmbq7",
+    "createdAt": "2026-06-01T10:33:42.178Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "",
+    "items": [
+      {
+        "id": "1780309972442-r54dl72",
+        "productId": "lemonade",
+        "quantity": 6,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 280
+      }
+    ],
+    "subtotal": 1680,
+    "deliveryFee": 0,
+    "total": 1680,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1780310022168-sb3k3m"
+  },
+  {
+    "id": "order-1779886268020-ch5re",
+    "createdAt": "2026-05-27T12:51:08.020Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "йуцйауцауця",
+    "items": [
+      {
+        "id": "1779886218311-rurtz41",
+        "productId": "sandwich",
+        "quantity": 6,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 320
+      }
+    ],
+    "subtotal": 1920,
+    "deliveryFee": 0,
+    "total": 1920,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1779886268008-fgy9b3"
+  },
+  {
+    "id": "order-1779886020043-0rfn9",
+    "createdAt": "2026-05-27T12:47:00.043Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "",
+    "items": [
+      {
+        "id": "1779885976072-bzuncx1",
+        "productId": "sandwich",
+        "quantity": 5,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 320
+      }
+    ],
+    "subtotal": 1600,
+    "deliveryFee": 0,
+    "total": 1600,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1779886020030-kcvu9b"
+  },
+  {
+    "id": "order-1779881497542-5yu9k",
+    "createdAt": "2026-05-27T11:31:37.542Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "",
+    "items": [
+      {
+        "id": "1779881471720-1z8dce7",
+        "productId": "sandwich",
+        "quantity": 5,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 320
+      }
+    ],
+    "subtotal": 1600,
+    "deliveryFee": 0,
+    "total": 1600,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "sbp",
+    "cardLast4": "----",
+    "cardBrand": "СБП",
+    "paymentId": "sbp-1779881491370-d3tope"
+  },
+  {
+    "id": "order-1779811461643-vnb16",
+    "createdAt": "2026-05-26T16:04:21.643Z",
+    "name": "Милена",
+    "phone": "+79871828119",
+    "address": "Мира 12",
+    "comment": "ПОБОЛЬШЕ",
+    "items": [
+      {
+        "id": "1779811419711-dvlkysv",
+        "productId": "croissant",
+        "quantity": 5,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 190
+      }
+    ],
+    "subtotal": 950,
+    "deliveryFee": 0,
+    "total": 950,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1779811461631-m74k3x"
+  },
+  {
+    "id": "order-1779807119276-bd11c",
+    "createdAt": "2026-05-26T14:51:59.276Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "",
+    "items": [
+      {
+        "id": "1779807029746-6tkshmb",
+        "productId": "cheesecake",
+        "quantity": 5,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 280
+      }
+    ],
+    "subtotal": 1400,
+    "deliveryFee": 0,
+    "total": 1400,
+    "status": "cancelled",
+    "paymentStatus": "paid",
+    "paymentMethod": "sbp",
+    "cardLast4": "----",
+    "cardBrand": "СБП",
+    "paymentId": "sbp-1779807093175-s9wf4k"
+  },
+  {
+    "id": "order-1779806956237-80izh",
+    "createdAt": "2026-05-26T14:49:16.237Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "",
+    "items": [
+      {
+        "id": "1779806903721-2g2yda2",
+        "productId": "sandwich",
+        "quantity": 4,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 320
+      }
+    ],
+    "subtotal": 1280,
+    "deliveryFee": 0,
+    "total": 1280,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "4242",
+    "cardBrand": "Visa",
+    "paymentId": "pay-1779806956222-x29w5d"
+  },
+  {
+    "id": "order-1779803221650-iy07s",
+    "createdAt": "2026-05-26T13:47:01.650Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский 62",
+    "comment": "123",
+    "items": [
+      {
+        "id": "1779803208659-i0ael3v",
+        "productId": "raf-vanilla",
+        "quantity": 1,
+        "options": {
+          "size": "m",
+          "milk": "regular"
+        },
+        "unitPrice": 290
+      },
+      {
+        "id": "1779803211442-dso32cy",
+        "productId": "cheesecake",
+        "quantity": 1,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 280
+      },
+      {
+        "id": "1779803212809-4cnnmo9",
+        "productId": "brownie",
+        "quantity": 1,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 220
+      }
+    ],
+    "subtotal": 790,
+    "deliveryFee": 149,
+    "total": 939,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "0000",
+    "cardBrand": "Card",
+    "paymentId": "legacy"
+  },
+  {
+    "id": "order-1779803034730-2dp1s",
+    "createdAt": "2026-05-26T13:43:54.731Z",
+    "name": "Егор",
+    "phone": "+79655886691",
+    "address": "Набережночелнинский проспект 62",
+    "comment": "без лука",
+    "items": [
+      {
+        "id": "1779803016931-fs3l85i",
+        "productId": "raf-vanilla",
+        "quantity": 1,
+        "options": {
+          "size": "m",
+          "milk": "regular"
+        },
+        "unitPrice": 290
+      },
+      {
+        "id": "1779803022131-9s7g4bv",
+        "productId": "iced-latte",
+        "quantity": 1,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 330
+      },
+      {
+        "id": "1779803025281-i9xdyzb",
+        "productId": "croissant",
+        "quantity": 1,
+        "options": {
+          "size": "l",
+          "milk": "regular"
+        },
+        "unitPrice": 190
+      }
+    ],
+    "subtotal": 810,
+    "deliveryFee": 0,
+    "total": 810,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "paymentMethod": "card",
+    "cardLast4": "0000",
+    "cardBrand": "Card",
+    "paymentId": "legacy"
+  }
+]
