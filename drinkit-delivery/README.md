@@ -40,7 +40,7 @@ supabase/schema.sql
 
 ```env
 ADMIN_PASSWORD=maru-admin
-SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+SUPABASE_URL=https://YOUR_PROJECT.supabase.cohttps://YOUR_PROJECT.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
 

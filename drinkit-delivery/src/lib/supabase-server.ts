@@ -9,8 +9,19 @@ function getEnv(name: string): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+export function normalizeSupabaseUrl(url: string): string {
+  let normalized = url.trim().replace(/\/+$/, "");
+  normalized = normalized.replace(/\/rest\/v1$/i, "");
+  normalized = normalized.replace(/\/v1$/i, "");
+  return normalized;
+}
+
+function getSupabaseUrl(): string {
+  return normalizeSupabaseUrl(getEnv("SUPABASE_URL"));
+}
+
 export function isSupabaseEnabled(): boolean {
-  return Boolean(getEnv("SUPABASE_URL") && getEnv("SUPABASE_SERVICE_ROLE_KEY"));
+  return Boolean(getSupabaseUrl() && getEnv("SUPABASE_SERVICE_ROLE_KEY"));
 }
 
 export function isCloudRuntime(): boolean {
@@ -31,8 +42,15 @@ export function getSupabaseServerClient() {
   }
 
   if (!cachedClient) {
+    const supabaseUrl = getSupabaseUrl();
+    if (!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(supabaseUrl)) {
+      throw new Error(
+        "SUPABASE_URL должен быть вида https://xxxxx.supabase.co (без /rest/v1).",
+      );
+    }
+
     cachedClient = createClient(
-      getEnv("SUPABASE_URL"),
+      supabaseUrl,
       getEnv("SUPABASE_SERVICE_ROLE_KEY"),
       {
         auth: { persistSession: false },
