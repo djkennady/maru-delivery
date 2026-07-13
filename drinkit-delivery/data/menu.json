@@ -1,9 +1,9 @@
 {
   "categories": [
     {
-      "id": "new",
-      "name": "Новинки",
-      "imageUrl": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "id": "breakfast",
+      "name": "Завтраки",
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "coffee",
@@ -11,19 +11,14 @@
       "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
-      "id": "tea",
-      "name": "Чай",
+      "id": "drinks",
+      "name": "Чай и напитки",
       "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=800"
-    },
-    {
-      "id": "cold",
-      "name": "Холодные",
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "food",
       "name": "Еда",
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "desserts",
@@ -33,259 +28,1563 @@
   ],
   "products": [
     {
-      "id": "raf-vanilla",
-      "categoryId": "new",
-      "name": "Раф ваниль",
-      "description": "Нежный кофе со сливками и ванильным сиропом",
-      "emoji": "☕",
-      "basePrice": 290,
-      "sizes": {
-        "s": 250,
-        "m": 290,
-        "l": 330
-      },
-      "customizable": true,
+      "id": "english-breakfast",
+      "categoryId": "breakfast",
+      "name": "Английский завтрак",
+      "description": "Яичница глазунья из трёх яиц, куриная колбаска, фасоль в соусе BBQ, хашбраун, тост, руккола, томаты черри, сметана",
+      "emoji": "🍳",
+      "basePrice": 599,
+      "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600",
       "tags": [
-        "new",
         "hit"
-      ],
-      "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ]
     },
     {
-      "id": "matcha-latte",
-      "categoryId": "new",
-      "name": "Матча латте",
-      "description": "Японский зелёный чай с молоком",
-      "emoji": "🍵",
-      "basePrice": 320,
-      "sizes": {
-        "s": 280,
-        "m": 320,
-        "l": 360
-      },
-      "customizable": true,
+      "id": "french-breakfast",
+      "categoryId": "breakfast",
+      "name": "Французский завтрак",
+      "description": "Омлет из трёх яиц, круассан, слабосолёный лосось, трюфельный крем, хашбраун, шпинат, томаты черри, сметана, джем",
+      "emoji": "🥐",
+      "basePrice": 699,
+      "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "russian-breakfast",
+      "categoryId": "breakfast",
+      "name": "Русский завтрак",
+      "description": "Скрэмбл из трёх яиц, ветчина из индейки, блинчик, тост, огурцы, помидоры, сметана, сливочное масло, джем",
+      "emoji": "🥞",
+      "basePrice": 599,
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "build-your-breakfast",
+      "categoryId": "breakfast",
+      "name": "Собери свой завтрак",
+      "description": "Омлет / скрэмбл / глазунья из трёх яиц + тост и сливочное масло",
+      "emoji": "🍽️",
+      "basePrice": 399,
+      "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "blinchiki",
+      "categoryId": "breakfast",
+      "name": "Блинчики",
+      "description": "",
+      "emoji": "🥞",
+      "basePrice": 199,
+      "imageUrl": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "syrniki",
+      "categoryId": "breakfast",
+      "name": "Сырники",
+      "description": "",
+      "emoji": "🧀",
+      "basePrice": 279,
+      "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600",
       "tags": [
-        "new"
-      ],
-      "imageUrl": "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=600"
+        "hit"
+      ]
     },
     {
-      "id": "espresso",
-      "categoryId": "coffee",
-      "name": "Эспрессо",
-      "description": "Классический двойной шот",
-      "emoji": "☕",
-      "basePrice": 150,
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "id": "sandwich-crispy-chicken",
+      "categoryId": "food",
+      "name": "Сэндвич с хрустящим цыплёнком",
+      "description": "Цыплёнок в панировке, помидоры, огурцы, романо, красный лук, соус BBQ и блю-чиз",
+      "emoji": "🥪",
+      "basePrice": 449,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "sandwich-roastbeef",
+      "categoryId": "food",
+      "name": "Сэндвич с ростбифом",
+      "description": "Ростбиф, трюфельный крем, романо, огуречный релиш, лук фри",
+      "emoji": "🥪",
+      "basePrice": 599,
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "croissant-caesar-salmon",
+      "categoryId": "food",
+      "name": "Круассан а-ля цезарь с лососем",
+      "description": "Слабосолёный лосось, салат, соус цезарь, томаты черри, пармезан",
+      "emoji": "🥐",
+      "basePrice": 599,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "sandwich-nutella-banana",
+      "categoryId": "food",
+      "name": "Сэндвич с нутеллой и бананом",
+      "description": "",
+      "emoji": "🍫",
+      "basePrice": 449,
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "croissant-chocolate",
+      "categoryId": "food",
+      "name": "Круассан с шоколадным кремом",
+      "description": "",
+      "emoji": "🥐",
+      "basePrice": 449,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "croissant",
+      "categoryId": "food",
+      "name": "Круассан классический",
+      "description": "",
+      "emoji": "🥐",
+      "basePrice": 449,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "americano",
       "categoryId": "coffee",
       "name": "Американо",
-      "description": "Эспрессо с горячей водой",
+      "description": "",
       "emoji": "☕",
-      "basePrice": 190,
+      "basePrice": 230,
+      "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
       "sizes": {
-        "s": 170,
-        "m": 190,
-        "l": 220
+        "s": 180,
+        "m": 230,
+        "l": 280
       },
       "customizable": true,
       "tags": [
         "hit"
-      ],
-      "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ]
+    },
+    {
+      "id": "filter-coffee",
+      "categoryId": "coffee",
+      "name": "Фильтр-кофе",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 230,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 180,
+        "m": 230,
+        "l": 280
+      },
+      "customizable": true
+    },
+    {
+      "id": "espresso",
+      "categoryId": "coffee",
+      "name": "Эспрессо",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 180,
+      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "cappuccino",
       "categoryId": "coffee",
       "name": "Капучино",
-      "description": "Эспрессо, молоко и плотная пенка",
-      "emoji": "☕",
-      "basePrice": 250,
-      "sizes": {
-        "s": 220,
-        "m": 250,
-        "l": 290
-      },
-      "customizable": true,
-      "tags": [
-        "hit"
-      ],
-      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600"
-    },
-    {
-      "id": "flat-white",
-      "categoryId": "coffee",
-      "name": "Флэт уайт",
-      "description": "Двойной эспрессо и barista-молоко",
+      "description": "",
       "emoji": "☕",
       "basePrice": 270,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
       "sizes": {
-        "s": 250,
+        "s": 220,
         "m": 270,
         "l": 310
       },
       "customizable": true,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "tags": [
+        "hit"
+      ]
     },
     {
       "id": "latte",
       "categoryId": "coffee",
       "name": "Латте",
-      "description": "Мягкий кофе с большим количеством молока",
+      "description": "",
       "emoji": "☕",
-      "basePrice": 260,
+      "basePrice": 270,
+      "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
       "sizes": {
-        "s": 230,
-        "m": 260,
-        "l": 300
+        "s": 220,
+        "m": 270,
+        "l": 310
+      },
+      "customizable": true
+    },
+    {
+      "id": "flat-white",
+      "categoryId": "coffee",
+      "name": "Флэт уайт",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 250,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "customizable": true
+    },
+    {
+      "id": "spanish-latte",
+      "categoryId": "coffee",
+      "name": "Испанский латте",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 370,
+      "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 320,
+        "m": 370,
+        "l": 420
       },
       "customizable": true,
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "pistachio-latte",
+      "categoryId": "coffee",
+      "name": "Фисташковый латте",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 400,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 350,
+        "m": 400,
+        "l": 450
+      },
+      "customizable": true,
+      "tags": [
+        "hit",
+        "new"
+      ]
+    },
+    {
+      "id": "salted-caramel-latte",
+      "categoryId": "coffee",
+      "name": "Латте солёная карамель",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 370,
+      "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 320,
+        "m": 370,
+        "l": 420
+      },
+      "customizable": true
+    },
+    {
+      "id": "raf-vanilla",
+      "categoryId": "coffee",
+      "name": "Раф ваниль",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 370,
+      "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 320,
+        "m": 370,
+        "l": 420
+      },
+      "customizable": true,
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "raf-chak-chak",
+      "categoryId": "coffee",
+      "name": "Раф чак-чак",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 400,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 350,
+        "m": 400,
+        "l": 450
+      },
+      "customizable": true,
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "nitro-black",
+      "categoryId": "coffee",
+      "name": "Nitro Black",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 340,
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 340,
+        "l": 390
+      },
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "nitro-vanilla",
+      "categoryId": "coffee",
+      "name": "Nitro Vanilla",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 390,
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 390,
+        "l": 450
+      },
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "nitro-orange",
+      "categoryId": "coffee",
+      "name": "Nitro Orange",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 410,
+      "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 410,
+        "l": 470
+      },
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "shot-pistachio",
+      "categoryId": "coffee",
+      "name": "Фисташковый шот",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 290,
       "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      "id": "black-tea",
-      "categoryId": "tea",
-      "name": "Чёрный чай",
-      "description": "Цейлон, можно с лимоном",
-      "emoji": "🫖",
-      "basePrice": 180,
-      "sizes": {
-        "m": 180,
-        "l": 210
-      },
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
-    },
-    {
-      "id": "herbal-tea",
-      "categoryId": "tea",
-      "name": "Травяной чай",
-      "description": "Мята, ромашка, имбирь",
-      "emoji": "🌿",
-      "basePrice": 200,
-      "sizes": {
-        "m": 200,
-        "l": 230
-      },
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600"
-    },
-    {
-      "id": "iced-latte",
-      "categoryId": "cold",
-      "name": "Айс латте",
-      "description": "Охлаждённый латте со льдом",
-      "emoji": "🧊",
+      "id": "shot-orange",
+      "categoryId": "coffee",
+      "name": "Апельсиновый шот",
+      "description": "",
+      "emoji": "☕",
       "basePrice": 290,
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "shot-salted-caramel",
+      "categoryId": "coffee",
+      "name": "Шот солёная карамель",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 290,
+      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "shot-coconut",
+      "categoryId": "coffee",
+      "name": "Кокосовый шот",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 290,
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "coffee-tasting-set",
+      "categoryId": "coffee",
+      "name": "Дегустационный сет (4 шота)",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 890,
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "matcha-latte",
+      "categoryId": "drinks",
+      "name": "Матча латте",
+      "description": "",
+      "emoji": "🍵",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
       "sizes": {
-        "m": 290,
-        "l": 330
+        "m": 420,
+        "l": 480
       },
       "customizable": true,
       "tags": [
         "hit"
-      ],
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ]
     },
     {
-      "id": "lemonade",
-      "categoryId": "cold",
-      "name": "Лимонад",
-      "description": "Домашний, с мятой и лаймом",
-      "emoji": "🍋",
-      "basePrice": 240,
+      "id": "strawberry-matcha",
+      "categoryId": "drinks",
+      "name": "Клубничная матча",
+      "description": "",
+      "emoji": "🍓",
+      "basePrice": 470,
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
       "sizes": {
-        "m": 240,
-        "l": 280
+        "m": 470,
+        "l": 530
       },
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
-    },
-    {
-      "id": "smoothie",
-      "categoryId": "cold",
-      "name": "Смузи",
-      "description": "Ягодный или тропический",
-      "emoji": "🥤",
-      "basePrice": 350,
-      "sizes": {
-        "m": 350,
-        "l": 390
-      },
-      "customizable": false,
+      "customizable": true,
       "tags": [
         "new"
-      ],
+      ]
+    },
+    {
+      "id": "cold-brew-classic",
+      "categoryId": "drinks",
+      "name": "Колд брю классический",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 320,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 320,
+        "l": 370
+      }
+    },
+    {
+      "id": "cold-brew-orange",
+      "categoryId": "drinks",
+      "name": "Колд брю апельсин",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 390,
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 390,
+        "l": 440
+      }
+    },
+    {
+      "id": "cold-brew-mango",
+      "categoryId": "drinks",
+      "name": "Колд брю манго",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 410,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 410,
+        "l": 460
+      }
+    },
+    {
+      "id": "cold-brew-tonic",
+      "categoryId": "drinks",
+      "name": "Колд брю тоник",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 390,
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 390,
+        "l": 440
+      }
+    },
+    {
+      "id": "iced-latte",
+      "categoryId": "drinks",
+      "name": "Айс латте",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 300,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 260,
+        "m": 300,
+        "l": 340
+      },
+      "customizable": true,
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "iced-spanish-latte",
+      "categoryId": "drinks",
+      "name": "Айс испанский латте",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 320,
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "m": 320,
+        "l": 370
+      },
+      "customizable": true
+    },
+    {
+      "id": "iced-pistachio-latte",
+      "categoryId": "drinks",
+      "name": "Айс фисташковый латте",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 400,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 350,
+        "m": 400,
+        "l": 450
+      },
+      "customizable": true
+    },
+    {
+      "id": "espresso-tonic",
+      "categoryId": "drinks",
+      "name": "Эспрессо-тоник",
+      "description": "",
+      "emoji": "🧊",
+      "basePrice": 300,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "sizes": {
+        "s": 260,
+        "m": 300,
+        "l": 340
+      }
+    },
+    {
+      "id": "berry-garden",
+      "categoryId": "drinks",
+      "name": "Ягодный сад",
+      "description": "",
+      "emoji": "🫐",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "peach-jasmine-drink",
+      "categoryId": "drinks",
+      "name": "Персик жасмин",
+      "description": "",
+      "emoji": "🍑",
+      "basePrice": 440,
       "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      "id": "croissant",
-      "categoryId": "food",
-      "name": "Круассан",
-      "description": "Сливочный, выпекаем каждое утро",
-      "emoji": "🥐",
-      "basePrice": 190,
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/3491546/pexels-photo-3491546.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "id": "cucumber-lime",
+      "categoryId": "drinks",
+      "name": "Огурец лайм",
+      "description": "",
+      "emoji": "🥒",
+      "basePrice": 390,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      "id": "sandwich",
-      "categoryId": "food",
-      "name": "Сэндвич",
-      "description": "Курица, авокадо, соус",
-      "emoji": "🥪",
-      "basePrice": 320,
-      "customizable": false,
+      "id": "smoothie-green",
+      "categoryId": "drinks",
+      "name": "Зелёная энергия",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 490,
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "smoothie-tropical",
+      "categoryId": "drinks",
+      "name": "Тропическое солнце",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 520,
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
       "tags": [
         "hit"
-      ],
+      ]
+    },
+    {
+      "id": "smoothie-berry",
+      "categoryId": "drinks",
+      "name": "Ягодный заряд",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 510,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-peach-jasmine",
+      "categoryId": "drinks",
+      "name": "Чай персик жасмин",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 620,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-sea-buckthorn",
+      "categoryId": "drinks",
+      "name": "Чай облепиха апельсин",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 650,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-raspberry-mint",
+      "categoryId": "drinks",
+      "name": "Чай малина мята",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 620,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-ginger-lime",
+      "categoryId": "drinks",
+      "name": "Чай имбирь лайм мёд",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 620,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-apple-cinnamon",
+      "categoryId": "drinks",
+      "name": "Чай яблоко корица ваниль",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 620,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "fresh-orange",
+      "categoryId": "drinks",
+      "name": "Фреш апельсин",
+      "description": "",
+      "emoji": "🍊",
+      "basePrice": 490,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "fresh-grapefruit",
+      "categoryId": "drinks",
+      "name": "Фреш грейпфрут",
+      "description": "",
+      "emoji": "🍊",
+      "basePrice": 520,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "fresh-orange-carrot",
+      "categoryId": "drinks",
+      "name": "Фреш апельсин морковь",
+      "description": "",
+      "emoji": "🥕",
+      "basePrice": 450,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "milkshake-pistachio",
+      "categoryId": "drinks",
+      "name": "Милкшейк фисташковый",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 520,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "milkshake-chocolate",
+      "categoryId": "drinks",
+      "name": "Милкшейк шоколадный",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 490,
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "cocoa-classic",
+      "categoryId": "drinks",
+      "name": "Классическое какао",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 360,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "cocoa-salted-caramel",
+      "categoryId": "drinks",
+      "name": "Какао солёная карамель",
+      "description": "",
+      "emoji": "☕",
+      "basePrice": 390,
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "hot-chocolate",
+      "categoryId": "drinks",
+      "name": "Горячий шоколад",
+      "description": "",
+      "emoji": "🍫",
+      "basePrice": 430,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "mors",
+      "categoryId": "drinks",
+      "name": "Морс",
+      "description": "",
+      "emoji": "🫐",
+      "basePrice": 220,
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "water",
+      "categoryId": "drinks",
+      "name": "Вода (с газом / без газа)",
+      "description": "",
+      "emoji": "💧",
+      "basePrice": 220,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "cola-zero",
+      "categoryId": "drinks",
+      "name": "Cola Zero",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 220,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tonic-drink",
+      "categoryId": "drinks",
+      "name": "Тоник",
+      "description": "",
+      "emoji": "🥤",
+      "basePrice": 220,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-assam",
+      "categoryId": "drinks",
+      "name": "Чай Ассам",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-sencha",
+      "categoryId": "drinks",
+      "name": "Чай Сенча",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-milk",
+      "categoryId": "drinks",
+      "name": "Чай молочный",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-earl-grey",
+      "categoryId": "drinks",
+      "name": "Чай Эрл Грей",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-jasmine",
+      "categoryId": "drinks",
+      "name": "Чай жасмин",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-tatar",
+      "categoryId": "drinks",
+      "name": "Чай татарский",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-rooibos",
+      "categoryId": "drinks",
+      "name": "Чай ройбуш",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "tea-altai",
+      "categoryId": "drinks",
+      "name": "Чай алтайский",
+      "description": "",
+      "emoji": "🫖",
+      "basePrice": 420,
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "shashlik-chicken-thigh",
+      "categoryId": "food",
+      "name": "Шашлык из куриного бедра",
+      "description": "",
+      "emoji": "🍖",
+      "basePrice": 480,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "shashlik-chicken-fillet",
+      "categoryId": "food",
+      "name": "Шашлык из куриного филе",
+      "description": "В горчичном маринаде",
+      "emoji": "🍖",
+      "basePrice": 480,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "shashlik-beef",
+      "categoryId": "food",
+      "name": "Шашлык из говядины",
+      "description": "",
+      "emoji": "🍖",
+      "basePrice": 990,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "lula-chicken",
+      "categoryId": "food",
+      "name": "Люля-кебаб из курицы",
+      "description": "",
+      "emoji": "🍖",
+      "basePrice": 480,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "lula-chicken-cheese",
+      "categoryId": "food",
+      "name": "Люля-кебаб из курицы с сыром",
+      "description": "",
+      "emoji": "🍖",
+      "basePrice": 490,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "lula-lamb",
+      "categoryId": "food",
+      "name": "Люля-кебаб из баранины",
+      "description": "",
+      "emoji": "🍖",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/353538/pexels-photo-353538.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "steak-beef-tenderloin",
+      "categoryId": "food",
+      "name": "Стейк из говяжьей вырезки",
+      "description": "",
+      "emoji": "🥩",
+      "basePrice": 990,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "steak-butcher",
+      "categoryId": "food",
+      "name": "Стейк мясника",
+      "description": "",
+      "emoji": "🥩",
+      "basePrice": 410,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "steak-chicken",
+      "categoryId": "food",
+      "name": "Стейк из куриного филе",
+      "description": "",
+      "emoji": "🍗",
+      "basePrice": 490,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "steak-salmon",
+      "categoryId": "food",
+      "name": "Стейк из лосося",
+      "description": "",
+      "emoji": "🐟",
+      "basePrice": 1190,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "grilled-vegetables",
+      "categoryId": "food",
+      "name": "Овощи гриль",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 490,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "grilled-corn",
+      "categoryId": "food",
+      "name": "Кукуруза гриль",
+      "description": "",
+      "emoji": "🌽",
+      "basePrice": 270,
       "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      "id": "bowl",
+      "id": "fries",
       "categoryId": "food",
-      "name": "Боул",
-      "description": "Рис, овощи, соус терияки",
-      "emoji": "🥗",
-      "basePrice": 420,
-      "customizable": false,
+      "name": "Картофель фри",
+      "description": "",
+      "emoji": "🍟",
+      "basePrice": 270,
+      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "potato-wedges",
+      "categoryId": "food",
+      "name": "Картофельные дольки",
+      "description": "",
+      "emoji": "🥔",
+      "basePrice": 270,
+      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "grilled-mushrooms",
+      "categoryId": "food",
+      "name": "Шампиньоны на углях",
+      "description": "",
+      "emoji": "🍄",
+      "basePrice": 330,
       "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "mashed-potato",
+      "categoryId": "food",
+      "name": "Картофельное пюре с зеленью",
+      "description": "",
+      "emoji": "🥔",
+      "basePrice": 170,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "fresh-vegetables",
+      "categoryId": "food",
+      "name": "Свежие овощи",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 220,
+      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "bread-borodinsky",
+      "categoryId": "food",
+      "name": "Хлеб бородинский",
+      "description": "",
+      "emoji": "🍞",
+      "basePrice": 99,
+      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "bread-wheat",
+      "categoryId": "food",
+      "name": "Хлеб пшеничный тостовый",
+      "description": "",
+      "emoji": "🍞",
+      "basePrice": 99,
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "bread-ciabatta",
+      "categoryId": "food",
+      "name": "Чиабатта",
+      "description": "",
+      "emoji": "🍞",
+      "basePrice": 149,
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pizza-pear-gorgonzola",
+      "categoryId": "food",
+      "name": "Пицца с грушей, горгондзолой и мёдом",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 740,
+      "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "new"
+      ]
+    },
+    {
+      "id": "pizza-mushroom",
+      "categoryId": "food",
+      "name": "Грибная пицца с зелёным луком",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pizza-pepperoni",
+      "categoryId": "food",
+      "name": "Пицца пеперони",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "pizza-margherita",
+      "categoryId": "food",
+      "name": "Пицца маргарита",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 590,
+      "imageUrl": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pizza-shrimp-spinach",
+      "categoryId": "food",
+      "name": "Пицца с креветками и шпинатом",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pizza-caesar-chicken",
+      "categoryId": "food",
+      "name": "Пицца цезарь с цыплёнком",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pizza-cheese",
+      "categoryId": "food",
+      "name": "Сырная пицца",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pizza-ham-mushroom",
+      "categoryId": "food",
+      "name": "Пицца ветчина и грибы",
+      "description": "",
+      "emoji": "🍕",
+      "basePrice": 740,
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-philadelphia",
+      "categoryId": "food",
+      "name": "Филадельфия",
+      "description": "Лосось, сливочный сыр, огурец, авокадо",
+      "emoji": "🍣",
+      "basePrice": 890,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "roll-dragon",
+      "categoryId": "food",
+      "name": "Дракон",
+      "description": "Угорь, огурец, краб, соус унаги, кунжут",
+      "emoji": "🍣",
+      "basePrice": 720,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-tuna-salmon",
+      "categoryId": "food",
+      "name": "В стружке тунца с лососем",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 870,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-tuna-shrimp",
+      "categoryId": "food",
+      "name": "В стружке тунца с креветкой и манго",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-caesar-chicken",
+      "categoryId": "food",
+      "name": "Цезарь с курицей",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 660,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-salmon-mango",
+      "categoryId": "food",
+      "name": "С лососем, сыром и манго",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 890,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-classic-cucumber",
+      "categoryId": "food",
+      "name": "Классический с огурцом",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 330,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-classic-shrimp",
+      "categoryId": "food",
+      "name": "Классический с креветкой",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-classic-salmon",
+      "categoryId": "food",
+      "name": "Классический с лососем",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 380,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-hot-caesar",
+      "categoryId": "food",
+      "name": "Горячий цезарь",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "roll-hot-eel",
+      "categoryId": "food",
+      "name": "Сливочный угорь",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 740,
+      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-hot-chicken-spicy",
+      "categoryId": "food",
+      "name": "С копчёным цыплёнком и соусом спайси",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-hot-shrimp",
+      "categoryId": "food",
+      "name": "С креветкой и ореховым соусом",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "roll-hot-salmon-mango",
+      "categoryId": "food",
+      "name": "С лососем, манго и авокадо",
+      "description": "",
+      "emoji": "🍣",
+      "basePrice": 890,
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salad-caesar-chicken",
+      "categoryId": "food",
+      "name": "Цезарь с хрустящим цыплёнком",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 410,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "salad-caesar-shrimp",
+      "categoryId": "food",
+      "name": "Цезарь с креветками",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salad-greek",
+      "categoryId": "food",
+      "name": "Греческий с кремом брынзы",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salad-roastbeef",
+      "categoryId": "food",
+      "name": "С ростбифом в азиатском стиле",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 590,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salad-salmon",
+      "categoryId": "food",
+      "name": "Со слабосолёным лососем",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salad-shrimp-mango",
+      "categoryId": "food",
+      "name": "С креветками, манго и ореховым соусом",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salad-green",
+      "categoryId": "food",
+      "name": "Зелёный салат в базиликовой заправке",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 590,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "poke-salmon",
+      "categoryId": "food",
+      "name": "Поке с лососем",
+      "description": "Рис, огурец, манго, чука, эдамаме, нори, соус поке",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "poke-eel",
+      "categoryId": "food",
+      "name": "Поке с угрём",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "poke-shrimp",
+      "categoryId": "food",
+      "name": "Поке с креветкой",
+      "description": "",
+      "emoji": "🥗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "soup-chicken",
+      "categoryId": "food",
+      "name": "Домашний куриный бульон",
+      "description": "",
+      "emoji": "🍲",
+      "basePrice": 290,
+      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "soup-borscht",
+      "categoryId": "food",
+      "name": "Борщ с говядиной",
+      "description": "",
+      "emoji": "🍲",
+      "basePrice": 410,
+      "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "soup-tom-yum",
+      "categoryId": "food",
+      "name": "Том ям с морепродуктами",
+      "description": "",
+      "emoji": "🍲",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "soup-mushroom",
+      "categoryId": "food",
+      "name": "Грибной крем-суп",
+      "description": "",
+      "emoji": "🍲",
+      "basePrice": 410,
+      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "soup-pumpkin",
+      "categoryId": "food",
+      "name": "Тыквенный крем-суп с креветками",
+      "description": "",
+      "emoji": "🍲",
+      "basePrice": 510,
+      "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "crispy-chicken-salad",
+      "categoryId": "food",
+      "name": "Хрустящий цыплёнок с салатом",
+      "description": "С соусом блю-чиз",
+      "emoji": "🍗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "chicken-cutlet-puree",
+      "categoryId": "food",
+      "name": "Куриная котлета с пюре",
+      "description": "",
+      "emoji": "🍗",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "beef-stroganoff",
+      "categoryId": "food",
+      "name": "Бефстроганов с пюре",
+      "description": "",
+      "emoji": "🥩",
+      "basePrice": 790,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "beef-rus",
+      "categoryId": "food",
+      "name": "Биф а-ля рус",
+      "description": "",
+      "emoji": "🥩",
+      "basePrice": 890,
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "salmon-grill",
+      "categoryId": "food",
+      "name": "Стейк лосося гриль",
+      "description": "",
+      "emoji": "🐟",
+      "basePrice": 1310,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "tuna-grill",
+      "categoryId": "food",
+      "name": "Стейк тунца гриль",
+      "description": "",
+      "emoji": "🐟",
+      "basePrice": 910,
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "burger-beef",
+      "categoryId": "food",
+      "name": "Бургер с котлетой из говядины",
+      "description": "",
+      "emoji": "🍔",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "burger-chicken",
+      "categoryId": "food",
+      "name": "Бургер с куриной котлетой",
+      "description": "",
+      "emoji": "🍔",
+      "basePrice": 640,
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pasta-shrimp",
+      "categoryId": "food",
+      "name": "Паста с креветками",
+      "description": "В сливочно-томатном соусе",
+      "emoji": "🍝",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pasta-chicken-mushroom",
+      "categoryId": "food",
+      "name": "Паста с курицей и грибами",
+      "description": "",
+      "emoji": "🍝",
+      "basePrice": 590,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pasta-beef",
+      "categoryId": "food",
+      "name": "Паста с говядиной",
+      "description": "",
+      "emoji": "🍝",
+      "basePrice": 690,
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "pasta-seafood",
+      "categoryId": "food",
+      "name": "Паста с морепродуктами",
+      "description": "",
+      "emoji": "🍝",
+      "basePrice": 790,
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "honey-cake",
+      "categoryId": "desserts",
+      "name": "Медовик с солёной карамелью",
+      "description": "",
+      "emoji": "🍰",
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "red-velvet",
+      "categoryId": "desserts",
+      "name": "Красный бархат",
+      "description": "",
+      "emoji": "🍰",
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/2890000/pexels-photo-2890000.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "meringue-roll",
+      "categoryId": "desserts",
+      "name": "Меренговый рулет с малиной",
+      "description": "",
+      "emoji": "🍰",
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
       "id": "cheesecake",
       "categoryId": "desserts",
-      "name": "Чизкейк",
-      "description": "Классический нью-йоркский",
+      "name": "Чизкейк манго-маракуйя",
+      "description": "",
       "emoji": "🍰",
-      "basePrice": 280,
-      "customizable": false,
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
       "tags": [
         "hit"
-      ],
+      ]
+    },
+    {
+      "id": "vanilla-praline",
+      "categoryId": "desserts",
+      "name": "Ванильный крем с пралине",
+      "description": "",
+      "emoji": "🍰",
+      "basePrice": 350,
       "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
     },
     {
-      "id": "brownie",
+      "id": "carrot-cake",
       "categoryId": "desserts",
-      "name": "Брауни",
-      "description": "Шоколадный, с орехами",
-      "emoji": "🍫",
-      "basePrice": 220,
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "name": "Морковный торт",
+      "description": "",
+      "emoji": "🍰",
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
+    },
+    {
+      "id": "panna-cotta",
+      "categoryId": "desserts",
+      "name": "Ванильная панна-котта с клубникой",
+      "description": "",
+      "emoji": "🍰",
+      "basePrice": 350,
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "tags": [
+        "new"
+      ]
     },
     {
       "id": "cookie",
       "categoryId": "desserts",
       "name": "Печенье",
-      "description": "Двойное шоколадное",
+      "description": "",
       "emoji": "🍪",
       "basePrice": 120,
-      "customizable": false,
-      "imageUrl": "https://images.pexels.com/photos/2890000/pexels-photo-2890000.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=600"
     }
   ],
   "settings": {

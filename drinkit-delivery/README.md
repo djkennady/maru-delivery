@@ -80,6 +80,12 @@ SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 
 Локально меню хранится в `data/menu.json`. В продакшене (при включенном Supabase) меню и заказы хранятся в БД.
 
+Обновить меню из PDF-данных Алабуги:
+
+```bash
+node scripts/build-alabuga-menu.mjs
+```
+
 ## Тестовые карты
 
 - `4242 4242 4242 4242` — успешная оплата

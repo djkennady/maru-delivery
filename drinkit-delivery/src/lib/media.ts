@@ -17,11 +17,10 @@ export const heroThumbs = [
 const fallbackProductImage = pexels(302899);
 
 const categoryFallbacks: Record<string, string> = {
-  new: pexels(2379004, 800),
+  breakfast: pexels(1640777, 800),
   coffee: pexels(302899, 800),
-  tea: pexels(1417945, 800),
-  cold: pexels(962464, 800),
-  food: pexels(1640777, 800),
+  drinks: pexels(1417945, 800),
+  food: pexels(1279330, 800),
   desserts: pexels(291528, 800),
 };
 

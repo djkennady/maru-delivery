@@ -137,12 +137,18 @@ async function writeMenu(menu: MenuData) {
   await fs.writeFile(MENU_FILE, JSON.stringify(menu, null, 2), "utf-8");
 }
 
+export async function resetMenuToDefaults(): Promise<MenuData> {
+  await writeMenu(DEFAULT_MENU);
+  return DEFAULT_MENU;
+}
+
 export async function getMenu(): Promise<MenuData> {
   if (isSupabaseEnabled()) {
     const supabaseMenu = await readMenuFromSupabase();
-    if (supabaseMenu) return supabaseMenu;
-    await writeMenu(DEFAULT_MENU);
-    return DEFAULT_MENU;
+    if (supabaseMenu && supabaseMenu.products.length > 0) {
+      return supabaseMenu;
+    }
+    return resetMenuToDefaults();
   }
 
   await ensureStore();
