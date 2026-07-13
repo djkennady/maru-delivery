@@ -23,6 +23,7 @@ export interface Product {
   customizable?: boolean;
   tags?: ProductTag[];
   imageUrl?: string;
+  group?: string;
 }
 
 export interface MenuSettings {

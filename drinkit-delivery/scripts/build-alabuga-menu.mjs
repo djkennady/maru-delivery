@@ -427,6 +427,53 @@ const categories = [
   { id: "desserts", name: "Десерты", imageUrl: pexels(291528, 800) },
 ];
 
+/** Порядок и названия подгрупп как в PDF-меню */
+const GROUP_SEQUENCE = [
+  ["Завтраки", 4],
+  ["Сырники и блинчики", 2],
+  ["Сэндвичи и круассаны сытные", 3],
+  ["Сэндвичи и круассаны сладкие", 3],
+  ["Чёрный кофе", 3],
+  ["Кофе с молоком", 3],
+  ["Фирменный кофе", 6],
+  ["Nitro Coffee", 3],
+  ["Кофейные шоты", 5],
+  ["Матча", 2],
+  ["Колд брю", 4],
+  ["Айс-кофе", 4],
+  ["Летние напитки", 3],
+  ["Смузи", 3],
+  ["Авторские чаи", 5],
+  ["Фреши", 3],
+  ["Милкшейки", 2],
+  ["Какао", 3],
+  ["Прохладительные напитки", 4],
+  ["Чай", 8],
+  ["Хоспер", 10],
+  ["Гарниры", 7],
+  ["Хлеб", 3],
+  ["Пицца", 8],
+  ["Роллы фирменные", 9],
+  ["Горячие роллы темпура", 4],
+  ["Салаты", 7],
+  ["Поке", 3],
+  ["Супы", 5],
+  ["Вторые блюда", 8],
+  ["Паста", 4],
+  ["Десерты", 8],
+];
+
+function applyMenuGroups(items) {
+  let index = 0;
+  for (const [group, count] of GROUP_SEQUENCE) {
+    for (let i = 0; i < count && index < items.length; i += 1, index += 1) {
+      items[index].group = group;
+    }
+  }
+}
+
+applyMenuGroups(RAW);
+
 function toProduct(item) {
   const pool = item.pool ?? item.cat;
   const product = {
@@ -437,6 +484,7 @@ function toProduct(item) {
     emoji: item.emoji,
     basePrice: item.price ?? item.sizes?.m ?? item.sizes?.s ?? 0,
     imageUrl: imageFor(pool, item.id),
+    group: item.group,
   };
   if (item.sizes) product.sizes = item.sizes;
   if (item.customizable) product.customizable = true;

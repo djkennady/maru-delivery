@@ -35,6 +35,7 @@
       "emoji": "🍳",
       "basePrice": 599,
       "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Завтраки",
       "tags": [
         "hit"
       ]
@@ -46,7 +47,8 @@
       "description": "Омлет из трёх яиц, круассан, слабосолёный лосось, трюфельный крем, хашбраун, шпинат, томаты черри, сметана, джем",
       "emoji": "🥐",
       "basePrice": 699,
-      "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Завтраки"
     },
     {
       "id": "russian-breakfast",
@@ -55,7 +57,8 @@
       "description": "Скрэмбл из трёх яиц, ветчина из индейки, блинчик, тост, огурцы, помидоры, сметана, сливочное масло, джем",
       "emoji": "🥞",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Завтраки"
     },
     {
       "id": "build-your-breakfast",
@@ -64,7 +67,8 @@
       "description": "Омлет / скрэмбл / глазунья из трёх яиц + тост и сливочное масло",
       "emoji": "🍽️",
       "basePrice": 399,
-      "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Завтраки"
     },
     {
       "id": "blinchiki",
@@ -73,7 +77,8 @@
       "description": "",
       "emoji": "🥞",
       "basePrice": 199,
-      "imageUrl": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сырники и блинчики"
     },
     {
       "id": "syrniki",
@@ -83,6 +88,7 @@
       "emoji": "🧀",
       "basePrice": 279,
       "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сырники и блинчики",
       "tags": [
         "hit"
       ]
@@ -95,6 +101,7 @@
       "emoji": "🥪",
       "basePrice": 449,
       "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сэндвичи и круассаны сытные",
       "tags": [
         "hit"
       ]
@@ -106,7 +113,8 @@
       "description": "Ростбиф, трюфельный крем, романо, огуречный релиш, лук фри",
       "emoji": "🥪",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сэндвичи и круассаны сытные"
     },
     {
       "id": "croissant-caesar-salmon",
@@ -115,7 +123,8 @@
       "description": "Слабосолёный лосось, салат, соус цезарь, томаты черри, пармезан",
       "emoji": "🥐",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сэндвичи и круассаны сытные"
     },
     {
       "id": "sandwich-nutella-banana",
@@ -124,7 +133,8 @@
       "description": "",
       "emoji": "🍫",
       "basePrice": 449,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сэндвичи и круассаны сладкие"
     },
     {
       "id": "croissant-chocolate",
@@ -133,7 +143,8 @@
       "description": "",
       "emoji": "🥐",
       "basePrice": 449,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сэндвичи и круассаны сладкие"
     },
     {
       "id": "croissant",
@@ -142,7 +153,8 @@
       "description": "",
       "emoji": "🥐",
       "basePrice": 449,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Сэндвичи и круассаны сладкие"
     },
     {
       "id": "americano",
@@ -152,6 +164,7 @@
       "emoji": "☕",
       "basePrice": 230,
       "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чёрный кофе",
       "sizes": {
         "s": 180,
         "m": 230,
@@ -170,6 +183,7 @@
       "emoji": "☕",
       "basePrice": 230,
       "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чёрный кофе",
       "sizes": {
         "s": 180,
         "m": 230,
@@ -184,7 +198,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 180,
-      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чёрный кофе"
     },
     {
       "id": "cappuccino",
@@ -194,6 +209,7 @@
       "emoji": "☕",
       "basePrice": 270,
       "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофе с молоком",
       "sizes": {
         "s": 220,
         "m": 270,
@@ -212,6 +228,7 @@
       "emoji": "☕",
       "basePrice": 270,
       "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофе с молоком",
       "sizes": {
         "s": 220,
         "m": 270,
@@ -227,6 +244,7 @@
       "emoji": "☕",
       "basePrice": 250,
       "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофе с молоком",
       "customizable": true
     },
     {
@@ -237,6 +255,7 @@
       "emoji": "☕",
       "basePrice": 370,
       "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фирменный кофе",
       "sizes": {
         "s": 320,
         "m": 370,
@@ -255,6 +274,7 @@
       "emoji": "☕",
       "basePrice": 400,
       "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фирменный кофе",
       "sizes": {
         "s": 350,
         "m": 400,
@@ -274,6 +294,7 @@
       "emoji": "☕",
       "basePrice": 370,
       "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фирменный кофе",
       "sizes": {
         "s": 320,
         "m": 370,
@@ -289,6 +310,7 @@
       "emoji": "☕",
       "basePrice": 370,
       "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фирменный кофе",
       "sizes": {
         "s": 320,
         "m": 370,
@@ -307,6 +329,7 @@
       "emoji": "☕",
       "basePrice": 400,
       "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фирменный кофе",
       "sizes": {
         "s": 350,
         "m": 400,
@@ -325,6 +348,7 @@
       "emoji": "🧊",
       "basePrice": 340,
       "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фирменный кофе",
       "sizes": {
         "m": 340,
         "l": 390
@@ -341,6 +365,7 @@
       "emoji": "🧊",
       "basePrice": 390,
       "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Nitro Coffee",
       "sizes": {
         "m": 390,
         "l": 450
@@ -357,6 +382,7 @@
       "emoji": "🧊",
       "basePrice": 410,
       "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Nitro Coffee",
       "sizes": {
         "m": 410,
         "l": 470
@@ -372,7 +398,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Nitro Coffee"
     },
     {
       "id": "shot-orange",
@@ -381,7 +408,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофейные шоты"
     },
     {
       "id": "shot-salted-caramel",
@@ -390,7 +418,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофейные шоты"
     },
     {
       "id": "shot-coconut",
@@ -399,7 +428,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофейные шоты"
     },
     {
       "id": "coffee-tasting-set",
@@ -409,6 +439,7 @@
       "emoji": "☕",
       "basePrice": 890,
       "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофейные шоты",
       "tags": [
         "hit"
       ]
@@ -421,6 +452,7 @@
       "emoji": "🍵",
       "basePrice": 420,
       "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Кофейные шоты",
       "sizes": {
         "m": 420,
         "l": 480
@@ -438,6 +470,7 @@
       "emoji": "🍓",
       "basePrice": 470,
       "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Матча",
       "sizes": {
         "m": 470,
         "l": 530
@@ -455,6 +488,7 @@
       "emoji": "🧊",
       "basePrice": 320,
       "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Матча",
       "sizes": {
         "m": 320,
         "l": 370
@@ -468,6 +502,7 @@
       "emoji": "🧊",
       "basePrice": 390,
       "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Колд брю",
       "sizes": {
         "m": 390,
         "l": 440
@@ -481,6 +516,7 @@
       "emoji": "🧊",
       "basePrice": 410,
       "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Колд брю",
       "sizes": {
         "m": 410,
         "l": 460
@@ -494,6 +530,7 @@
       "emoji": "🧊",
       "basePrice": 390,
       "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Колд брю",
       "sizes": {
         "m": 390,
         "l": 440
@@ -507,6 +544,7 @@
       "emoji": "🧊",
       "basePrice": 300,
       "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Колд брю",
       "sizes": {
         "s": 260,
         "m": 300,
@@ -525,6 +563,7 @@
       "emoji": "🧊",
       "basePrice": 320,
       "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Айс-кофе",
       "sizes": {
         "m": 320,
         "l": 370
@@ -539,6 +578,7 @@
       "emoji": "🧊",
       "basePrice": 400,
       "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Айс-кофе",
       "sizes": {
         "s": 350,
         "m": 400,
@@ -554,6 +594,7 @@
       "emoji": "🧊",
       "basePrice": 300,
       "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Айс-кофе",
       "sizes": {
         "s": 260,
         "m": 300,
@@ -568,6 +609,7 @@
       "emoji": "🫐",
       "basePrice": 420,
       "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Айс-кофе",
       "tags": [
         "new"
       ]
@@ -579,7 +621,8 @@
       "description": "",
       "emoji": "🍑",
       "basePrice": 440,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Летние напитки"
     },
     {
       "id": "cucumber-lime",
@@ -588,7 +631,8 @@
       "description": "",
       "emoji": "🥒",
       "basePrice": 390,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Летние напитки"
     },
     {
       "id": "smoothie-green",
@@ -597,7 +641,8 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Летние напитки"
     },
     {
       "id": "smoothie-tropical",
@@ -607,6 +652,7 @@
       "emoji": "🥤",
       "basePrice": 520,
       "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Смузи",
       "tags": [
         "hit"
       ]
@@ -618,7 +664,8 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 510,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Смузи"
     },
     {
       "id": "tea-peach-jasmine",
@@ -627,7 +674,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Смузи"
     },
     {
       "id": "tea-sea-buckthorn",
@@ -636,7 +684,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 650,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Авторские чаи"
     },
     {
       "id": "tea-raspberry-mint",
@@ -645,7 +694,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Авторские чаи"
     },
     {
       "id": "tea-ginger-lime",
@@ -654,7 +704,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Авторские чаи"
     },
     {
       "id": "tea-apple-cinnamon",
@@ -663,7 +714,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Авторские чаи"
     },
     {
       "id": "fresh-orange",
@@ -672,7 +724,8 @@
       "description": "",
       "emoji": "🍊",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Авторские чаи"
     },
     {
       "id": "fresh-grapefruit",
@@ -681,7 +734,8 @@
       "description": "",
       "emoji": "🍊",
       "basePrice": 520,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фреши"
     },
     {
       "id": "fresh-orange-carrot",
@@ -690,7 +744,8 @@
       "description": "",
       "emoji": "🥕",
       "basePrice": 450,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фреши"
     },
     {
       "id": "milkshake-pistachio",
@@ -699,7 +754,8 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 520,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Фреши"
     },
     {
       "id": "milkshake-chocolate",
@@ -708,7 +764,8 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Милкшейки"
     },
     {
       "id": "cocoa-classic",
@@ -717,7 +774,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 360,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Милкшейки"
     },
     {
       "id": "cocoa-salted-caramel",
@@ -726,7 +784,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 390,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Какао"
     },
     {
       "id": "hot-chocolate",
@@ -735,7 +794,8 @@
       "description": "",
       "emoji": "🍫",
       "basePrice": 430,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Какао"
     },
     {
       "id": "mors",
@@ -744,7 +804,8 @@
       "description": "",
       "emoji": "🫐",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Какао"
     },
     {
       "id": "water",
@@ -753,7 +814,8 @@
       "description": "",
       "emoji": "💧",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Прохладительные напитки"
     },
     {
       "id": "cola-zero",
@@ -762,7 +824,8 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Прохладительные напитки"
     },
     {
       "id": "tonic-drink",
@@ -771,7 +834,8 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Прохладительные напитки"
     },
     {
       "id": "tea-assam",
@@ -780,7 +844,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Прохладительные напитки"
     },
     {
       "id": "tea-sencha",
@@ -789,7 +854,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "tea-milk",
@@ -798,7 +864,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "tea-earl-grey",
@@ -807,7 +874,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "tea-jasmine",
@@ -816,7 +884,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "tea-tatar",
@@ -825,7 +894,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "tea-rooibos",
@@ -834,7 +904,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "tea-altai",
@@ -843,7 +914,8 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "shashlik-chicken-thigh",
@@ -852,7 +924,8 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 480,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Чай"
     },
     {
       "id": "shashlik-chicken-fillet",
@@ -861,7 +934,8 @@
       "description": "В горчичном маринаде",
       "emoji": "🍖",
       "basePrice": 480,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "shashlik-beef",
@@ -871,6 +945,7 @@
       "emoji": "🍖",
       "basePrice": 990,
       "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер",
       "tags": [
         "hit"
       ]
@@ -882,7 +957,8 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 480,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "lula-chicken-cheese",
@@ -891,7 +967,8 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "lula-lamb",
@@ -900,7 +977,8 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/353538/pexels-photo-353538.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/353538/pexels-photo-353538.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "steak-beef-tenderloin",
@@ -910,6 +988,7 @@
       "emoji": "🥩",
       "basePrice": 990,
       "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер",
       "tags": [
         "hit"
       ]
@@ -921,7 +1000,8 @@
       "description": "",
       "emoji": "🥩",
       "basePrice": 410,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "steak-chicken",
@@ -930,7 +1010,8 @@
       "description": "",
       "emoji": "🍗",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "steak-salmon",
@@ -940,6 +1021,7 @@
       "emoji": "🐟",
       "basePrice": 1190,
       "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер",
       "tags": [
         "hit"
       ]
@@ -951,7 +1033,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хоспер"
     },
     {
       "id": "grilled-corn",
@@ -960,7 +1043,8 @@
       "description": "",
       "emoji": "🌽",
       "basePrice": 270,
-      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры"
     },
     {
       "id": "fries",
@@ -970,6 +1054,7 @@
       "emoji": "🍟",
       "basePrice": 270,
       "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры",
       "tags": [
         "hit"
       ]
@@ -981,7 +1066,8 @@
       "description": "",
       "emoji": "🥔",
       "basePrice": 270,
-      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры"
     },
     {
       "id": "grilled-mushrooms",
@@ -990,7 +1076,8 @@
       "description": "",
       "emoji": "🍄",
       "basePrice": 330,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры"
     },
     {
       "id": "mashed-potato",
@@ -999,7 +1086,8 @@
       "description": "",
       "emoji": "🥔",
       "basePrice": 170,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры"
     },
     {
       "id": "fresh-vegetables",
@@ -1008,7 +1096,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры"
     },
     {
       "id": "bread-borodinsky",
@@ -1017,7 +1106,8 @@
       "description": "",
       "emoji": "🍞",
       "basePrice": 99,
-      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2232/pexels-photo-2232.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Гарниры"
     },
     {
       "id": "bread-wheat",
@@ -1026,7 +1116,8 @@
       "description": "",
       "emoji": "🍞",
       "basePrice": 99,
-      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хлеб"
     },
     {
       "id": "bread-ciabatta",
@@ -1035,7 +1126,8 @@
       "description": "",
       "emoji": "🍞",
       "basePrice": 149,
-      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хлеб"
     },
     {
       "id": "pizza-pear-gorgonzola",
@@ -1045,6 +1137,7 @@
       "emoji": "🍕",
       "basePrice": 740,
       "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Хлеб",
       "tags": [
         "new"
       ]
@@ -1056,7 +1149,8 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца"
     },
     {
       "id": "pizza-pepperoni",
@@ -1066,6 +1160,7 @@
       "emoji": "🍕",
       "basePrice": 690,
       "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца",
       "tags": [
         "hit"
       ]
@@ -1077,7 +1172,8 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 590,
-      "imageUrl": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца"
     },
     {
       "id": "pizza-shrimp-spinach",
@@ -1086,7 +1182,8 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца"
     },
     {
       "id": "pizza-caesar-chicken",
@@ -1095,7 +1192,8 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1146760/pexels-photo-1146760.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца"
     },
     {
       "id": "pizza-cheese",
@@ -1104,7 +1202,8 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца"
     },
     {
       "id": "pizza-ham-mushroom",
@@ -1113,7 +1212,8 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 740,
-      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца"
     },
     {
       "id": "roll-philadelphia",
@@ -1123,6 +1223,7 @@
       "emoji": "🍣",
       "basePrice": 890,
       "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Пицца",
       "tags": [
         "hit"
       ]
@@ -1134,7 +1235,8 @@
       "description": "Угорь, огурец, краб, соус унаги, кунжут",
       "emoji": "🍣",
       "basePrice": 720,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-tuna-salmon",
@@ -1143,7 +1245,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 870,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-tuna-shrimp",
@@ -1152,7 +1255,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-caesar-chicken",
@@ -1161,7 +1265,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 660,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-salmon-mango",
@@ -1170,7 +1275,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 890,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-classic-cucumber",
@@ -1179,7 +1285,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 330,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-classic-shrimp",
@@ -1188,7 +1295,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-classic-salmon",
@@ -1197,7 +1305,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 380,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные"
     },
     {
       "id": "roll-hot-caesar",
@@ -1207,6 +1316,7 @@
       "emoji": "🍣",
       "basePrice": 690,
       "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Роллы фирменные",
       "tags": [
         "hit"
       ]
@@ -1218,7 +1328,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 740,
-      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Горячие роллы темпура"
     },
     {
       "id": "roll-hot-chicken-spicy",
@@ -1227,7 +1338,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Горячие роллы темпура"
     },
     {
       "id": "roll-hot-shrimp",
@@ -1236,7 +1348,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Горячие роллы темпура"
     },
     {
       "id": "roll-hot-salmon-mango",
@@ -1245,7 +1358,8 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 890,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Горячие роллы темпура"
     },
     {
       "id": "salad-caesar-chicken",
@@ -1255,6 +1369,7 @@
       "emoji": "🥗",
       "basePrice": 410,
       "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты",
       "tags": [
         "hit"
       ]
@@ -1266,7 +1381,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты"
     },
     {
       "id": "salad-greek",
@@ -1275,7 +1391,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты"
     },
     {
       "id": "salad-roastbeef",
@@ -1284,7 +1401,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 590,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты"
     },
     {
       "id": "salad-salmon",
@@ -1293,7 +1411,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты"
     },
     {
       "id": "salad-shrimp-mango",
@@ -1302,7 +1421,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты"
     },
     {
       "id": "salad-green",
@@ -1311,7 +1431,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 590,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Салаты"
     },
     {
       "id": "poke-salmon",
@@ -1320,7 +1441,8 @@
       "description": "Рис, огурец, манго, чука, эдамаме, нори, соус поке",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Поке"
     },
     {
       "id": "poke-eel",
@@ -1329,7 +1451,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Поке"
     },
     {
       "id": "poke-shrimp",
@@ -1338,7 +1461,8 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Поке"
     },
     {
       "id": "soup-chicken",
@@ -1347,7 +1471,8 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Супы"
     },
     {
       "id": "soup-borscht",
@@ -1357,6 +1482,7 @@
       "emoji": "🍲",
       "basePrice": 410,
       "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Супы",
       "tags": [
         "hit"
       ]
@@ -1368,7 +1494,8 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Супы"
     },
     {
       "id": "soup-mushroom",
@@ -1377,7 +1504,8 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 410,
-      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Супы"
     },
     {
       "id": "soup-pumpkin",
@@ -1386,7 +1514,8 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 510,
-      "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Супы"
     },
     {
       "id": "crispy-chicken-salad",
@@ -1395,7 +1524,8 @@
       "description": "С соусом блю-чиз",
       "emoji": "🍗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда"
     },
     {
       "id": "chicken-cutlet-puree",
@@ -1404,7 +1534,8 @@
       "description": "",
       "emoji": "🍗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда"
     },
     {
       "id": "beef-stroganoff",
@@ -1414,6 +1545,7 @@
       "emoji": "🥩",
       "basePrice": 790,
       "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда",
       "tags": [
         "hit"
       ]
@@ -1425,7 +1557,8 @@
       "description": "",
       "emoji": "🥩",
       "basePrice": 890,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда"
     },
     {
       "id": "salmon-grill",
@@ -1435,6 +1568,7 @@
       "emoji": "🐟",
       "basePrice": 1310,
       "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда",
       "tags": [
         "hit"
       ]
@@ -1446,7 +1580,8 @@
       "description": "",
       "emoji": "🐟",
       "basePrice": 910,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда"
     },
     {
       "id": "burger-beef",
@@ -1456,6 +1591,7 @@
       "emoji": "🍔",
       "basePrice": 690,
       "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда",
       "tags": [
         "hit"
       ]
@@ -1467,7 +1603,8 @@
       "description": "",
       "emoji": "🍔",
       "basePrice": 640,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Вторые блюда"
     },
     {
       "id": "pasta-shrimp",
@@ -1476,7 +1613,8 @@
       "description": "В сливочно-томатном соусе",
       "emoji": "🍝",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Паста"
     },
     {
       "id": "pasta-chicken-mushroom",
@@ -1485,7 +1623,8 @@
       "description": "",
       "emoji": "🍝",
       "basePrice": 590,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Паста"
     },
     {
       "id": "pasta-beef",
@@ -1494,7 +1633,8 @@
       "description": "",
       "emoji": "🍝",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Паста"
     },
     {
       "id": "pasta-seafood",
@@ -1503,7 +1643,8 @@
       "description": "",
       "emoji": "🍝",
       "basePrice": 790,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Паста"
     },
     {
       "id": "honey-cake",
@@ -1513,6 +1654,7 @@
       "emoji": "🍰",
       "basePrice": 350,
       "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты",
       "tags": [
         "hit"
       ]
@@ -1524,7 +1666,8 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/2890000/pexels-photo-2890000.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/2890000/pexels-photo-2890000.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты"
     },
     {
       "id": "meringue-roll",
@@ -1533,7 +1676,8 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты"
     },
     {
       "id": "cheesecake",
@@ -1543,6 +1687,7 @@
       "emoji": "🍰",
       "basePrice": 350,
       "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты",
       "tags": [
         "hit"
       ]
@@ -1554,7 +1699,8 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты"
     },
     {
       "id": "carrot-cake",
@@ -1563,7 +1709,8 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты"
     },
     {
       "id": "panna-cotta",
@@ -1573,6 +1720,7 @@
       "emoji": "🍰",
       "basePrice": 350,
       "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты",
       "tags": [
         "new"
       ]
@@ -1584,7 +1732,8 @@
       "description": "",
       "emoji": "🍪",
       "basePrice": 120,
-      "imageUrl": "https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=600"
+      "imageUrl": "https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "group": "Десерты"
     }
   ],
   "settings": {

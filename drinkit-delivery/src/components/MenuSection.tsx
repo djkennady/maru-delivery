@@ -23,6 +23,22 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     [products, activeCategory],
   );
 
+  const groupedProducts = useMemo(() => {
+    const order: string[] = [];
+    const map = new Map<string, Product[]>();
+
+    for (const product of filteredProducts) {
+      const groupName = product.group?.trim() || "Меню";
+      if (!map.has(groupName)) {
+        map.set(groupName, []);
+        order.push(groupName);
+      }
+      map.get(groupName)!.push(product);
+    }
+
+    return order.map((name) => ({ name, items: map.get(name)! }));
+  }, [filteredProducts]);
+
   const activeCategoryData = categories.find((c) => c.id === activeCategory);
   const categoryName = activeCategoryData?.name ?? "";
 
@@ -102,18 +118,27 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-8">
           {filteredProducts.length === 0 ? (
             <p className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
               В этой категории пока пусто
             </p>
           ) : (
-            filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onSelect={onSelect}
-              />
+            groupedProducts.map((group) => (
+              <div key={group.name}>
+                <h3 className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent-warm)]">
+                  {group.name}
+                </h3>
+                <div className="space-y-4">
+                  {group.items.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onSelect={onSelect}
+                    />
+                  ))}
+                </div>
+              </div>
             ))
           )}
         </div>
