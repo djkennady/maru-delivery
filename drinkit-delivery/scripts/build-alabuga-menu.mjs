@@ -493,6 +493,7 @@ function toProduct(item) {
 }
 
 const menu = {
+  menuVersion: 2,
   categories,
   products: RAW.map(toProduct),
   settings: {

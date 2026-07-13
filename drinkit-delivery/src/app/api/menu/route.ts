@@ -5,7 +5,10 @@ export async function GET() {
   try {
     const menu = await getMenu();
     return NextResponse.json(menu);
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Server error";
+    console.error("GET /api/menu failed:", error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -19,6 +19,7 @@ import type {
 const MENU_FILE = path.join(process.cwd(), "data", "menu.json");
 const APP_STATE_TABLE = "app_state";
 const MENU_STATE_KEY = "menu";
+export const CURRENT_MENU_VERSION = 2;
 
 async function ensureStore() {
   const dir = path.dirname(MENU_FILE);
@@ -122,7 +123,25 @@ function normalizeMenu(data: Partial<MenuData>): MenuData {
         data.settings?.estimatedMinutes ||
         DEFAULT_MENU.settings.estimatedMinutes,
     },
+    menuVersion: Number(data.menuVersion) || 1,
   };
+}
+
+function withCurrentMenuVersion(menu: MenuData): MenuData {
+  return {
+    ...menu,
+    menuVersion: CURRENT_MENU_VERSION,
+  };
+}
+
+function needsMenuReseed(menu: MenuData): boolean {
+  if (menu.products.length === 0) return true;
+  if ((menu.menuVersion ?? 1) < CURRENT_MENU_VERSION) return true;
+
+  const hasGroupedProducts = menu.products.some((product) =>
+    Boolean(product.group?.trim()),
+  );
+  return !hasGroupedProducts;
 }
 
 async function writeMenu(menu: MenuData) {
@@ -139,17 +158,28 @@ async function writeMenu(menu: MenuData) {
 }
 
 export async function resetMenuToDefaults(): Promise<MenuData> {
-  await writeMenu(DEFAULT_MENU);
-  return DEFAULT_MENU;
+  const menu = withCurrentMenuVersion(DEFAULT_MENU);
+  try {
+    await writeMenu(menu);
+  } catch (error) {
+    console.error("resetMenuToDefaults write failed:", error);
+  }
+  return menu;
 }
 
 export async function getMenu(): Promise<MenuData> {
   if (isSupabaseEnabled()) {
-    const supabaseMenu = await readMenuFromSupabase();
-    if (supabaseMenu && supabaseMenu.products.length > 0) {
-      return supabaseMenu;
+    try {
+      const supabaseMenu = await readMenuFromSupabase();
+      if (supabaseMenu && !needsMenuReseed(supabaseMenu)) {
+        return supabaseMenu;
+      }
+
+      return await resetMenuToDefaults();
+    } catch (error) {
+      console.error("getMenu supabase error:", error);
+      return withCurrentMenuVersion(DEFAULT_MENU);
     }
-    return resetMenuToDefaults();
   }
 
   await ensureStore();

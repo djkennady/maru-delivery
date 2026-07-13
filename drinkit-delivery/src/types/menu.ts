@@ -36,6 +36,7 @@ export interface MenuData {
   categories: Category[];
   products: Product[];
   settings: MenuSettings;
+  menuVersion?: number;
 }
 
 export interface CartItemOptions {
