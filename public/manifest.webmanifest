@@ -1,0 +1,25 @@
+{
+  "name": "Bird Network",
+  "short_name": "Bird Network",
+  "description": "Сеть ресторанов и лаунжей — меню, афиша, бронирование",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0b0a",
+  "theme_color": "#d4af37",
+  "orientation": "portrait-primary",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/FC%20%D0%BB%D0%BE%D0%B3%D0%BE/Future%20Corp.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/FC%20%D0%BB%D0%BE%D0%B3%D0%BE/Future%20Corp.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
