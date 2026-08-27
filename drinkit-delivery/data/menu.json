@@ -1,5 +1,5 @@
 {
-  "menuVersion": 3,
+  "menuVersion": 4,
   "categories": [
     {
       "id": "breakfast",
@@ -35,7 +35,7 @@
       "description": "Яичница глазунья из трёх яиц, куриная колбаска, фасоль в соусе BBQ, хашбраун, тост, руккола, томаты черри, сметана",
       "emoji": "🍳",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/english-breakfast.jpg",
       "group": "Завтраки",
       "tags": [
         "hit"
@@ -48,7 +48,7 @@
       "description": "Омлет из трёх яиц, круассан, слабосолёный лосось, трюфельный крем, хашбраун, шпинат, томаты черри, сметана, джем",
       "emoji": "🥐",
       "basePrice": 699,
-      "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/french-breakfast.jpg",
       "group": "Завтраки"
     },
     {
@@ -58,7 +58,7 @@
       "description": "Скрэмбл из трёх яиц, ветчина из индейки, блинчик, тост, огурцы, помидоры, сметана, сливочное масло, джем",
       "emoji": "🥞",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/russian-breakfast.jpg",
       "group": "Завтраки"
     },
     {
@@ -101,7 +101,7 @@
       "description": "Цыплёнок в панировке, помидоры, огурцы, романо, красный лук, соус BBQ и блю-чиз",
       "emoji": "🥪",
       "basePrice": 449,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/sandwich-crispy-chicken.jpg",
       "group": "Сэндвичи и круассаны сытные",
       "tags": [
         "hit"
@@ -114,7 +114,7 @@
       "description": "Ростбиф, трюфельный крем, романо, огуречный релиш, лук фри",
       "emoji": "🥪",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/sandwich-roastbeef.jpg",
       "group": "Сэндвичи и круассаны сытные"
     },
     {
@@ -124,7 +124,7 @@
       "description": "Слабосолёный лосось, салат, соус цезарь, томаты черри, пармезан",
       "emoji": "🥐",
       "basePrice": 599,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/croissant-caesar-salmon.jpg",
       "group": "Сэндвичи и круассаны сытные"
     },
     {
@@ -134,7 +134,7 @@
       "description": "",
       "emoji": "🍫",
       "basePrice": 449,
-      "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/sandwich-nutella-banana.jpg",
       "group": "Сэндвичи и круассаны сладкие"
     },
     {
@@ -925,7 +925,7 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 480,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/shashlik-chicken-thigh.jpg",
       "group": "Хоспер"
     },
     {
@@ -945,7 +945,7 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 990,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/shashlik-beef.jpg",
       "group": "Хоспер",
       "tags": [
         "hit"
@@ -968,7 +968,7 @@
       "description": "",
       "emoji": "🍖",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/lula-chicken-cheese.jpg",
       "group": "Хоспер"
     },
     {
@@ -988,7 +988,7 @@
       "description": "",
       "emoji": "🥩",
       "basePrice": 990,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/steak-beef-tenderloin.jpg",
       "group": "Хоспер",
       "tags": [
         "hit"
@@ -1034,7 +1034,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/grilled-vegetables.jpg",
       "group": "Гарниры"
     },
     {
@@ -1137,7 +1137,7 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 740,
-      "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/pizza-pear-gorgonzola.jpg",
       "group": "Пицца",
       "tags": [
         "new"
@@ -1150,7 +1150,7 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/pizza-mushroom.jpg",
       "group": "Пицца"
     },
     {
@@ -1183,7 +1183,7 @@
       "description": "",
       "emoji": "🍕",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/pizza-shrimp-spinach.jpg",
       "group": "Пицца"
     },
     {
@@ -1256,7 +1256,7 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/roll-tuna-shrimp.jpg",
       "group": "Роллы фирменные"
     },
     {
@@ -1266,7 +1266,7 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 660,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/roll-caesar-chicken.jpg",
       "group": "Роллы фирменные"
     },
     {
@@ -1276,7 +1276,7 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 890,
-      "imageUrl": "https://images.pexels.com/photos/2098085/pexels-photo-2098085.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/roll-salmon-mango.jpg",
       "group": "Роллы фирменные"
     },
     {
@@ -1316,7 +1316,7 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/roll-hot-caesar.jpg",
       "group": "Горячие роллы темпура",
       "tags": [
         "hit"
@@ -1339,7 +1339,7 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/roll-hot-chicken-spicy.jpg",
       "group": "Горячие роллы темпура"
     },
     {
@@ -1349,7 +1349,7 @@
       "description": "",
       "emoji": "🍣",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/roll-hot-shrimp.jpg",
       "group": "Горячие роллы темпура"
     },
     {
@@ -1369,7 +1369,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 410,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-caesar-chicken.jpg",
       "group": "Салаты",
       "tags": [
         "hit"
@@ -1382,7 +1382,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-caesar-shrimp.jpg",
       "group": "Салаты"
     },
     {
@@ -1392,7 +1392,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-greek.jpg",
       "group": "Салаты"
     },
     {
@@ -1402,7 +1402,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 590,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-roastbeef.jpg",
       "group": "Салаты"
     },
     {
@@ -1412,7 +1412,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-salmon.jpg",
       "group": "Салаты"
     },
     {
@@ -1422,7 +1422,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-shrimp-mango.jpg",
       "group": "Салаты"
     },
     {
@@ -1432,7 +1432,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 590,
-      "imageUrl": "https://images.pexels.com/photos/5938/pexels-photo-5938.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salad-green.jpg",
       "group": "Салаты"
     },
     {
@@ -1462,7 +1462,7 @@
       "description": "",
       "emoji": "🥗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/poke-shrimp.jpg",
       "group": "Поке"
     },
     {
@@ -1482,7 +1482,7 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 410,
-      "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/soup-borscht.jpg",
       "group": "Супы",
       "tags": [
         "hit"
@@ -1495,7 +1495,7 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/691114/pexels-photo-691114.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/soup-tom-yum.jpg",
       "group": "Супы"
     },
     {
@@ -1515,7 +1515,7 @@
       "description": "",
       "emoji": "🍲",
       "basePrice": 510,
-      "imageUrl": "https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/soup-pumpkin.jpg",
       "group": "Супы"
     },
     {
@@ -1535,7 +1535,7 @@
       "description": "",
       "emoji": "🍗",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/chicken-cutlet-puree.jpg",
       "group": "Вторые блюда"
     },
     {
@@ -1545,7 +1545,7 @@
       "description": "",
       "emoji": "🥩",
       "basePrice": 790,
-      "imageUrl": "https://images.pexels.com/photos/361184/pexels-photo-361184.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/beef-stroganoff.jpg",
       "group": "Вторые блюда",
       "tags": [
         "hit"
@@ -1568,7 +1568,7 @@
       "description": "",
       "emoji": "🐟",
       "basePrice": 1310,
-      "imageUrl": "https://images.pexels.com/photos/248444/pexels-photo-248444.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/salmon-grill.jpg",
       "group": "Вторые блюда",
       "tags": [
         "hit"
@@ -1591,7 +1591,7 @@
       "description": "",
       "emoji": "🍔",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/2233348/pexels-photo-2233348.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/burger-beef.jpg",
       "group": "Вторые блюда",
       "tags": [
         "hit"
@@ -1634,7 +1634,7 @@
       "description": "",
       "emoji": "🍝",
       "basePrice": 690,
-      "imageUrl": "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/pasta-beef.jpg",
       "group": "Паста"
     },
     {
@@ -1654,7 +1654,7 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/honey-cake.jpg",
       "group": "Десерты",
       "tags": [
         "hit"
@@ -1667,7 +1667,7 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/2890000/pexels-photo-2890000.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/red-velvet.jpg",
       "group": "Десерты"
     },
     {
@@ -1677,7 +1677,7 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/452010/pexels-photo-452010.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/meringue-roll.jpg",
       "group": "Десерты"
     },
     {
@@ -1687,7 +1687,7 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/cheesecake.jpg",
       "group": "Десерты",
       "tags": [
         "hit"
@@ -1700,7 +1700,7 @@
       "description": "",
       "emoji": "🍰",
       "basePrice": 350,
-      "imageUrl": "https://images.pexels.com/photos/291528/pexels-photo-291528.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/vanilla-praline.jpg",
       "group": "Десерты"
     },
     {

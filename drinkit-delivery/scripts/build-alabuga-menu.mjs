@@ -1,4 +1,4 @@
-import { writeFileSync, readFileSync } from "fs";
+import { writeFileSync, readFileSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -507,6 +507,8 @@ applyMenuGroups(RAW);
 
 function toProduct(item) {
   const pool = item.pool ?? item.cat;
+  const localPhoto = `/uploads/menu/${item.id}.jpg`;
+  const localPath = join(root, "public", "uploads", "menu", `${item.id}.jpg`);
   const product = {
     id: item.id,
     categoryId: item.cat,
@@ -514,7 +516,7 @@ function toProduct(item) {
     description: item.desc ?? "",
     emoji: item.emoji,
     basePrice: item.price ?? item.sizes?.m ?? item.sizes?.s ?? 0,
-    imageUrl: imageFor(pool, item.id),
+    imageUrl: existsSync(localPath) ? localPhoto : imageFor(pool, item.id),
     group: item.group,
   };
   if (item.sizes) product.sizes = item.sizes;
@@ -524,7 +526,7 @@ function toProduct(item) {
 }
 
 const menu = {
-  menuVersion: 3,
+  menuVersion: 4,
   categories,
   products: RAW.map(toProduct),
   settings: {

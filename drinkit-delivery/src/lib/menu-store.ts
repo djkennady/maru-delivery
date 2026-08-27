@@ -19,7 +19,7 @@ import type {
 const MENU_FILE = path.join(process.cwd(), "data", "menu.json");
 const APP_STATE_TABLE = "app_state";
 const MENU_STATE_KEY = "menu";
-export const CURRENT_MENU_VERSION = 3;
+export const CURRENT_MENU_VERSION = 4;
 
 async function ensureStore() {
   const dir = path.dirname(MENU_FILE);
