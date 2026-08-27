@@ -12,35 +12,47 @@ interface MenuSectionProps {
   onSelect: (product: Product) => void;
 }
 
+function buildGroups(products: Product[]) {
+  const order: string[] = [];
+  const map = new Map<string, Product[]>();
+
+  for (const product of products) {
+    const groupName = product.group?.trim() || "Меню";
+    if (!map.has(groupName)) {
+      map.set(groupName, []);
+      order.push(groupName);
+    }
+    map.get(groupName)!.push(product);
+  }
+
+  return order.map((name) => ({ name, items: map.get(name)! }));
+}
+
 export function MenuSection({ onSelect }: MenuSectionProps) {
   const { categories, products } = useMenu();
   const [activeCategory, setActiveCategory] = useState(
     () => categories[0]?.id ?? "new",
   );
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
 
   const filteredProducts = useMemo(
     () => products.filter((p) => p.categoryId === activeCategory),
     [products, activeCategory],
   );
 
-  const groupedProducts = useMemo(() => {
-    const order: string[] = [];
-    const map = new Map<string, Product[]>();
+  const groupedProducts = useMemo(
+    () => buildGroups(filteredProducts),
+    [filteredProducts],
+  );
 
-    for (const product of filteredProducts) {
-      const groupName = product.group?.trim() || "Меню";
-      if (!map.has(groupName)) {
-        map.set(groupName, []);
-        order.push(groupName);
-      }
-      map.get(groupName)!.push(product);
-    }
-
-    return order.map((name) => ({ name, items: map.get(name)! }));
-  }, [filteredProducts]);
+  const visibleGroups = useMemo(() => {
+    if (!activeGroup) return groupedProducts;
+    return groupedProducts.filter((group) => group.name === activeGroup);
+  }, [groupedProducts, activeGroup]);
 
   const activeCategoryData = categories.find((c) => c.id === activeCategory);
   const categoryName = activeCategoryData?.name ?? "";
+  const hasSubgroups = groupedProducts.length > 1;
 
   useEffect(() => {
     if (!categories.length) return;
@@ -48,6 +60,10 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
       setActiveCategory(categories[0].id);
     }
   }, [categories, activeCategory]);
+
+  useEffect(() => {
+    setActiveGroup(groupedProducts[0]?.name ?? null);
+  }, [activeCategory, groupedProducts]);
 
   return (
     <>
@@ -118,17 +134,48 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
           </div>
         </div>
 
-        <div className="space-y-8">
+        {hasSubgroups ? (
+          <div className="sticky top-[9.25rem] z-30 -mx-4 mb-4 border-b border-orange-100/80 bg-[var(--bg)]/90 px-4 py-3 backdrop-blur-md">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+              {groupedProducts.map((group) => {
+                const active = activeGroup === group.name;
+                return (
+                  <button
+                    key={group.name}
+                    type="button"
+                    onClick={() => setActiveGroup(group.name)}
+                    className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition ${
+                      active
+                        ? "bg-[var(--accent-warm)] text-white shadow-md shadow-orange-300/40"
+                        : "bg-white text-[var(--text)] ring-1 ring-orange-100 hover:bg-orange-50"
+                    }`}
+                  >
+                    {group.name}
+                    <span
+                      className={`ml-1.5 tabular-nums ${active ? "text-orange-100" : "text-[var(--muted)]"}`}
+                    >
+                      {group.items.length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : null}
+
+        <div className="space-y-4">
           {filteredProducts.length === 0 ? (
             <p className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
               В этой категории пока пусто
             </p>
           ) : (
-            groupedProducts.map((group) => (
+            visibleGroups.map((group) => (
               <div key={group.name}>
-                <h3 className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent-warm)]">
-                  {group.name}
-                </h3>
+                {!hasSubgroups ? (
+                  <h3 className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent-warm)]">
+                    {group.name}
+                  </h3>
+                ) : null}
                 <div className="space-y-4">
                   {group.items.map((product) => (
                     <ProductCard

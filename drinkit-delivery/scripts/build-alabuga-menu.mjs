@@ -1,4 +1,4 @@
-import { writeFileSync } from "fs";
+import { writeFileSync, readFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -427,48 +427,79 @@ const categories = [
   { id: "desserts", name: "Десерты", imageUrl: pexels(291528, 800) },
 ];
 
-/** Порядок и названия подгрупп как в PDF-меню */
-const GROUP_SEQUENCE = [
-  ["Завтраки", 4],
-  ["Сырники и блинчики", 2],
-  ["Сэндвичи и круассаны сытные", 3],
-  ["Сэндвичи и круассаны сладкие", 3],
-  ["Чёрный кофе", 3],
-  ["Кофе с молоком", 3],
-  ["Фирменный кофе", 6],
-  ["Nitro Coffee", 3],
-  ["Кофейные шоты", 5],
-  ["Матча", 2],
-  ["Колд брю", 4],
-  ["Айс-кофе", 4],
-  ["Летние напитки", 3],
-  ["Смузи", 3],
-  ["Авторские чаи", 5],
-  ["Фреши", 3],
-  ["Милкшейки", 2],
-  ["Какао", 3],
-  ["Прохладительные напитки", 4],
-  ["Чай", 8],
-  ["Хоспер", 10],
-  ["Гарниры", 7],
-  ["Хлеб", 3],
-  ["Пицца", 8],
-  ["Роллы фирменные", 9],
-  ["Горячие роллы темпура", 4],
-  ["Салаты", 7],
-  ["Поке", 3],
-  ["Супы", 5],
-  ["Вторые блюда", 8],
-  ["Паста", 4],
-  ["Десерты", 8],
-];
+/** Названия подгрупп по секциям в RAW (как в PDF) */
+const SECTION_GROUP_NAMES = {
+  Завтраки: ["Завтраки", "Сырники и блинчики"],
+  Сэндвичи: ["Сэндвичи и круассаны сытные", "Сэндвичи и круассаны сладкие"],
+  "Кофе чёрный": "Чёрный кофе",
+  "Кофе с молоком": "Кофе с молоком",
+  "Фирменный кофе": "Фирменный кофе",
+  Nitro: "Nitro Coffee",
+  Шоты: "Кофейные шоты",
+  Матча: "Матча",
+  "Колд брю": "Колд брю",
+  "Айс-кофе": "Айс-кофе",
+  Летние: "Летние напитки",
+  Смузи: "Смузи",
+  "Авторские чаи": "Авторские чаи",
+  Фреши: "Фреши",
+  Милкшейки: "Милкшейки",
+  Какао: "Какао",
+  Прохладительные: "Прохладительные напитки",
+  Чай: "Чай",
+  Хоспер: "Хоспер",
+  Гарниры: "Гарниры",
+  Хлеб: "Хлеб",
+  Пицца: "Пицца",
+  Роллы: ["Роллы фирменные", "Горячие роллы темпура"],
+  Салаты: "Салаты",
+  Поке: "Поке",
+  Супы: "Супы",
+  "Вторые блюда": "Вторые блюда",
+  Паста: "Паста",
+  Десерты: "Десерты",
+};
+
+const SPLIT_LIMITS = {
+  Завтраки: [4, 2],
+  Сэндвичи: [3, 3],
+  Роллы: [9, 5],
+};
+
+function resolveGroup(section, indexInSection) {
+  const mapping = SECTION_GROUP_NAMES[section];
+  if (!mapping) return section;
+  if (typeof mapping === "string") return mapping;
+
+  const limits = SPLIT_LIMITS[section];
+  if (!limits) return mapping[0];
+  if (indexInSection < limits[0]) return mapping[0];
+  return mapping[1];
+}
 
 function applyMenuGroups(items) {
-  let index = 0;
-  for (const [group, count] of GROUP_SEQUENCE) {
-    for (let i = 0; i < count && index < items.length; i += 1, index += 1) {
-      items[index].group = group;
+  const src = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  const groupById = new Map();
+  let section = "";
+  let sectionIndex = 0;
+
+  for (const line of src.split("\n")) {
+    const sectionMatch = line.match(/\/\/ ——— (.+?) ———/);
+    if (sectionMatch) {
+      section = sectionMatch[1];
+      sectionIndex = 0;
+      continue;
     }
+
+    const idMatch = line.match(/id:\s*"([^"]+)"/);
+    if (!idMatch || !section) continue;
+
+    groupById.set(idMatch[1], resolveGroup(section, sectionIndex));
+    sectionIndex += 1;
+  }
+
+  for (const item of items) {
+    item.group = groupById.get(item.id);
   }
 }
 
@@ -493,7 +524,7 @@ function toProduct(item) {
 }
 
 const menu = {
-  menuVersion: 2,
+  menuVersion: 3,
   categories,
   products: RAW.map(toProduct),
   settings: {

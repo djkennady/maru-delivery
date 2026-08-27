@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "title": "Bird Network — сеть ресторанов и лаунжей",
+    "description": "The Bird, Buddu Lounge, Mare, Chilling Lounge, Urman, ChillOut — выберите заведение и забронируйте столик"
+  },
+  "nav": {
+    "home": "Главная",
+    "menu": "Меню",
+    "events": "Афиша",
+    "gallery": "Фото",
+    "booking": "Бронь",
+    "about": "О нас"
+  },
+  "home": {
+    "heroTitle": "Выберите заведение",
+    "heroSubtitle": "Сеть ресторанов и лаунжей в Татарстане — меню, афиша, бронирование",
+    "filterAll": "Все города",
+    "venuesCount": "{count} заведений",
+    "openVenue": "Перейти",
+    "openNow": "Открыто",
+    "closedNow": "Закрыто"
+  },
+  "venue": {
+    "about": "О заведении",
+    "contacts": "Контакты",
+    "hours": "Часы работы",
+    "address": "Адрес",
+    "phone": "Телефон",
+    "call": "Позвонить",
+    "route": "Маршрут",
+    "cuisine": "Кухня",
+    "promotions": "Акции",
+    "promoText": "Happy hour с 17:00 до 19:00 — скидка 20% на коктейльную карту",
+    "upcomingEvents": "Ближайшие события",
+    "viewAllEvents": "Вся афиша",
+    "viewMenu": "Смотреть меню",
+    "bookTable": "Забронировать стол"
+  },
+  "menu": {
+    "title": "Меню",
+    "tags": {
+      "hit": "Хит",
+      "new": "Новинка",
+      "vegan": "Веган",
+      "spicy": "Острое"
+    }
+  },
+  "events": {
+    "title": "Афиша",
+    "empty": "Скоро здесь появятся новые события",
+    "register": "Записаться"
+  },
+  "gallery": {
+    "title": "Фотогалерея",
+    "all": "Все"
+  },
+  "booking": {
+    "title": "Бронирование",
+    "subtitle": "Оставьте заявку — администратор перезвонит для подтверждения",
+    "name": "Ваше имя",
+    "phone": "Телефон",
+    "date": "Дата",
+    "time": "Время",
+    "guests": "Количество гостей",
+    "comment": "Комментарий",
+    "commentPlaceholder": "Детский стул, праздник, особые пожелания…",
+    "submit": "Отправить заявку",
+    "submitting": "Отправка…",
+    "successTitle": "Заявка отправлена!",
+    "successText": "Мы перезвоним вам в ближайшее время для подтверждения бронирования.",
+    "error": "Не удалось отправить заявку. Попробуйте позже или позвоните нам.",
+    "guestsOption": "{count} гостей"
+  },
+  "footer": {
+    "network": "Bird Network",
+    "rights": "© {year} Bird Network. Все права защищены."
+  },
+  "pwa": {
+    "install": "Установить приложение",
+    "installHint": "Добавьте на главный экран для быстрого доступа"
+  },
+  "cities": {
+    "naberezhnye-chelny": "Набережные Челны",
+    "yelabuga": "Елабуга",
+    "almetievsk": "Альметьевск",
+    "kazan": "Казань"
+  }
+}
