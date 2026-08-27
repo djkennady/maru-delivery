@@ -6,6 +6,7 @@ export default function HomePage() {
     <>
       <SiteHeader />
       <HomeContent />
+      {/* deploy marker: layout-fix-2026-08-27c */}
     </>
   );
 }
