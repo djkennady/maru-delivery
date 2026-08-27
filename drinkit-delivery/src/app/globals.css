@@ -19,10 +19,16 @@
   --font-brand: var(--font-brand), system-ui, sans-serif;
 }
 
+html {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 body {
   color: var(--text);
   font-family: var(--font-sans), system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 .font-brand {

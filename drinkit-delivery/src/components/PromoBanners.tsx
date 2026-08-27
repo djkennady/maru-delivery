@@ -4,15 +4,15 @@ import { promos } from "@/lib/media";
 export function PromoBanners() {
   return (
     <section className="px-4 py-3">
-      <div className="mx-auto max-w-lg">
+      <div className="mx-auto max-w-lg min-w-0">
         <p className="mb-2 text-sm font-medium lowercase text-[var(--text)]">
           комбо и акции
         </p>
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto overscroll-x-contain scrollbar-hide">
         {promos.map((promo) => (
           <article
             key={promo.id}
-            className={`relative h-[120px] w-[240px] min-w-[240px] max-w-[240px] flex-none overflow-hidden rounded-3xl bg-gradient-to-br ${promo.gradient} p-4 text-white shadow-lg`}
+            className={`relative h-[120px] w-[78vw] max-w-[260px] min-w-[78vw] flex-none overflow-hidden rounded-3xl bg-gradient-to-br ${promo.gradient} p-4 text-white shadow-lg sm:w-[240px] sm:min-w-[240px] sm:max-w-[240px]`}
           >
             <Image
               src={promo.image}

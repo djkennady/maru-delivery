@@ -19,7 +19,7 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
 
   return (
     <section className="px-4 pb-3 pt-3">
-      <div className="mx-auto max-w-lg">
+      <div className="mx-auto max-w-lg min-w-0">
         <div className="mb-3 flex items-end justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-warm)]">
@@ -35,19 +35,19 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
           </span>
         </div>
 
-        <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-1 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto overscroll-x-contain pb-1 scrollbar-hide">
           {hits.map((product) => (
             <article
               key={product.id}
-              className="box-border flex w-[150px] min-w-[150px] max-w-[150px] flex-none flex-col overflow-hidden rounded-[1.25rem] bg-[var(--card)] shadow-md ring-1 ring-orange-100"
+              className="box-border flex w-[140px] min-w-[140px] max-w-[140px] flex-none flex-col overflow-hidden rounded-[1.25rem] bg-[var(--card)] shadow-md ring-1 ring-orange-100"
             >
-              <div className="relative h-[180px] w-[150px] overflow-hidden">
+              <div className="relative h-[160px] w-full overflow-hidden">
                 <Image
                   src={getProductImage(product.id, product.imageUrl)}
                   alt={product.name}
                   fill
                   className="object-cover"
-                  sizes="150px"
+                  sizes="140px"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <span className="absolute left-2 top-2 rounded-full bg-[var(--accent-warm)] px-2 py-0.5 text-[10px] font-bold uppercase text-white">

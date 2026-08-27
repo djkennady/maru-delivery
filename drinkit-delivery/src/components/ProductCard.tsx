@@ -21,7 +21,7 @@ interface ProductCardProps {
 export function ProductCard({ product, onSelect }: ProductCardProps) {
   return (
     <article className="overflow-hidden rounded-[1.35rem] bg-[var(--card)] shadow-md ring-1 ring-orange-100">
-      <div className="relative h-44 w-full overflow-hidden">
+      <div className="relative h-40 w-full overflow-hidden">
         <Image
           src={getProductImage(product.id, product.imageUrl)}
           alt={product.name}

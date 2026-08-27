@@ -69,12 +69,12 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     <>
       <FeaturedHits onSelect={onSelect} />
 
-      <section className="sticky top-16 z-40 border-b border-orange-200/50 bg-white/45 px-4 py-3 backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto max-w-lg overflow-hidden">
+      <section className="sticky top-16 z-40 border-b border-orange-200/50 bg-white/70 px-4 py-3 backdrop-blur-xl backdrop-saturate-150">
+        <div className="mx-auto max-w-lg min-w-0">
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
             меню
           </p>
-          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 scrollbar-hide">
+          <div className="flex gap-2 overflow-x-auto overscroll-x-contain scrollbar-hide">
             {categories.map((category) => {
               const active = activeCategory === category.id;
               return (
@@ -109,30 +109,9 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
               );
             })}
           </div>
-        </div>
-      </section>
 
-      <section className="mx-auto max-w-lg overflow-x-hidden px-4 py-5 pb-32">
-        <div className="relative mb-4 h-28 overflow-hidden rounded-[1.5rem]">
-          <Image
-            src={getCategoryImage(activeCategory, activeCategoryData)}
-            alt={categoryName}
-            fill
-            className="object-cover"
-            sizes="512px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-200">
-              Категория
-            </p>
-            <h2 className="text-2xl font-black text-white">{categoryName}</h2>
-          </div>
-        </div>
-
-        {hasSubgroups ? (
-          <div className="sticky top-[8.75rem] z-30 mb-4 overflow-hidden rounded-2xl border border-orange-100/80 bg-[var(--bg)]/95 py-2.5 backdrop-blur-md">
-            <div className="flex gap-2 overflow-x-auto px-2.5 scrollbar-hide">
+          {hasSubgroups ? (
+            <div className="mt-3 flex gap-2 overflow-x-auto overscroll-x-contain scrollbar-hide">
               {groupedProducts.map((group) => {
                 const active = activeGroup === group.name;
                 return (
@@ -156,8 +135,27 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                 );
               })}
             </div>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-lg min-w-0 px-4 py-5 pb-32">
+        <div className="relative mb-4 h-28 overflow-hidden rounded-[1.5rem]">
+          <Image
+            src={getCategoryImage(activeCategory, activeCategoryData)}
+            alt={categoryName}
+            fill
+            className="object-cover"
+            sizes="512px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-200">
+              Категория
+            </p>
+            <h2 className="text-2xl font-black text-white">{categoryName}</h2>
           </div>
-        ) : null}
+        </div>
 
         <div className="space-y-4">
           {filteredProducts.length === 0 ? (
