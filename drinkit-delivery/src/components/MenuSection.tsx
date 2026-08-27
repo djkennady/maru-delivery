@@ -69,77 +69,81 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     <>
       <FeaturedHits onSelect={onSelect} />
 
-      <section className="sticky top-16 z-40 border-b border-orange-200/50 bg-white/70 px-4 py-3 backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto max-w-lg min-w-0">
+      <section className="sticky top-16 z-40 w-full max-w-[100vw] overflow-x-clip border-b border-orange-200/50 bg-white/70 py-3 backdrop-blur-xl backdrop-saturate-150">
+        <div className="mx-auto w-full max-w-lg min-w-0 px-4">
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
             меню
           </p>
-          <div className="flex gap-2 overflow-x-auto overscroll-x-contain scrollbar-hide">
-            {categories.map((category) => {
-              const active = activeCategory === category.id;
-              return (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => setActiveCategory(category.id)}
-                  className={`relative h-20 w-24 min-w-24 max-w-24 flex-none overflow-hidden rounded-2xl transition ${
-                    active
-                      ? "ring-2 ring-[var(--accent-warm)]"
-                      : "opacity-80 hover:opacity-100"
-                  }`}
-                >
-                  <Image
-                    src={getCategoryImage(category.id, category)}
-                    alt={category.name}
-                    fill
-                    className="object-cover"
-                    sizes="96px"
-                  />
-                  <div
-                    className={`absolute inset-0 ${
-                      active
-                        ? "bg-gradient-to-t from-[var(--accent-warm)]/90 to-[var(--accent-warm)]/20"
-                        : "bg-gradient-to-t from-black/70 to-black/10"
-                    }`}
-                  />
-                  <span className="absolute inset-x-0 bottom-2 px-1 text-center text-[11px] font-bold leading-tight text-white">
-                    {category.name}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-
-          {hasSubgroups ? (
-            <div className="mt-3 flex gap-2 overflow-x-auto overscroll-x-contain scrollbar-hide">
-              {groupedProducts.map((group) => {
-                const active = activeGroup === group.name;
+          <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
+            <div className="flex w-max gap-2">
+              {categories.map((category) => {
+                const active = activeCategory === category.id;
                 return (
                   <button
-                    key={group.name}
+                    key={category.id}
                     type="button"
-                    onClick={() => setActiveGroup(group.name)}
-                    className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition ${
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`relative h-20 w-24 min-w-24 max-w-24 flex-none overflow-hidden rounded-2xl transition ${
                       active
-                        ? "bg-[var(--accent-warm)] text-white shadow-md shadow-orange-300/40"
-                        : "bg-white text-[var(--text)] ring-1 ring-orange-100 hover:bg-orange-50"
+                        ? "ring-2 ring-[var(--accent-warm)]"
+                        : "opacity-80 hover:opacity-100"
                     }`}
                   >
-                    {group.name}
-                    <span
-                      className={`ml-1.5 tabular-nums ${active ? "text-orange-100" : "text-[var(--muted)]"}`}
-                    >
-                      {group.items.length}
+                    <Image
+                      src={getCategoryImage(category.id, category)}
+                      alt={category.name}
+                      fill
+                      className="object-cover"
+                      sizes="96px"
+                    />
+                    <div
+                      className={`absolute inset-0 ${
+                        active
+                          ? "bg-gradient-to-t from-[var(--accent-warm)]/90 to-[var(--accent-warm)]/20"
+                          : "bg-gradient-to-t from-black/70 to-black/10"
+                      }`}
+                    />
+                    <span className="absolute inset-x-0 bottom-2 px-1 text-center text-[11px] font-bold leading-tight text-white">
+                      {category.name}
                     </span>
                   </button>
                 );
               })}
             </div>
+          </div>
+
+          {hasSubgroups ? (
+            <div className="mt-3 w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
+              <div className="flex w-max gap-2">
+                {groupedProducts.map((group) => {
+                  const active = activeGroup === group.name;
+                  return (
+                    <button
+                      key={group.name}
+                      type="button"
+                      onClick={() => setActiveGroup(group.name)}
+                      className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition ${
+                        active
+                          ? "bg-[var(--accent-warm)] text-white shadow-md shadow-orange-300/40"
+                          : "bg-white text-[var(--text)] ring-1 ring-orange-100 hover:bg-orange-50"
+                      }`}
+                    >
+                      {group.name}
+                      <span
+                        className={`ml-1.5 tabular-nums ${active ? "text-orange-100" : "text-[var(--muted)]"}`}
+                      >
+                        {group.items.length}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           ) : null}
         </div>
       </section>
 
-      <section className="mx-auto max-w-lg min-w-0 px-4 py-5 pb-32">
+      <section className="mx-auto w-full max-w-lg min-w-0 px-4 py-5 pb-32">
         <div className="relative mb-4 h-28 overflow-hidden rounded-[1.5rem]">
           <Image
             src={getCategoryImage(activeCategory, activeCategoryData)}

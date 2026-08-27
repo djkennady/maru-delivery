@@ -1,5 +1,5 @@
 {
-  "menuVersion": 4,
+  "menuVersion": 5,
   "categories": [
     {
       "id": "breakfast",
@@ -75,20 +75,20 @@
       "id": "blinchiki",
       "categoryId": "breakfast",
       "name": "Блинчики",
-      "description": "",
+      "description": "Тонкие блинчики со сметаной",
       "emoji": "🥞",
       "basePrice": 199,
-      "imageUrl": "https://images.pexels.com/photos/566566/pexels-photo-566566.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/blinchiki.jpg",
       "group": "Сырники и блинчики"
     },
     {
       "id": "syrniki",
       "categoryId": "breakfast",
       "name": "Сырники",
-      "description": "",
+      "description": "Нежные сырники со сметаной и ягодами",
       "emoji": "🧀",
       "basePrice": 279,
-      "imageUrl": "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/uploads/menu/syrniki.jpg",
       "group": "Сырники и блинчики",
       "tags": [
         "hit"
