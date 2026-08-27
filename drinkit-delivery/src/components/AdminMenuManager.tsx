@@ -24,6 +24,7 @@ const EMPTY_FORM: ProductInput = {
   customizable: false,
   tags: [],
   imageUrl: "",
+  rkeeperCode: "",
 };
 
 interface AdminMenuManagerProps {
@@ -111,6 +112,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
       customizable: product.customizable,
       tags: product.tags ?? [],
       imageUrl: product.imageUrl ?? "",
+      rkeeperCode: product.rkeeperCode ?? "",
     });
     setHasSizes(Boolean(product.sizes && Object.keys(product.sizes).length));
     setEditingId(product.id);
@@ -175,6 +177,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
       customizable: hasSizes ? form.customizable : false,
       tags: form.tags?.length ? form.tags : undefined,
       imageUrl: form.imageUrl?.trim() || undefined,
+      rkeeperCode: form.rkeeperCode?.trim() || undefined,
     };
 
     try {
@@ -400,6 +403,23 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                 }
                 className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
               />
+            </label>
+
+            <label className="block sm:col-span-2">
+              <span className="mb-1.5 block text-sm font-medium">
+                Код R-Keeper (необязательно)
+              </span>
+              <input
+                value={form.rkeeperCode ?? ""}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, rkeeperCode: e.target.value }))
+                }
+                placeholder="Например: 10042"
+                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+              />
+              <span className="mt-1 block text-xs text-[var(--muted)]">
+                Нужен только если позже подключите кипер. На сайт не влияет.
+              </span>
             </label>
 
             <label className="flex items-center gap-2 self-end pb-2">

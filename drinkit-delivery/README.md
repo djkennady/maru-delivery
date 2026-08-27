@@ -122,6 +122,35 @@ YOOKASSA_SHOP_ID=
 YOOKASSA_SECRET_KEY=
 ```
 
+## R-Keeper (подготовка, опционально)
+
+Интеграция **выключена по умолчанию** и на работу сайта не влияет.
+Сейчас добавлен только каркас: после сохранения заказа формируется payload для кипера.
+
+### Что уже сделано
+
+- поле `rkeeperCode` у товара (в админке: «Код R-Keeper»)
+- маппинг заказа → payload (`src/lib/rkeeper/`)
+- хук после `createOrder` в `/api/order`
+- статус: `GET /api/admin/rkeeper` (нужна авторизация админа)
+
+### Включение позже
+
+В Netlify / `.env`:
+
+```env
+RKEEPER_ENABLED=false
+RKEEPER_BASE_URL=
+RKEEPER_OBJECT_ID=
+RKEEPER_STATION_ID=
+RKEEPER_USERNAME=
+RKEEPER_PASSWORD=
+# Опционально: падать при ошибке кипера (по умолчанию заказ всё равно сохраняется)
+RKEEPER_FAIL_ORDER_ON_ERROR=false
+```
+
+Когда будут доступы к API (White Server / XML / UCS), нужно дописать реальный HTTP-вызов в `src/lib/rkeeper/client.ts` и проставить коды блюд в админке.
+
 ## Структура
 
 ```
@@ -130,6 +159,6 @@ src/
   components/    — UI-компоненты
   context/       — корзина
   data/          — меню
-  lib/           — расчёт цен
+  lib/           — расчёт цен, rkeeper-каркас
   types/         — TypeScript-типы
 ```

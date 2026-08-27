@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createOrder, getOrdersByPhone } from "@/lib/orders-store";
+import { syncOrderWithRkeeper } from "@/lib/rkeeper";
 
 export async function POST(request: Request) {
   try {
@@ -35,7 +36,9 @@ export async function POST(request: Request) {
       paymentId: body.paymentId,
     });
 
-    return NextResponse.json({ order });
+    const rkeeper = await syncOrderWithRkeeper(order);
+
+    return NextResponse.json({ order, rkeeper });
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Не удалось сохранить заказ";

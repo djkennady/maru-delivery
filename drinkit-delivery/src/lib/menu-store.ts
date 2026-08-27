@@ -94,6 +94,7 @@ function normalizeProduct(product: Partial<Product>): Product {
     tags: tags?.length ? tags : undefined,
     imageUrl: product.imageUrl,
     group: product.group?.trim() || undefined,
+    rkeeperCode: product.rkeeperCode?.trim() || undefined,
   };
 }
 

@@ -24,6 +24,8 @@ export interface Product {
   tags?: ProductTag[];
   imageUrl?: string;
   group?: string;
+  /** Код блюда в R-Keeper (опционально, для будущей интеграции) */
+  rkeeperCode?: string;
 }
 
 export interface MenuSettings {
