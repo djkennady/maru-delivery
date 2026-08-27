@@ -116,7 +116,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
       <section className="mx-auto max-w-lg px-4 py-5 pb-32">
         <div className="relative mb-4 overflow-hidden rounded-[1.75rem]">
-          <div className="relative aspect-[21/9]">
+          <div className="relative h-28 w-full overflow-hidden sm:h-32">
             <Image
               src={getCategoryImage(activeCategory, activeCategoryData)}
               alt={categoryName}

@@ -21,7 +21,10 @@ interface ProductCardProps {
 export function ProductCard({ product, onSelect }: ProductCardProps) {
   return (
     <article className="group overflow-hidden rounded-[1.5rem] bg-[var(--card)] shadow-md ring-1 ring-orange-100 transition hover:-translate-y-0.5 hover:shadow-xl">
-      <div className="relative aspect-[16/11] overflow-hidden">
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ aspectRatio: "16 / 9" }}
+      >
         <Image
           src={getProductImage(product.id, product.imageUrl)}
           alt={product.name}
@@ -29,7 +32,7 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
           className="object-cover transition duration-500 group-hover:scale-105"
           sizes="(max-width: 512px) 100vw, 512px"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           {product.tags?.map((tag) => (
             <span
@@ -40,15 +43,17 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
             </span>
           ))}
         </div>
-        <span className="absolute bottom-3 left-3 text-2xl drop-shadow-lg">
+        <span className="absolute bottom-3 left-3 text-xl drop-shadow-lg">
           {product.emoji}
         </span>
       </div>
 
-      <div className="flex items-end justify-between gap-3 p-4">
+      <div className="flex items-end justify-between gap-3 p-3.5">
         <div className="min-w-0">
-          <h3 className="font-bold text-[var(--text)]">{product.name}</h3>
-          <p className="mt-1 line-clamp-2 text-sm text-[var(--muted)]">
+          <h3 className="font-bold leading-snug text-[var(--text)]">
+            {product.name}
+          </h3>
+          <p className="mt-1 line-clamp-2 text-sm leading-snug text-[var(--muted)]">
             {product.description}
           </p>
           <p className="mt-2 text-lg font-black text-[var(--accent-warm)]">
