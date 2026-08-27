@@ -5,3 +5,10 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    CDN-Cache-Control = "no-store"
+    Netlify-CDN-Cache-Control = "no-store"

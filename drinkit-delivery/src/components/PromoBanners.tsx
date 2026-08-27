@@ -12,7 +12,7 @@ export function PromoBanners() {
         {promos.map((promo) => (
           <article
             key={promo.id}
-            className={`relative min-h-[120px] min-w-[240px] shrink-0 overflow-hidden rounded-3xl bg-gradient-to-br ${promo.gradient} p-4 text-white shadow-lg`}
+            className={`relative h-[120px] w-[240px] min-w-[240px] max-w-[240px] flex-none overflow-hidden rounded-3xl bg-gradient-to-br ${promo.gradient} p-4 text-white shadow-lg`}
           >
             <Image
               src={promo.image}
