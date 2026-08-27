@@ -1,0 +1,158 @@
+{
+  "header": {
+    "network": "Bird Network",
+    "backToNetwork": "Все заведения"
+  },
+  "meta": {
+    "title": "Bird Network — сеть ресторанов и лаунжей",
+    "description": "The Bird, Buddu Lounge, Mare, Chilling Lounge, Urman, ChillOut — выберите заведение и забронируйте столик"
+  },
+  "nav": {
+    "home": "Главная",
+    "menu": "Меню",
+    "events": "Афиша",
+    "gallery": "Фото",
+    "booking": "Бронь",
+    "about": "О нас",
+    "venueNav": "Навигация по заведению"
+  },
+  "home": {
+    "heroTitle": "Выберите заведение",
+    "heroSubtitle": "Сеть ресторанов и лаунжей в Татарстане — меню, афиша, бронирование",
+    "filterAll": "Все города",
+    "venuesCount": "{count} заведений",
+    "deliveryCta": "Заказать доставку",
+    "openVenue": "Перейти",
+    "openNow": "Открыто",
+    "closedNow": "Закрыто",
+    "noVenues": "В этом городе пока нет заведений"
+  },
+  "delivery": {
+    "metaTitle": "Bird Drink — доставка кофе и еды",
+    "metaDescription": "Закажите кофе, чай, еду и десерты с доставкой за 25–40 минут",
+    "brand": "Bird Drink",
+    "addressShort": "Казань, доставка",
+    "cart": "Корзина",
+    "heroBadge": "Доставка от 25 мин",
+    "heroTitle": "Кофе и еда с доставкой",
+    "heroSubtitle": "Свежий кофе, чай, десерты и снеки — прямо к вашей двери",
+    "eta": "{minutes} мин",
+    "freeDeliveryFrom": "Бесплатно от {amount} ₽",
+    "freeDeliveryHint": "До бесплатной доставки осталось {amount}",
+    "addToCart": "В корзину",
+    "goToCheckout": "Оформить заказ",
+    "close": "Закрыть",
+    "size": "Размер",
+    "milk": "Молоко",
+    "quantity": "Количество",
+    "increase": "Увеличить",
+    "decrease": "Уменьшить",
+    "remove": "Удалить",
+    "emptyCategory": "В этой категории пока пусто",
+    "yourOrder": "Ваш заказ",
+    "subtotal": "Сумма",
+    "delivery": "Доставка",
+    "free": "Бесплатно",
+    "total": "Итого",
+    "deliveryDetails": "Доставка",
+    "name": "Имя",
+    "phone": "Телефон",
+    "address": "Адрес",
+    "addressPlaceholder": "Улица, дом, квартира, подъезд",
+    "comment": "Комментарий",
+    "commentPlaceholder": "Домофон, этаж, пожелания…",
+    "placeOrder": "Заказать · {total}",
+    "submitting": "Отправка…",
+    "orderError": "Не удалось оформить заказ. Попробуйте ещё раз.",
+    "emptyCartTitle": "Корзина пуста",
+    "emptyCartText": "Добавьте напитки или еду из меню",
+    "backToMenu": "К меню",
+    "orderSuccessTitle": "Заказ принят!",
+    "orderSuccessText": "Курьер уже готовится к выезду. Мы позвоним для уточнения деталей.",
+    "orderAgain": "Заказать ещё",
+    "tags": {
+      "hit": "Хит",
+      "new": "Новинка"
+    },
+    "sizes": {
+      "s": "S",
+      "m": "M",
+      "l": "L"
+    },
+    "milkOptions": {
+      "regular": "Обычное",
+      "oat": "Овсяное +40 ₽",
+      "almond": "Миндальное +40 ₽",
+      "none": "Без молока"
+    }
+  },
+  "venue": {
+    "about": "О заведении",
+    "contacts": "Контакты",
+    "hours": "Часы работы",
+    "address": "Адрес",
+    "phone": "Телефон",
+    "call": "Позвонить",
+    "route": "Маршрут",
+    "cuisine": "Кухня",
+    "promotions": "Акции",
+    "promoText": "Happy hour с 17:00 до 19:00 — скидка 20% на коктейльную карту",
+    "upcomingEvents": "Ближайшие события",
+    "viewAllEvents": "Вся афиша",
+    "viewMenu": "Смотреть меню",
+    "bookTable": "Забронировать стол",
+    "instagram": "Instagram"
+  },
+  "menu": {
+    "title": "Меню",
+    "tags": {
+      "hit": "Хит",
+      "new": "Новинка",
+      "vegan": "Веган",
+      "spicy": "Острое"
+    }
+  },
+  "events": {
+    "title": "Афиша",
+    "empty": "Скоро здесь появятся новые события",
+    "register": "Записаться"
+  },
+  "gallery": {
+    "title": "Фотогалерея",
+    "all": "Все",
+    "empty": "Фотографии скоро появятся"
+  },
+  "booking": {
+    "title": "Бронирование",
+    "subtitle": "Оставьте заявку — администратор перезвонит для подтверждения",
+    "name": "Ваше имя",
+    "phone": "Телефон",
+    "date": "Дата",
+    "time": "Время",
+    "guests": "Количество гостей",
+    "comment": "Комментарий",
+    "commentPlaceholder": "Детский стул, праздник, особые пожелания…",
+    "submit": "Отправить заявку",
+    "submitting": "Отправка…",
+    "successTitle": "Заявка отправлена!",
+    "successText": "Мы перезвоним вам в ближайшее время для подтверждения бронирования.",
+    "bookAgain": "Забронировать ещё раз",
+    "error": "Не удалось отправить заявку. Попробуйте позже или позвоните нам.",
+    "guestsOption": "{count} гостей"
+  },
+  "footer": {
+    "network": "Bird Network",
+    "rights": "© {year} Bird Network. Все права защищены."
+  },
+  "pwa": {
+    "install": "Установить приложение",
+    "installHint": "Добавьте на главный экран для быстрого доступа",
+    "close": "Закрыть"
+  },
+  "cities": {
+    "naberezhnye-chelny": "Набережные Челны",
+    "yelabuga": "Елабуга",
+    "almetievsk": "Альметьевск",
+    "kazan": "Казань"
+  }
+}
