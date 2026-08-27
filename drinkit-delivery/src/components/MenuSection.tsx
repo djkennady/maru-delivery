@@ -70,11 +70,11 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
       <FeaturedHits onSelect={onSelect} />
 
       <section className="sticky top-16 z-40 border-b border-orange-200/50 bg-white/45 px-4 py-3 backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto max-w-lg">
+        <div className="mx-auto max-w-lg overflow-hidden">
           <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
             меню
           </p>
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 scrollbar-hide">
             {categories.map((category) => {
               const active = activeCategory === category.id;
               return (
@@ -82,31 +82,29 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   key={category.id}
                   type="button"
                   onClick={() => setActiveCategory(category.id)}
-                  className={`relative shrink-0 overflow-hidden rounded-2xl transition ${
+                  className={`relative h-20 w-24 min-w-24 max-w-24 flex-none overflow-hidden rounded-2xl transition ${
                     active
-                      ? "ring-2 ring-[var(--accent-warm)] ring-offset-2 ring-offset-white/40"
+                      ? "ring-2 ring-[var(--accent-warm)]"
                       : "opacity-80 hover:opacity-100"
                   }`}
                 >
-                  <div className="relative h-20 w-24">
-                    <Image
-                      src={getCategoryImage(category.id, category)}
-                      alt={category.name}
-                      fill
-                      className="object-cover"
-                      sizes="96px"
-                    />
-                    <div
-                      className={`absolute inset-0 ${
-                        active
-                          ? "bg-gradient-to-t from-[var(--accent-warm)]/90 to-[var(--accent-warm)]/20"
-                          : "bg-gradient-to-t from-black/70 to-black/10"
-                      }`}
-                    />
-                    <span className="absolute inset-x-0 bottom-2 text-center text-xs font-bold text-white">
-                      {category.name}
-                    </span>
-                  </div>
+                  <Image
+                    src={getCategoryImage(category.id, category)}
+                    alt={category.name}
+                    fill
+                    className="object-cover"
+                    sizes="96px"
+                  />
+                  <div
+                    className={`absolute inset-0 ${
+                      active
+                        ? "bg-gradient-to-t from-[var(--accent-warm)]/90 to-[var(--accent-warm)]/20"
+                        : "bg-gradient-to-t from-black/70 to-black/10"
+                    }`}
+                  />
+                  <span className="absolute inset-x-0 bottom-2 px-1 text-center text-[11px] font-bold leading-tight text-white">
+                    {category.name}
+                  </span>
                 </button>
               );
             })}
@@ -114,29 +112,27 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
         </div>
       </section>
 
-      <section className="mx-auto max-w-lg px-4 py-5 pb-32">
-        <div className="relative mb-4 overflow-hidden rounded-[1.75rem]">
-          <div className="relative h-28 w-full overflow-hidden sm:h-32">
-            <Image
-              src={getCategoryImage(activeCategory, activeCategoryData)}
-              alt={categoryName}
-              fill
-              className="object-cover"
-              sizes="512px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-center px-5">
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-200">
-                Категория
-              </p>
-              <h2 className="text-2xl font-black text-white">{categoryName}</h2>
-            </div>
+      <section className="mx-auto max-w-lg overflow-x-hidden px-4 py-5 pb-32">
+        <div className="relative mb-4 h-28 overflow-hidden rounded-[1.5rem]">
+          <Image
+            src={getCategoryImage(activeCategory, activeCategoryData)}
+            alt={categoryName}
+            fill
+            className="object-cover"
+            sizes="512px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
+          <div className="absolute inset-0 flex flex-col justify-center px-5">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-200">
+              Категория
+            </p>
+            <h2 className="text-2xl font-black text-white">{categoryName}</h2>
           </div>
         </div>
 
         {hasSubgroups ? (
-          <div className="sticky top-[9.25rem] z-30 -mx-4 mb-4 border-b border-orange-100/80 bg-[var(--bg)]/90 px-4 py-3 backdrop-blur-md">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+          <div className="sticky top-[8.75rem] z-30 mb-4 overflow-hidden rounded-2xl border border-orange-100/80 bg-[var(--bg)]/95 py-2.5 backdrop-blur-md">
+            <div className="flex gap-2 overflow-x-auto px-2.5 scrollbar-hide">
               {groupedProducts.map((group) => {
                 const active = activeGroup === group.name;
                 return (

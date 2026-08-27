@@ -33,9 +33,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" className={`${inter.variable} ${rubik.variable} h-full`}>
-      <body className="relative min-h-full font-sans text-[var(--text)] antialiased">
+      <body className="relative min-h-full overflow-x-hidden font-sans text-[var(--text)] antialiased">
         <AnimatedBackground />
-        <div className="relative flex min-h-full flex-1 flex-col">
+        <div className="relative flex min-h-full flex-1 flex-col overflow-x-hidden">
           <UserProvider>
             <MenuProvider>
               <CartProvider>{children}</CartProvider>

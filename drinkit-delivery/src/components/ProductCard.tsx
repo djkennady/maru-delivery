@@ -20,19 +20,16 @@ interface ProductCardProps {
 
 export function ProductCard({ product, onSelect }: ProductCardProps) {
   return (
-    <article className="group overflow-hidden rounded-[1.5rem] bg-[var(--card)] shadow-md ring-1 ring-orange-100 transition hover:-translate-y-0.5 hover:shadow-xl">
-      <div
-        className="relative w-full overflow-hidden"
-        style={{ aspectRatio: "16 / 9" }}
-      >
+    <article className="overflow-hidden rounded-[1.35rem] bg-[var(--card)] shadow-md ring-1 ring-orange-100">
+      <div className="relative h-44 w-full overflow-hidden">
         <Image
           src={getProductImage(product.id, product.imageUrl)}
           alt={product.name}
           fill
-          className="object-cover transition duration-500 group-hover:scale-105"
+          className="object-cover"
           sizes="(max-width: 512px) 100vw, 512px"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
           {product.tags?.map((tag) => (
             <span
@@ -49,8 +46,8 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
       </div>
 
       <div className="flex items-end justify-between gap-3 p-3.5">
-        <div className="min-w-0">
-          <h3 className="font-bold leading-snug text-[var(--text)]">
+        <div className="min-w-0 flex-1 overflow-hidden">
+          <h3 className="truncate font-bold leading-snug text-[var(--text)]">
             {product.name}
           </h3>
           <p className="mt-1 line-clamp-2 text-sm leading-snug text-[var(--muted)]">
@@ -63,7 +60,7 @@ export function ProductCard({ product, onSelect }: ProductCardProps) {
         <button
           type="button"
           onClick={() => onSelect(product)}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--accent)] to-emerald-600 text-white shadow-lg shadow-emerald-500/30 transition hover:scale-105 active:scale-95"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--accent)] to-emerald-600 text-white shadow-lg shadow-emerald-500/30"
           aria-label="Добавить в корзину"
         >
           <Plus className="h-5 w-5" />
