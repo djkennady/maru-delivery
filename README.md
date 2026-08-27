@@ -1,50 +1,23 @@
-# Bird Network
+# МАРУ — доставка
 
-Сайт и PWA для сети ресторанов и лаунжей: выбор заведения, меню, афиша, галерея, бронирование.
-
-## Заведения (9 точек)
-
-| Заведение | Город |
-|-----------|-------|
-| The Bird | Набережные Челны |
-| Buddu Lounge | Набережные Челны |
-| Mare | Набережные Челны |
-| Chilling Lounge (проспект) | Набережные Челны |
-| Chilling Lounge (ТРК) | Набережные Челны |
-| Urman | Набережные Челны |
-| ChillOut ethno bar | Елабуга |
-| ChillOut resto club | Альметьевск |
-| Chilling Lounge | Казань |
+Репозиторий сайта доставки. Приложение лежит в папке `drinkit-delivery`.
 
 ## Запуск
 
 ```bash
+cd drinkit-delivery
 npm install
 npm run dev
 ```
 
 Откройте [http://localhost:3000](http://localhost:3000)
 
-## Языки
+## Деплой (Netlify)
 
-- Русский (по умолчанию): `/`
-- English: `/en`
+В корне есть `netlify.toml`:
 
-## PWA
+- Base directory: `drinkit-delivery`
+- Build: `npm run build`
+- Plugin: `@netlify/plugin-nextjs`
 
-На телефоне: «Поделиться» → «На экран Домой» (iOS) или «Установить приложение» (Android/Chrome).
-
-## Бронирование
-
-Заявки отправляются на API `/api/booking` и логируются в консоль сервера. Для продакшена подключите email (Resend, Nodemailer) или Telegram-бот.
-
-## Контент
-
-Данные заведений — в `src/data/venues.ts`. Замените адреса, телефоны, меню и фото на реальные.
-
-## Сборка
-
-```bash
-npm run build
-npm start
-```
+Подробности по Supabase и админке — в [`drinkit-delivery/README.md`](drinkit-delivery/README.md).
