@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} ${rubik.variable} h-full`}>
       <body
-        data-deploy="layout-fix-2026-08-27f"
+        data-deploy="bg-anim-2026-08-28"
         className="relative min-h-full max-w-full overflow-x-clip font-sans text-[var(--text)] antialiased"
       >
         <AnimatedBackground />
