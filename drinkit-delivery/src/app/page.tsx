@@ -9,8 +9,8 @@ export default async function HomePage() {
     <>
       <SiteHeader />
       <HomeContent />
-      {/* deploy marker: layout-fix-2026-08-27f */}
-      <div hidden data-deploy="layout-fix-2026-08-27f" />
+      {/* deploy marker: bg-anim-2026-08-28 */}
+      <div hidden data-deploy="bg-anim-2026-08-28" />
     </>
   );
 }
