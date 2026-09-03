@@ -44,10 +44,20 @@ SUPABASE_URL=https://YOUR_PROJECT.supabase.cohttps://YOUR_PROJECT.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
 ```
 
-### 4) Важно про картинки меню
+### 4) Фото меню
 
-В облачном режиме загрузка файлов на диск (`/api/admin/menu/upload`) отключена, потому что файловая система Netlify не постоянная.
-Для фото блюд указывайте **прямой URL** изображения в форме товара.
+Фото загружаются кнопкой **Загрузить фото** в админке.
+
+- Локально файлы пишутся в `public/uploads/menu`
+- На Netlify — в **Supabase Storage**, bucket `menu` (создаётся автоматически при первой загрузке)
+
+Если bucket не создался сам, выполните в SQL Editor:
+
+```sql
+insert into storage.buckets (id, name, public)
+values ('menu', 'menu', true)
+on conflict (id) do update set public = true;
+```
 
 ## Возможности
 

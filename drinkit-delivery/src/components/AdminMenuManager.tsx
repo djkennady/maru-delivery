@@ -151,15 +151,16 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
         body,
       });
 
-      if (!res.ok) throw new Error("upload failed");
-
-      const data = (await res.json()) as { url: string };
+      const data = (await res.json()) as { url?: string; error?: string };
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || "Не удалось загрузить фото");
+      }
 
       if (target === "product") {
         setForm((prev) => ({ ...prev, imageUrl: data.url }));
       }
-    } catch {
-      setError("Не удалось загрузить фото");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Не удалось загрузить фото");
     } finally {
       setUploading(false);
     }
@@ -503,13 +504,11 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
             <div className="flex gap-3">
               <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-[var(--surface)]">
                 {form.imageUrl ? (
-                  <Image
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
                     src={form.imageUrl}
                     alt="Превью"
-                    fill
-                    className="object-cover"
-                    sizes="80px"
-                    unoptimized={form.imageUrl.startsWith("/")}
+                    className="h-full w-full object-cover"
                   />
                 ) : (
                   <div className="flex h-full items-center justify-center text-[var(--muted)]">
@@ -536,6 +535,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                     disabled={uploading}
                     onChange={(e) => {
                       const file = e.target.files?.[0];
+                      e.target.value = "";
                       if (file) void handleUpload(file, "product");
                     }}
                   />

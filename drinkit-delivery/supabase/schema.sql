@@ -40,5 +40,7 @@ create table if not exists public.sbp_payment_sessions (
 );
 
 create index if not exists sbp_sessions_phone_idx on public.sbp_payment_sessions (phone);
-create index if not exists sbp_sessions_created_at_idx
-  on public.sbp_payment_sessions (created_at desc);
+insert into storage.buckets (id, name, public)
+values ('menu', 'menu', true)
+on conflict (id) do update set public = true;
+

@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { isAuthorizedAdmin } from "@/lib/admin-auth";
 import { isSupabaseEnabled } from "@/lib/supabase-server";
+import { resolveImageType, uploadMenuImage } from "@/lib/menu-image-upload";
 
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "menu");
 
@@ -18,30 +19,35 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (isSupabaseEnabled()) {
-    return NextResponse.json(
-      {
-        error:
-          "В облачном режиме загрузка файлов на диск недоступна. Используйте прямую ссылку на изображение.",
-      },
-      { status: 400 },
-    );
-  }
-
   try {
     const formData = await request.formData();
     const file = formData.get("file");
 
     if (!(file instanceof File)) {
-      return NextResponse.json({ error: "File required" }, { status: 400 });
+      return NextResponse.json({ error: "Выберите файл" }, { status: 400 });
     }
 
-    if (!ALLOWED_TYPES.has(file.type)) {
-      return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
+    const mimeType = resolveImageType(file);
+    if (!ALLOWED_TYPES.has(mimeType)) {
+      return NextResponse.json(
+        {
+          error:
+            "Нужен JPEG, PNG, WebP или GIF. Фото с iPhone в HEIC сохраните как JPEG.",
+        },
+        { status: 400 },
+      );
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "File too large" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Файл больше 5 МБ" },
+        { status: 400 },
+      );
+    }
+
+    if (isSupabaseEnabled()) {
+      const url = await uploadMenuImage(file, mimeType);
+      return NextResponse.json({ url });
     }
 
     await fs.mkdir(UPLOAD_DIR, { recursive: true });
@@ -59,7 +65,9 @@ export async function POST(request: Request) {
     await fs.writeFile(filepath, buffer);
 
     return NextResponse.json({ url: `/uploads/menu/${filename}` });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Не удалось загрузить фото";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
