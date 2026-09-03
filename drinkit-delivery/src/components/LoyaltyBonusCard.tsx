@@ -51,7 +51,8 @@ export function LoyaltyBonusCard() {
                   ? "день"
                   : progress.daysLeft < 5
                     ? "дня"
-                    : "дней"}
+                    : "дней"}{" "}
+                до конца месяца
               </p>
 
               <p className="mt-3 text-[1.35rem] font-bold leading-tight">
@@ -158,7 +159,8 @@ export function LoyaltyBonusCard() {
 
               <p className="mt-4 inline-flex items-center gap-1 text-xs text-white/50">
                 <Sparkles className="h-3.5 w-3.5" />
-                Потрачено за 30 дней: {formatPrice(progress.spent)}
+                Бонусы обнуляются 1-го числа. Потрачено в этом месяце:{" "}
+                {formatPrice(progress.spent)}
               </p>
             </div>
           </article>

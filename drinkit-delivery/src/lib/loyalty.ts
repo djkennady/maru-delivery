@@ -1,6 +1,9 @@
 import type { OrderRecord } from "@/types/user";
 import type { ClaimedGift } from "@/lib/loyalty-gifts";
-import { getLoyaltyPeriodId } from "@/lib/loyalty-storage";
+import {
+  getLoyaltyDaysLeft,
+  getLoyaltyPeriodId,
+} from "@/lib/loyalty-storage";
 
 export const LOYALTY_MILESTONES = [300, 900, 2000] as const;
 
@@ -52,12 +55,8 @@ export function getLoyaltyProgress(
   claimedGifts: ClaimedGift[] = [],
   periodId = getLoyaltyPeriodId(),
 ): LoyaltyProgress {
-  const now = new Date();
-  const periodStart = new Date(now);
-  periodStart.setDate(periodStart.getDate() - 30);
-
   const spent = getPaidOrders(orders)
-    .filter((order) => new Date(order.createdAt) >= periodStart)
+    .filter((order) => getLoyaltyPeriodId(new Date(order.createdAt)) === periodId)
     .reduce((sum, order) => sum + order.total, 0);
 
   const milestones = LOYALTY_MILESTONES;
@@ -95,18 +94,7 @@ export function getLoyaltyProgress(
   const allOpened = milestones.every((amount) => claimsByMilestone.has(amount));
   const allReached = spent >= milestones[milestones.length - 1];
 
-  const endOfMonth = new Date(
-    now.getFullYear(),
-    now.getMonth() + 1,
-    0,
-    23,
-    59,
-    59,
-  );
-  const daysLeft = Math.max(
-    1,
-    Math.ceil((endOfMonth.getTime() - now.getTime()) / 86_400_000),
-  );
+  const daysLeft = getLoyaltyDaysLeft();
 
   return {
     spent,

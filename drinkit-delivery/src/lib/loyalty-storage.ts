@@ -99,8 +99,32 @@ export function markGiftUsed(
 }
 
 export function getLoyaltyPeriodId(date = new Date()): string {
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  return `${date.getFullYear()}-${month}`;
+  const { year, month } = getMoscowDateParts(date);
+  return `${year}-${String(month).padStart(2, "0")}`;
+}
+
+export function getLoyaltyDaysLeft(date = new Date()): number {
+  const { year, month, day } = getMoscowDateParts(date);
+  const daysInMonth = new Date(year, month, 0).getDate();
+  return Math.max(1, daysInMonth - day + 1);
+}
+
+function getMoscowDateParts(date: Date) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Moscow",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date);
+
+  const pick = (type: string) =>
+    Number(parts.find((part) => part.type === type)?.value ?? "0");
+
+  return {
+    year: pick("year"),
+    month: pick("month"),
+    day: pick("day"),
+  };
 }
 
 export function getActiveRewards(
