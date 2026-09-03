@@ -110,7 +110,9 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
       basePrice: product.basePrice,
       sizes: product.sizes,
       customizable: product.customizable,
-      tags: product.tags ?? [],
+      tags: Array.isArray(product.tags)
+        ? product.tags.filter((tag) => tag === "hit" || tag === "new")
+        : [],
       imageUrl: product.imageUrl ?? "",
       rkeeperCode: product.rkeeperCode ?? "",
     });
@@ -128,7 +130,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
 
   const toggleTag = (tag: ProductTag) => {
     setForm((prev) => {
-      const tags = prev.tags ?? [];
+      const tags = Array.isArray(prev.tags) ? prev.tags : [];
       return {
         ...prev,
         tags: tags.includes(tag)
@@ -176,7 +178,9 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
       basePrice: Number(form.basePrice) || 0,
       sizes: hasSizes ? form.sizes : undefined,
       customizable: hasSizes ? form.customizable : false,
-      tags: form.tags?.length ? form.tags : undefined,
+      tags: Array.isArray(form.tags)
+        ? form.tags.filter((tag) => tag === "hit" || tag === "new")
+        : [],
       imageUrl: form.imageUrl?.trim() || undefined,
       rkeeperCode: form.rkeeperCode?.trim() || undefined,
     };

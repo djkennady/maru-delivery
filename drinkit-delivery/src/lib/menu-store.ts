@@ -215,11 +215,18 @@ export async function updateProduct(
   const index = menu.products.findIndex((product) => product.id === id);
   if (index === -1) return null;
 
-  menu.products[index] = normalizeProduct({
-    ...menu.products[index],
+  const previous = menu.products[index];
+  const nextInput: Partial<Product> = {
+    ...previous,
     ...input,
     id,
-  });
+  };
+
+  if (Object.prototype.hasOwnProperty.call(input, "tags")) {
+    nextInput.tags = Array.isArray(input.tags) ? input.tags : [];
+  }
+
+  menu.products[index] = normalizeProduct(nextInput);
   await writeMenu(menu);
   return menu.products[index];
 }
