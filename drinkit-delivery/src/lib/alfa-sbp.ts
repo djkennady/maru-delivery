@@ -1,5 +1,10 @@
 import https from "node:https";
+import tls from "node:tls";
 import { URL } from "node:url";
+import {
+  RUSSIAN_TRUSTED_ROOT_CA,
+  RUSSIAN_TRUSTED_SUB_CA,
+} from "@/lib/russian-trusted-cas";
 
 type AlfaJson = Record<string, unknown>;
 
@@ -76,6 +81,12 @@ function postForm(urlString: string, body: string): Promise<{ status: number; ra
         method: "POST",
         family: 4,
         timeout: 20000,
+        rejectUnauthorized: true,
+        ca: [
+          ...tls.rootCertificates,
+          RUSSIAN_TRUSTED_ROOT_CA,
+          RUSSIAN_TRUSTED_SUB_CA,
+        ],
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           "Content-Length": Buffer.byteLength(body),
