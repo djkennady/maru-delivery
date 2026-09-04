@@ -2,13 +2,16 @@ import { promises as fs } from "fs";
 import path from "path";
 import {
   captureAlfaHold,
+  cardPaymentReturnUrl,
   createAlfaSbpQr,
   decodeSbpQrStorage,
+  encodeCardPaymentStorage,
   encodeSbpQrStorage,
   getAlfaOrderStatus,
   isAlfaPaymentRejected,
   isAlfaPaymentSuccessful,
   isAlfaSbpConfigured,
+  registerAlfaOrder,
 } from "@/lib/alfa-sbp";
 import {
   assertPersistentStorageAvailable,
@@ -81,8 +84,8 @@ async function writeSessions(sessions: SbpPaymentSession[]) {
   await fs.writeFile(SBP_FILE, JSON.stringify(sessions, null, 2), "utf-8");
 }
 
-function createSessionId(): string {
-  return `sbp-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+function createSessionId(prefix: "sbp" | "card"): string {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
 function buildQrPayload(id: string, amount: number): string {
@@ -107,7 +110,7 @@ export async function createSbpSession(
   }
 
   const now = Date.now();
-  const id = createSessionId();
+  const id = createSessionId("sbp");
   let qrPayload = buildQrPayload(id, amount);
 
   if (isAlfaSbpConfigured()) {
@@ -159,6 +162,76 @@ export async function createSbpSession(
   sessions.unshift(session);
   await writeSessions(sessions.slice(0, 100));
   return session;
+}
+
+async function persistSession(session: SbpPaymentSession): Promise<SbpPaymentSession> {
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return session;
+
+    const { error } = await supabase.from(SBP_TABLE).insert({
+      id: session.id,
+      amount: session.amount,
+      phone: session.phone,
+      status: session.status,
+      qr_payload: session.qrPayload,
+      created_at: session.createdAt,
+      expires_at: session.expiresAt,
+      paid_at: null,
+    });
+
+    if (error) {
+      throw new Error(`Supabase SBP create failed: ${error.message}`);
+    }
+
+    return session;
+  }
+
+  const sessions = await readSessions();
+  sessions.unshift(session);
+  await writeSessions(sessions.slice(0, 100));
+  return session;
+}
+
+export async function createCardSession(
+  amount: number,
+  phone: string,
+  pageView: "DESKTOP" | "MOBILE" = "DESKTOP",
+): Promise<{ session: SbpPaymentSession; paymentUrl: string }> {
+  assertPersistentStorageAvailable();
+
+  if (amount <= 0) {
+    throw new Error("Invalid amount");
+  }
+  if (!isAlfaSbpConfigured()) {
+    throw new Error(
+      "Оплата картой не настроена. Добавьте ALFA_SBP_USERNAME и ALFA_SBP_PASSWORD в Netlify и сделайте redeploy.",
+    );
+  }
+
+  const now = Date.now();
+  const id = createSessionId("card");
+  const alfa = await registerAlfaOrder({
+    orderNumber: id,
+    amountRub: amount,
+    description: `Заказ MARU ${id}`,
+    returnUrl: cardPaymentReturnUrl(id),
+    failUrl: cardPaymentReturnUrl(id, true),
+    pageView,
+  });
+
+  const session: SbpPaymentSession = {
+    id,
+    amount,
+    phone,
+    status: "pending",
+    qrPayload: encodeCardPaymentStorage(alfa.mdOrder, alfa.formUrl),
+    createdAt: new Date(now).toISOString(),
+    expiresAt: new Date(now + 15 * 60 * 1000).toISOString(),
+  };
+
+  await persistSession(session);
+  return { session, paymentUrl: alfa.formUrl };
 }
 
 export async function getSbpSession(id: string): Promise<SbpPaymentSession | null> {

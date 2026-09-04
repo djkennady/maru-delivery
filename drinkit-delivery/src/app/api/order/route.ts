@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { createOrder, getOrdersByPhone } from "@/lib/orders-store";
+import { confirmSbpSession } from "@/lib/sbp-payments-store";
+import { createOrder, getOrderByPaymentId, getOrdersByPhone } from "@/lib/orders-store";
 import { syncOrderWithRkeeper } from "@/lib/rkeeper";
 
 export async function POST(request: Request) {
@@ -16,6 +17,21 @@ export async function POST(request: Request) {
       !body.paymentMethod
     ) {
       return NextResponse.json({ error: "Invalid order" }, { status: 400 });
+    }
+
+    const existing = await getOrderByPaymentId(body.paymentId);
+    if (existing) {
+      return NextResponse.json({ order: existing });
+    }
+
+    if (body.paymentMethod === "sbp" || body.paymentMethod === "card") {
+      const session = await confirmSbpSession(body.paymentId);
+      if (!session || session.status !== "paid") {
+        return NextResponse.json(
+          { error: "Оплата ещё не подтверждена банком." },
+          { status: 402 },
+        );
+      }
     }
 
     const order = await createOrder({

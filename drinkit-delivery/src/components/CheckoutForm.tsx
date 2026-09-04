@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { CardPaymentFields, type CardFormValues } from "@/components/CardPaymentFields";
+import { CardPaymentFields } from "@/components/CardPaymentFields";
 import { GiftSelector } from "@/components/GiftSelector";
 import { PaymentMethodSelector } from "@/components/PaymentMethodSelector";
 import { SbpPaymentPanel } from "@/components/SbpPaymentPanel";
@@ -27,6 +27,23 @@ const MILK_LABELS = {
   almond: "Миндальное",
   none: "Без молока",
 } as const;
+
+const CARD_DRAFT_KEY = "maru-card-checkout";
+
+type CardCheckoutDraft = {
+  paymentId: string;
+  name: string;
+  phone: string;
+  address: string;
+  comment?: string;
+  items: CartItem[];
+  subtotal: number;
+  deliveryFee: number;
+  giftDiscount?: number;
+  appliedGift?: AppliedGift;
+  total: number;
+  selectedGiftId?: string | null;
+};
 
 function CartLineItem({
   item,
@@ -151,12 +168,6 @@ export function CheckoutForm() {
   const [address, setAddress] = useState("");
   const [comment, setComment] = useState("");
   const [selectedGiftId, setSelectedGiftId] = useState<string | null>(null);
-  const [card, setCard] = useState<CardFormValues>({
-    cardNumber: "",
-    expiry: "",
-    cvc: "",
-    cardholder: "",
-  });
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
   const [sbpSession, setSbpSession] = useState<{
     paymentId: string;
@@ -168,16 +179,14 @@ export function CheckoutForm() {
   const [successGiftTitle, setSuccessGiftTitle] = useState<string | null>(null);
   const [error, setError] = useState("");
   const placingSbpOrder = useRef(false);
+  const placingCardOrder = useRef(false);
+  const [resumingCard] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return new URLSearchParams(window.location.search).has("cardSession");
+  });
 
   useEffect(() => {
-    if (profile.name) {
-      setName(profile.name);
-      setCard((prev) =>
-        prev.cardholder
-          ? prev
-          : { ...prev, cardholder: String(profile.name).toUpperCase() },
-      );
-    }
+    if (profile.name) setName(profile.name);
     if (profile.phone) setPhone(profile.phone);
     if (profile.address) setAddress(profile.address);
   }, [profile.name, profile.phone, profile.address]);
@@ -266,6 +275,52 @@ export function CheckoutForm() {
     setSuccess(true);
   };
 
+  const placeCardOrderFromDraft = async (draft: CardCheckoutDraft) => {
+    const res = await fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: draft.name,
+        phone: draft.phone,
+        address: draft.address,
+        comment: draft.comment,
+        items: draft.items,
+        subtotal: draft.subtotal,
+        deliveryFee: draft.deliveryFee,
+        giftDiscount: draft.giftDiscount,
+        appliedGift: draft.appliedGift,
+        total: draft.total,
+        paymentId: draft.paymentId,
+        paymentMethod: "card",
+        cardLast4: "----",
+        cardBrand: "Карта",
+      }),
+    });
+
+    const data = (await res.json()) as { order?: OrderRecord; error?: string };
+    if (!res.ok) {
+      throw new Error(data.error ?? "Не удалось сохранить заказ");
+    }
+    if (!data.order) {
+      throw new Error("Не удалось сохранить заказ");
+    }
+    if (draft.appliedGift) {
+      useGift(draft.appliedGift.id, data.order.id);
+    }
+    prependOrder(data.order);
+    updateProfile({
+      name: draft.name,
+      phone: draft.phone,
+      address: draft.address,
+    });
+    clearCart();
+    setSuccessGiftTitle(draft.appliedGift?.title ?? null);
+    setSelectedGiftId(null);
+    sessionStorage.removeItem(CARD_DRAFT_KEY);
+    setSuccess(true);
+    window.history.replaceState({}, "", "/checkout");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -277,24 +332,44 @@ export function CheckoutForm() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            ...card,
             amount: total,
+            phone,
+            pageView: window.innerWidth < 768 ? "MOBILE" : "DESKTOP",
           }),
         });
 
         const paymentData = await paymentRes.json();
 
         if (!paymentRes.ok) {
-          setError(paymentData.error ?? "Оплата не прошла");
+          setError(paymentData.error ?? "Не удалось открыть оплату картой");
           return;
         }
 
-        await placeOrder({
+        const draft: CardCheckoutDraft = {
           paymentId: paymentData.paymentId,
-          paymentMethod: "card",
-          cardLast4: paymentData.cardLast4,
-          cardBrand: paymentData.cardBrand,
-        });
+          name,
+          phone,
+          address,
+          comment: comment.trim() || undefined,
+          items: orderItems,
+          subtotal,
+          deliveryFee,
+          giftDiscount: giftDiscount || undefined,
+          appliedGift: selectedGift
+            ? {
+                id: selectedGift.id,
+                title: selectedGift.title,
+                emoji: selectedGift.emoji,
+                discount: giftDiscount,
+                bonusProductId: giftEffect?.bonusProductId,
+                bonusProductName: giftEffect?.bonusProductName,
+              }
+            : undefined,
+          total,
+          selectedGiftId,
+        };
+        sessionStorage.setItem(CARD_DRAFT_KEY, JSON.stringify(draft));
+        window.location.assign(paymentData.paymentUrl as string);
         return;
       }
 
@@ -407,7 +482,71 @@ export function CheckoutForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sbpSession?.paymentId, success]);
 
-  if (items.length === 0 && !success) {
+  useEffect(() => {
+    if (success || placingCardOrder.current) return;
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("cardSession");
+    if (!sessionId) return;
+
+    if (params.get("failed") === "1") {
+      setError("Оплата картой не прошла. Можно выбрать другой способ или попробовать снова.");
+      sessionStorage.removeItem(CARD_DRAFT_KEY);
+      window.history.replaceState({}, "", "/checkout");
+      return;
+    }
+
+    placingCardOrder.current = true;
+    setSubmitting(true);
+    setError("");
+
+    const waitForPaid = async () => {
+      for (let attempt = 0; attempt < 12; attempt += 1) {
+        const confirmRes = await fetch("/api/payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ action: "confirm", paymentId: sessionId }),
+        });
+        const confirmData = await confirmRes.json();
+        if (confirmRes.status === 410) {
+          throw new Error(
+            confirmData.error ?? "Оплата картой не прошла. Попробуйте ещё раз.",
+          );
+        }
+        if (confirmRes.ok && confirmData.session?.status === "paid") {
+          const raw = sessionStorage.getItem(CARD_DRAFT_KEY);
+          if (!raw) {
+            throw new Error(
+              "Оплата прошла, но данные заказа не найдены. Напишите нам, мы проверим платёж.",
+            );
+          }
+          const draft = JSON.parse(raw) as CardCheckoutDraft;
+          await placeCardOrderFromDraft({ ...draft, paymentId: sessionId });
+          return;
+        }
+        await new Promise((resolve) => window.setTimeout(resolve, 2000));
+      }
+      throw new Error(
+        "Банк ещё не подтвердил оплату. Обновите страницу через минуту или напишите нам.",
+      );
+    };
+
+    void waitForPaid()
+      .catch((error: unknown) => {
+        placingCardOrder.current = false;
+        setError(
+          error instanceof Error
+            ? error.message
+            : "Не удалось завершить оплату картой.",
+        );
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
+    // placeCardOrderFromDraft is recreated each render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
+
+  if (items.length === 0 && !success && !resumingCard) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
         <p className="text-5xl">🛍️</p>
@@ -580,7 +719,7 @@ export function CheckoutForm() {
         </div>
 
         {paymentMethod === "card" ? (
-          <CardPaymentFields values={card} onChange={setCard} disabled={submitting} />
+          <CardPaymentFields disabled={submitting} />
         ) : sbpSession ? (
           <SbpPaymentPanel
             amount={total}
@@ -616,7 +755,7 @@ export function CheckoutForm() {
               ? "Обработка…"
               : paymentMethod === "sbp"
                 ? `Получить QR · ${formatPrice(total)}`
-                : `Оплатить · ${formatPrice(total)}`}
+                : `Оплатить картой · ${formatPrice(total)}`}
           </button>
         ) : null}
       </form>

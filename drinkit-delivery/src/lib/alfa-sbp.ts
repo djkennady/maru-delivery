@@ -28,6 +28,13 @@ function returnUrl(): string {
   return env("ALFA_SBP_RETURN_URL") || DEFAULT_RETURN_URL;
 }
 
+export function cardPaymentReturnUrl(sessionId: string, failed = false): string {
+  const url = new URL(returnUrl());
+  url.searchParams.set("cardSession", sessionId);
+  if (failed) url.searchParams.set("failed", "1");
+  return url.toString();
+}
+
 function credentials() {
   const userName = env("ALFA_SBP_USERNAME");
   const password = env("ALFA_SBP_PASSWORD");
@@ -150,6 +157,49 @@ async function alfaPost(path: string, fields: Record<string, string>): Promise<A
   return data;
 }
 
+export interface AlfaRegisteredOrder {
+  mdOrder: string;
+  formUrl: string;
+}
+
+export async function registerAlfaOrder(input: {
+  orderNumber: string;
+  amountRub: number;
+  description: string;
+  returnUrl?: string;
+  failUrl?: string;
+  pageView?: "DESKTOP" | "MOBILE";
+}): Promise<AlfaRegisteredOrder> {
+  const amountKopecks = Math.round(input.amountRub * 100);
+  if (amountKopecks <= 0) {
+    throw new Error("Сумма оплаты должна быть больше нуля");
+  }
+
+  const successUrl = input.returnUrl || returnUrl();
+  const registered = await alfaPost("/register.do", {
+    orderNumber: input.orderNumber,
+    amount: String(amountKopecks),
+    currency: "643",
+    returnUrl: successUrl,
+    failUrl: input.failUrl || successUrl,
+    description: input.description.slice(0, 512),
+    language: "ru",
+    pageView: input.pageView ?? "DESKTOP",
+  });
+
+  if (!isAlfaSuccess(registered) || typeof registered.orderId !== "string") {
+    throw new Error(alfaMessage(registered, "Не удалось зарегистрировать заказ в Альфа-Банке"));
+  }
+  if (typeof registered.formUrl !== "string" || !registered.formUrl) {
+    throw new Error("Альфа-Банк не вернул страницу оплаты картой");
+  }
+
+  return {
+    mdOrder: registered.orderId,
+    formUrl: registered.formUrl,
+  };
+}
+
 export interface AlfaQrResult {
   mdOrder: string;
   payload: string;
@@ -161,26 +211,8 @@ export async function createAlfaSbpQr(input: {
   amountRub: number;
   description: string;
 }): Promise<AlfaQrResult> {
-  const amountKopecks = Math.round(input.amountRub * 100);
-  if (amountKopecks <= 0) {
-    throw new Error("Сумма оплаты должна быть больше нуля");
-  }
-
-  const registered = await alfaPost("/register.do", {
-    orderNumber: input.orderNumber,
-    amount: String(amountKopecks),
-    currency: "643",
-    returnUrl: returnUrl(),
-    failUrl: returnUrl(),
-    description: input.description.slice(0, 512),
-    language: "ru",
-  });
-
-  if (!isAlfaSuccess(registered) || typeof registered.orderId !== "string") {
-    throw new Error(alfaMessage(registered, "Не удалось зарегистрировать заказ в Альфа-Банке"));
-  }
-
-  const mdOrder = registered.orderId;
+  const registered = await registerAlfaOrder(input);
+  const mdOrder = registered.mdOrder;
   const qr = await alfaPost("/sbp/c2b/qr/dynamic/get.do", {
     mdOrder,
     qrFormat: "image",
@@ -206,6 +238,7 @@ export interface AlfaOrderStatus {
   orderId?: string;
   orderStatus: AlfaOrderStatusCode;
   amountKopecks?: number;
+  panMasked?: string;
 }
 
 function parseOrderStatus(value: unknown): AlfaOrderStatusCode {
@@ -230,6 +263,9 @@ export async function getAlfaOrderStatus(input: {
     throw new Error(alfaMessage(data, "Не удалось проверить статус оплаты в Альфа-Банке"));
   }
 
+  const cardAuth = asRecord(data.cardAuthInfo);
+  const panMasked = typeof cardAuth.pan === "string" ? cardAuth.pan : undefined;
+
   return {
     orderNumber: typeof data.orderNumber === "string" ? data.orderNumber : undefined,
     orderId: typeof data.orderId === "string" ? data.orderId : input.orderId,
@@ -240,6 +276,7 @@ export async function getAlfaOrderStatus(input: {
         : typeof data.amount === "string"
           ? Number(data.amount)
           : undefined,
+    panMasked,
   };
 }
 
@@ -264,18 +301,35 @@ export async function captureAlfaHold(orderId: string, amountKopecks?: number): 
 }
 
 export function encodeSbpQrStorage(mdOrder: string, payload: string): string {
-  return JSON.stringify({ v: 1, mdOrder, payload });
+  return JSON.stringify({ v: 1, kind: "sbp", mdOrder, payload });
 }
 
-export function decodeSbpQrStorage(raw: string): { mdOrder?: string; payload: string } {
+export function encodeCardPaymentStorage(mdOrder: string, formUrl: string): string {
+  return JSON.stringify({ v: 1, kind: "card", mdOrder, formUrl });
+}
+
+export function decodeSbpQrStorage(raw: string): {
+  mdOrder?: string;
+  payload: string;
+  formUrl?: string;
+  kind?: string;
+} {
   const value = raw.trim();
   if (value.startsWith("{")) {
     try {
       const parsed = asRecord(JSON.parse(value));
-      if (typeof parsed.payload === "string" && parsed.payload) {
+      const payload =
+        typeof parsed.payload === "string"
+          ? parsed.payload
+          : typeof parsed.formUrl === "string"
+            ? parsed.formUrl
+            : "";
+      if (payload || typeof parsed.mdOrder === "string") {
         return {
           mdOrder: typeof parsed.mdOrder === "string" ? parsed.mdOrder : undefined,
-          payload: parsed.payload,
+          payload,
+          formUrl: typeof parsed.formUrl === "string" ? parsed.formUrl : undefined,
+          kind: typeof parsed.kind === "string" ? parsed.kind : undefined,
         };
       }
     } catch {

@@ -155,6 +155,52 @@ export async function getOrdersByPhone(phone: string): Promise<OrderRecord[]> {
   );
 }
 
+export async function getOrderByPaymentId(
+  paymentId: string,
+): Promise<OrderRecord | null> {
+  if (!paymentId) return null;
+
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return null;
+
+    const { data, error } = await supabase
+      .from(ORDERS_TABLE)
+      .select("*")
+      .eq("payment_id", paymentId)
+      .maybeSingle();
+
+    if (error) {
+      throw new Error(`Supabase order fetch failed: ${error.message}`);
+    }
+    if (!data) return null;
+
+    return normalizeOrder({
+      id: data.id,
+      createdAt: data.created_at,
+      name: data.name,
+      phone: data.phone,
+      address: data.address,
+      comment: data.comment ?? undefined,
+      items: data.items,
+      subtotal: data.subtotal,
+      deliveryFee: data.delivery_fee,
+      giftDiscount: data.gift_discount ?? undefined,
+      appliedGift: data.applied_gift ?? undefined,
+      total: data.total,
+      status: data.status,
+      paymentStatus: data.payment_status,
+      paymentMethod: data.payment_method,
+      cardLast4: data.card_last4,
+      cardBrand: data.card_brand,
+      paymentId: data.payment_id,
+    });
+  }
+
+  const orders = await readOrders();
+  return orders.find((order) => order.paymentId === paymentId) ?? null;
+}
+
 export async function getAllOrders(): Promise<OrderRecord[]> {
   return readOrders();
 }
