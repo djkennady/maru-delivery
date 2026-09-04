@@ -75,11 +75,11 @@ export function SbpPaymentPanel({
         disabled={confirming}
         className="w-full rounded-2xl bg-[#7B2D8E] px-5 py-3 font-semibold text-white transition hover:bg-[#692677] disabled:opacity-60"
       >
-        {confirming ? "Проверка…" : "Я оплатил через банк"}
+        {confirming ? "Проверяем оплату…" : "Я оплатил в банке"}
       </button>
 
       <p className="text-center text-[11px] text-[var(--muted)]">
-        Демо-режим: кнопка имитирует успешную оплату через СБП
+        Заказ создастся автоматически после оплаты. Не закрывайте эту страницу.
       </p>
     </section>
   );

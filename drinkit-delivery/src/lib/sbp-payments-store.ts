@@ -1,6 +1,21 @@
 import { promises as fs } from "fs";
 import path from "path";
-import { assertPersistentStorageAvailable, getSupabaseServerClient, isSupabaseEnabled } from "@/lib/supabase-server";
+import {
+  captureAlfaHold,
+  createAlfaSbpQr,
+  decodeSbpQrStorage,
+  encodeSbpQrStorage,
+  getAlfaOrderStatus,
+  isAlfaPaymentRejected,
+  isAlfaPaymentSuccessful,
+  isAlfaSbpConfigured,
+} from "@/lib/alfa-sbp";
+import {
+  assertPersistentStorageAvailable,
+  getSupabaseServerClient,
+  isCloudRuntime,
+  isSupabaseEnabled,
+} from "@/lib/supabase-server";
 
 export type SbpPaymentStatus = "pending" | "paid" | "expired";
 
@@ -93,12 +108,27 @@ export async function createSbpSession(
 
   const now = Date.now();
   const id = createSessionId();
+  let qrPayload = buildQrPayload(id, amount);
+
+  if (isAlfaSbpConfigured()) {
+    const alfa = await createAlfaSbpQr({
+      orderNumber: id,
+      amountRub: amount,
+      description: `Заказ MARU ${id}`,
+    });
+    qrPayload = encodeSbpQrStorage(alfa.mdOrder, alfa.payload);
+  } else if (isCloudRuntime()) {
+    throw new Error(
+      "СБП Альфа-Банка не настроен. Добавьте ALFA_SBP_USERNAME и ALFA_SBP_PASSWORD в Netlify и сделайте redeploy.",
+    );
+  }
+
   const session: SbpPaymentSession = {
     id,
     amount,
     phone,
     status: "pending",
-    qrPayload: buildQrPayload(id, amount),
+    qrPayload,
     createdAt: new Date(now).toISOString(),
     expiresAt: new Date(now + 15 * 60 * 1000).toISOString(),
   };
@@ -193,16 +223,13 @@ export async function getSbpSession(id: string): Promise<SbpPaymentSession | nul
   return session;
 }
 
-export async function confirmSbpSession(id: string): Promise<SbpPaymentSession | null> {
+async function markSbpSessionPaid(id: string): Promise<SbpPaymentSession | null> {
+  const paidAt = new Date().toISOString();
+
   if (isSupabaseEnabled()) {
     const supabase = getSupabaseServerClient();
     if (!supabase) return null;
 
-    const current = await getSbpSession(id);
-    if (!current) return null;
-    if (current.status === "expired" || current.status === "paid") return current;
-
-    const paidAt = new Date().toISOString();
     const { data, error } = await supabase
       .from(SBP_TABLE)
       .update({ status: "paid", paid_at: paidAt })
@@ -231,17 +258,98 @@ export async function confirmSbpSession(id: string): Promise<SbpPaymentSession |
   const index = sessions.findIndex((item) => item.id === id);
   if (index === -1) return null;
 
-  const session = sessions[index];
-  if (session.status === "expired") return session;
-  if (session.status === "paid") return session;
-
   const paidSession: SbpPaymentSession = {
-    ...session,
+    ...sessions[index],
     status: "paid",
-    paidAt: new Date().toISOString(),
+    paidAt,
   };
-
   sessions[index] = paidSession;
   await writeSessions(sessions);
   return paidSession;
+}
+
+async function markSbpSessionExpired(id: string): Promise<SbpPaymentSession | null> {
+  const current = await getSbpSession(id);
+  if (!current) return null;
+  if (current.status !== "pending") return current;
+
+  if (isSupabaseEnabled()) {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return current;
+
+    const { error } = await supabase
+      .from(SBP_TABLE)
+      .update({ status: "expired" })
+      .eq("id", id);
+
+    if (error) {
+      throw new Error(`Supabase SBP expire update failed: ${error.message}`);
+    }
+    return { ...current, status: "expired" };
+  }
+
+  const sessions = await readSessions();
+  const next = sessions.map((item) =>
+    item.id === id ? { ...item, status: "expired" as const } : item,
+  );
+  await writeSessions(next);
+  return { ...current, status: "expired" };
+}
+
+export async function syncSbpSessionWithBank(
+  id: string,
+): Promise<SbpPaymentSession | null> {
+  const session = await getSbpSession(id);
+  if (!session) return null;
+  if (session.status !== "pending") return session;
+  if (!isAlfaSbpConfigured()) return session;
+
+  const stored = decodeSbpQrStorage(session.qrPayload);
+  const status = await getAlfaOrderStatus({
+    orderNumber: session.id,
+    orderId: stored.mdOrder,
+  });
+
+  if (isAlfaPaymentSuccessful(status.orderStatus)) {
+    if (status.orderStatus === 1 && stored.mdOrder) {
+      try {
+        await captureAlfaHold(stored.mdOrder, status.amountKopecks);
+      } catch {
+        /* холд можно завершить в кабинете банка */
+      }
+    }
+    return markSbpSessionPaid(id);
+  }
+
+  if (isAlfaPaymentRejected(status.orderStatus)) {
+    return markSbpSessionExpired(id);
+  }
+
+  return session;
+}
+
+export async function syncSbpSessionByAlfaIds(input: {
+  orderNumber?: string;
+  orderId?: string;
+}): Promise<SbpPaymentSession | null> {
+  if (input.orderNumber) {
+    return syncSbpSessionWithBank(input.orderNumber);
+  }
+
+  if (!input.orderId || !isAlfaSbpConfigured()) return null;
+
+  const status = await getAlfaOrderStatus({ orderId: input.orderId });
+  if (!status.orderNumber) return null;
+  return syncSbpSessionWithBank(status.orderNumber);
+}
+
+export async function confirmSbpSession(id: string): Promise<SbpPaymentSession | null> {
+  if (isAlfaSbpConfigured()) {
+    return syncSbpSessionWithBank(id);
+  }
+
+  const current = await getSbpSession(id);
+  if (!current) return null;
+  if (current.status === "expired" || current.status === "paid") return current;
+  return markSbpSessionPaid(id);
 }

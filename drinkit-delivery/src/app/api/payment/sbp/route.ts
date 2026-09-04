@@ -1,10 +1,37 @@
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
+import { decodeSbpQrStorage } from "@/lib/alfa-sbp";
 import {
   confirmSbpSession,
   createSbpSession,
   getSbpSession,
+  syncSbpSessionWithBank,
 } from "@/lib/sbp-payments-store";
+
+export const dynamic = "force-dynamic";
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : "Server error";
+}
+
+async function sessionResponse(session: {
+  id: string;
+  amount: number;
+  phone: string;
+  status: string;
+  qrPayload: string;
+  createdAt: string;
+  expiresAt: string;
+  paidAt?: string;
+}) {
+  const { payload } = decodeSbpQrStorage(session.qrPayload);
+  const qrDataUrl = await QRCode.toDataURL(payload, {
+    margin: 1,
+    width: 280,
+    color: { dark: "#0f172a", light: "#ffffff" },
+  });
+  return { session, qrDataUrl };
+}
 
 export async function POST(request: Request) {
   try {
@@ -22,8 +49,18 @@ export async function POST(request: Request) {
 
       if (session.status === "expired") {
         return NextResponse.json(
-          { error: "Срок оплаты по QR истёк. Создайте новый." },
+          { error: "Срок оплаты по QR истёк или платёж отклонён. Создайте новый." },
           { status: 410 },
+        );
+      }
+
+      if (session.status !== "paid") {
+        return NextResponse.json(
+          {
+            error: "Оплата ещё не поступила. Подтвердите платёж в приложении банка.",
+            session,
+          },
+          { status: 409 },
         );
       }
 
@@ -35,15 +72,10 @@ export async function POST(request: Request) {
     }
 
     const session = await createSbpSession(body.amount, body.phone);
-    const qrDataUrl = await QRCode.toDataURL(session.qrPayload, {
-      margin: 1,
-      width: 280,
-      color: { dark: "#0f172a", light: "#ffffff" },
-    });
-
-    return NextResponse.json({ session, qrDataUrl });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    const payload = await sessionResponse(session);
+    return NextResponse.json(payload);
+  } catch (error) {
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }
 
@@ -55,13 +87,22 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Payment ID required" }, { status: 400 });
     }
 
-    const session = await getSbpSession(paymentId);
+    let session = await getSbpSession(paymentId);
     if (!session) {
       return NextResponse.json({ error: "Payment not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ session });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    try {
+      session = (await syncSbpSessionWithBank(paymentId)) ?? session;
+    } catch {
+      /* keep last known session if the bank is temporarily unavailable */
+    }
+
+    return NextResponse.json(
+      { session },
+      { headers: { "Cache-Control": "no-store" } },
+    );
+  } catch (error) {
+    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
   }
 }

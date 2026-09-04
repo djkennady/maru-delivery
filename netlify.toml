@@ -3,6 +3,10 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  ALFA_SBP_GATEWAY_URL = "https://payment.alfabank.ru/payment/rest"
+  ALFA_SBP_RETURN_URL = "https://maru-delivery.netlify.app/checkout"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 

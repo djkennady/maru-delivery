@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Minus, Plus, Trash2 } from "lucide-react";
@@ -167,6 +167,7 @@ export function CheckoutForm() {
   const [success, setSuccess] = useState(false);
   const [successGiftTitle, setSuccessGiftTitle] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const placingSbpOrder = useRef(false);
 
   useEffect(() => {
     if (profile.name) {
@@ -330,8 +331,9 @@ export function CheckoutForm() {
   };
 
   const handleSbpConfirm = async () => {
-    if (!sbpSession) return;
+    if (!sbpSession || placingSbpOrder.current) return;
 
+    placingSbpOrder.current = true;
     setError("");
     setSubmitting(true);
 
@@ -348,6 +350,7 @@ export function CheckoutForm() {
       const confirmData = await confirmRes.json();
 
       if (!confirmRes.ok) {
+        placingSbpOrder.current = false;
         setError(confirmData.error ?? "Оплата через СБП не подтверждена");
         return;
       }
@@ -359,6 +362,7 @@ export function CheckoutForm() {
         cardBrand: "СБП",
       });
     } catch (error) {
+      placingSbpOrder.current = false;
       setError(
         error instanceof Error
           ? error.message
@@ -368,6 +372,40 @@ export function CheckoutForm() {
       setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    if (!sbpSession || success) return;
+
+    const poll = async () => {
+      if (placingSbpOrder.current) return;
+      try {
+        const res = await fetch(
+          `/api/payment/sbp?paymentId=${encodeURIComponent(sbpSession.paymentId)}`,
+          { cache: "no-store" },
+        );
+        const data = (await res.json()) as {
+          session?: { status?: string };
+          error?: string;
+        };
+        if (!res.ok) return;
+        if (data.session?.status === "paid") {
+          await handleSbpConfirm();
+        }
+        if (data.session?.status === "expired") {
+          setError("Срок оплаты по QR истёк или платёж отклонён. Создайте новый.");
+          setSbpSession(null);
+        }
+      } catch {
+        /* next poll */
+      }
+    };
+
+    const timer = window.setInterval(poll, 3000);
+    void poll();
+    return () => window.clearInterval(timer);
+    // handleSbpConfirm is recreated each render; paymentId is the stable key
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sbpSession?.paymentId, success]);
 
   if (items.length === 0 && !success) {
     return (
