@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { syncSbpSessionByAlfaIds } from "@/lib/sbp-payments-store";
 
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 async function readCallbackParams(request: Request): Promise<Record<string, string>> {

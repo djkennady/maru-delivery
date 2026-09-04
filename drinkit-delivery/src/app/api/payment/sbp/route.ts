@@ -8,6 +8,7 @@ import {
   syncSbpSessionWithBank,
 } from "@/lib/sbp-payments-store";
 
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 function errorMessage(error: unknown): string {
