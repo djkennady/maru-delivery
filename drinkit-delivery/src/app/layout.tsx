@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Rubik } from "next/font/google";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { SiteFooter } from "@/components/SiteFooter";
 import { CartProvider } from "@/context/CartContext";
 import { MenuProvider } from "@/context/MenuContext";
 import { UserProvider } from "@/context/UserContext";
@@ -41,7 +42,12 @@ export default function RootLayout({
         <div className="relative flex min-h-full max-w-full flex-1 flex-col">
           <UserProvider>
             <MenuProvider>
-              <CartProvider>{children}</CartProvider>
+              <CartProvider>
+                <div className="flex min-h-full flex-1 flex-col">
+                  <div className="flex-1">{children}</div>
+                  <SiteFooter />
+                </div>
+              </CartProvider>
             </MenuProvider>
           </UserProvider>
         </div>
