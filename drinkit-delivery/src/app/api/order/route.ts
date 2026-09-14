@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { confirmSbpSession } from "@/lib/sbp-payments-store";
 import { createOrder, getOrderByPaymentId, getOrdersByPhone } from "@/lib/orders-store";
 import { syncOrderWithRkeeper } from "@/lib/rkeeper";
+import { notifyAdminsAboutOrder } from "@/lib/telegram";
 
 export async function POST(request: Request) {
   try {
@@ -53,6 +54,15 @@ export async function POST(request: Request) {
     });
 
     const rkeeper = await syncOrderWithRkeeper(order);
+
+    try {
+      await notifyAdminsAboutOrder(order);
+    } catch (error) {
+      console.error(
+        "[telegram] notify failed",
+        error instanceof Error ? error.message : error,
+      );
+    }
 
     return NextResponse.json({ order, rkeeper });
   } catch (error) {

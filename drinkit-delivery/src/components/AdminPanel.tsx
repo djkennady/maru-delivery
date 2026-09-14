@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  Bell,
   CreditCard,
   Clock,
   Lock,
@@ -143,6 +144,10 @@ export function AdminPanel() {
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [fetchError, setFetchError] = useState("");
+  const [telegramBot, setTelegramBot] = useState<string | null>(null);
+  const [telegramChats, setTelegramChats] = useState(0);
+  const [telegramBusy, setTelegramBusy] = useState(false);
+  const [telegramNote, setTelegramNote] = useState("");
 
   useEffect(() => {
     setAuthed(Boolean(sessionStorage.getItem(ADMIN_TOKEN_KEY)));
@@ -180,6 +185,33 @@ export function AdminPanel() {
     return () => clearInterval(interval);
   }, [authed, loadOrders]);
 
+  const loadTelegram = useCallback(async () => {
+    try {
+      const res = await fetch("/api/telegram/setup", {
+        headers: getAdminHeaders(),
+      });
+      if (!res.ok) return;
+      const data = (await res.json()) as {
+        configured?: boolean;
+        bot?: string;
+        adminChats?: number;
+      };
+      if (data.configured) {
+        setTelegramBot(typeof data.bot === "string" ? data.bot : "бот");
+        setTelegramChats(data.adminChats ?? 0);
+      } else {
+        setTelegramBot(null);
+      }
+    } catch {
+      /* optional */
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!authed) return;
+    void loadTelegram();
+  }, [authed, loadTelegram]);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
@@ -204,10 +236,39 @@ export function AdminPanel() {
     }
   };
 
+  const handleTelegramConnect = async () => {
+    setTelegramBusy(true);
+    setTelegramNote("");
+    try {
+      const res = await fetch("/api/telegram/setup", {
+        method: "POST",
+        headers: getAdminHeaders(),
+      });
+      const data = (await res.json()) as { bot?: string; error?: string };
+      if (!res.ok) {
+        setTelegramNote(data.error ?? "Не удалось подключить бота");
+        return;
+      }
+      setTelegramBot(data.bot || "бот");
+      setTelegramNote(
+        data.bot
+          ? `Откройте ${data.bot} в Telegram → /start → пароль этой админки.`
+          : "Бот подключен. Откройте его в Telegram, напишите /start и пароль админки.",
+      );
+      await loadTelegram();
+    } catch {
+      setTelegramNote("Не удалось подключить бота");
+    } finally {
+      setTelegramBusy(false);
+    }
+  };
+
   const handleLogout = () => {
     sessionStorage.removeItem(ADMIN_TOKEN_KEY);
     setAuthed(false);
     setOrders([]);
+    setTelegramBot(null);
+    setTelegramNote("");
   };
 
   const handleStatusChange = async (id: string, status: OrderStatus) => {
@@ -375,6 +436,37 @@ export function AdminPanel() {
               {fetchError}
             </p>
           )}
+
+          <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#229ED9]/10 text-[#229ED9]">
+                <Bell className="h-5 w-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h2 className="font-semibold text-[var(--text)]">Telegram</h2>
+                <p className="mt-1 text-sm text-[var(--muted)]">
+                  {telegramBot
+                    ? `${telegramBot} · подключено админов: ${telegramChats}. Напишите боту /start и пароль админки.`
+                    : "Новые заказы можно сразу слать в Telegram, чтобы ничего не пропустить."}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => void handleTelegramConnect()}
+                  disabled={telegramBusy}
+                  className="mt-3 rounded-xl bg-[#229ED9] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1b8ec4] disabled:opacity-60"
+                >
+                  {telegramBusy
+                    ? "Подключаем…"
+                    : telegramBot
+                      ? "Обновить подключение"
+                      : "Включить бота"}
+                </button>
+                {telegramNote && (
+                  <p className="mt-2 text-sm text-[var(--text)]">{telegramNote}</p>
+                )}
+              </div>
+            </div>
+          </section>
 
           {orders.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-4 py-12 text-center">
