@@ -54,7 +54,7 @@ export const promos = [
   },
   {
     id: "combo-lunch",
-    title: "Комбообеды",
+    title: "Комбо-обеды",
     subtitle: "От 450 ₽",
     gradient: "from-emerald-500 to-teal-500",
     emoji: "🍱",
