@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const hall = pathname === "/menu";
+  const hall = pathname === "/" || pathname === "/menu";
 
   if (hall) {
     return (

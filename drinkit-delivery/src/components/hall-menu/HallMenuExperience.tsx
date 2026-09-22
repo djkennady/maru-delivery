@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HALL_PHOTO_ITEMS, HALL_SECTIONS, type HallItem, type HallKind } from "@/data/hall-menu";
+import { HALL_PHOTO_ITEMS, HALL_SECTIONS, PICKUP_SITE_URL, type HallItem, type HallKind } from "@/data/hall-menu";
 
 type Lightbox = {
   name: string;
@@ -100,12 +100,12 @@ export function HallMenuExperience() {
               <span className="rounded-full border border-white/25 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-white/80">
                 Алабуга
               </span>
-              <Link
-                href="/"
+              <a
+                href={PICKUP_SITE_URL}
                 className="rounded-full bg-[#f3ead8] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#171611] transition hover:bg-white"
               >
                 Самовывоз −10%
-              </Link>
+              </a>
             </div>
           </nav>
 
@@ -297,12 +297,12 @@ export function HallMenuExperience() {
               То же МАРУ, только заказать можно онлайн и забрать в Алабуге.
             </p>
           </div>
-          <Link
-            href="/"
+          <a
+            href={PICKUP_SITE_URL}
             className="mt-6 inline-flex rounded-full bg-[#f3ead8] px-6 py-3 text-base font-semibold text-[#171611] transition hover:bg-white sm:mt-0"
           >
             Оформить заказ
-          </Link>
+          </a>
         </div>
       </div>
 

@@ -1,15 +1,17 @@
-import { connection } from "next/server";
-import { HomeContent } from "@/components/HomeContent";
-import { SiteHeader } from "@/components/SiteHeader";
+import type { Metadata } from "next";
+import { HallHub } from "@/components/hall-menu/HallHub";
 
-export default async function HomePage() {
-  await connection();
+export const metadata: Metadata = {
+  title: "МАРУ — кухня и кофе",
+  description:
+    "МАРУ в Алабуге: меню в зале и самовывоз со скидкой 10%. Кухня, кофе и живые фото блюд.",
+  openGraph: {
+    title: "МАРУ — кухня и кофе",
+    description: "Вкус — в деталях. Меню и самовывоз в Алабуге.",
+    images: [{ url: "/hall-menu/og.png", width: 1733, height: 907 }],
+  },
+};
 
-  return (
-    <>
-      <SiteHeader />
-      <HomeContent />
-      <div hidden data-deploy="bg-anim-2026-08-28" />
-    </>
-  );
+export default function HomePage() {
+  return <HallHub />;
 }
