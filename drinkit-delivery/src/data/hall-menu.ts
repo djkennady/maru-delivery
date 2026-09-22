@@ -17,7 +17,7 @@ export type HallSection = {
   items: HallItem[];
 };
 
-export const PICKUP_SITE_URL = "https://maru-delivery.netlify.app/";
+export const PICKUP_SITE_URL = "/order";
 
 export const HALL_SECTIONS: HallSection[] = [
   {

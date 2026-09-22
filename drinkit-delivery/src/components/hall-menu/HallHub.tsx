@@ -72,7 +72,7 @@ export function HallHub() {
             </span>
           </span>
         </Link>
-        <a
+        <Link
           href={PICKUP_SITE_URL}
           className="group relative min-h-[340px] overflow-hidden rounded-[28px]"
         >
@@ -97,7 +97,7 @@ export function HallHub() {
               Заказать онлайн →
             </span>
           </span>
-        </a>
+        </Link>
       </section>
 
       <section className="mx-auto max-w-6xl px-5 pb-20 sm:px-8">

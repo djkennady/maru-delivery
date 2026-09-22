@@ -100,12 +100,12 @@ export function HallMenuExperience() {
               <span className="rounded-full border border-white/25 px-3 py-2 text-[10px] uppercase tracking-[0.18em] text-white/80">
                 Алабуга
               </span>
-              <a
+              <Link
                 href={PICKUP_SITE_URL}
                 className="rounded-full bg-[#f3ead8] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#171611] transition hover:bg-white"
               >
                 Самовывоз −10%
-              </a>
+              </Link>
             </div>
           </nav>
 
@@ -297,12 +297,12 @@ export function HallMenuExperience() {
               То же МАРУ, только заказать можно онлайн и забрать в Алабуге.
             </p>
           </div>
-          <a
+          <Link
             href={PICKUP_SITE_URL}
             className="mt-6 inline-flex rounded-full bg-[#f3ead8] px-6 py-3 text-base font-semibold text-[#171611] transition hover:bg-white sm:mt-0"
           >
             Оформить заказ
-          </a>
+          </Link>
         </div>
       </div>
 
