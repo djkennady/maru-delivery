@@ -101,7 +101,7 @@ export function HallMenuExperience() {
                 Алабуга
               </span>
               <Link
-                href="/order"
+                href="/"
                 className="rounded-full bg-[#f3ead8] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#171611] transition hover:bg-white"
               >
                 Самовывоз −10%
@@ -152,7 +152,7 @@ export function HallMenuExperience() {
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
               <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              <span className="absolute bottom-3 left-3 right-3 text-left font-serif text-sm leading-tight sm:text-base">
+              <span className="absolute bottom-3 left-3 right-3 text-left font-sans text-base font-semibold leading-tight sm:text-xl">
                 {item.name}
               </span>
             </button>
@@ -171,7 +171,7 @@ export function HallMenuExperience() {
                   setKind(item.id);
                   setQuery("");
                 }}
-                className={`rounded-full px-5 py-2 text-sm transition ${
+                className={`rounded-full px-5 py-2.5 text-base font-medium transition ${
                   kind === item.id
                     ? "bg-[#f3ead8] text-[#171611]"
                     : "text-[#cfc6b6]"
@@ -188,7 +188,7 @@ export function HallMenuExperience() {
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Найти в меню"
               aria-label="Поиск по меню"
-              className="w-full bg-transparent text-sm text-[#f6f1e8] outline-none placeholder:text-[#8d8578]"
+              className="w-full bg-transparent text-base text-[#f6f1e8] outline-none placeholder:text-[#8d8578]"
             />
           </label>
         </div>
@@ -199,7 +199,7 @@ export function HallMenuExperience() {
                 <a
                   key={section.id}
                   href={`#${section.id}`}
-                  className="shrink-0 rounded-full border border-[#cfc5b6]/35 px-3 py-1.5 text-xs text-[#ddd4c5] transition hover:bg-white/10"
+                  className="shrink-0 rounded-full border border-[#cfc5b6]/35 px-3.5 py-2 text-[15px] text-[#ddd4c5] transition hover:bg-white/10"
                 >
                   {section.title}
                 </a>
@@ -225,7 +225,7 @@ export function HallMenuExperience() {
                   {section.title}
                 </h2>
                 {section.note ? (
-                  <p className="mt-2 text-sm text-[#b8b0a3]">{section.note}</p>
+                  <p className="mt-2 text-base text-[#c8c0b3]">{section.note}</p>
                 ) : null}
               </div>
             </div>
@@ -233,16 +233,16 @@ export function HallMenuExperience() {
               {section.items.map((item) => (
                 <article
                   key={item.name}
-                  className={`grid items-start gap-4 border-t border-[#d2c9bc]/20 py-5 ${
+                  className={`grid items-start gap-4 border-t border-[#d2c9bc]/20 py-6 ${
                     item.photo
-                      ? "grid-cols-[92px_minmax(0,1fr)_auto] sm:grid-cols-[126px_minmax(0,1fr)_auto]"
+                      ? "grid-cols-[104px_minmax(0,1fr)_auto] sm:grid-cols-[140px_minmax(0,1fr)_auto]"
                       : "grid-cols-[minmax(0,1fr)_auto]"
                   }`}
                 >
                   {item.photo ? (
                     <button
                       type="button"
-                      className="relative h-[72px] overflow-hidden rounded-sm bg-[#2a2722] sm:h-[94px]"
+                      className="relative h-[84px] overflow-hidden rounded-sm bg-[#2a2722] sm:h-[108px]"
                       onClick={() => openLightbox(item, setLightbox)}
                       aria-label={`Открыть фотографию: ${item.name}`}
                     >
@@ -250,27 +250,27 @@ export function HallMenuExperience() {
                         src={item.photo}
                         alt={item.name}
                         fill
-                        sizes="126px"
+                        sizes="140px"
                         className="object-cover transition duration-500 hover:scale-105"
                       />
                     </button>
                   ) : null}
                   <div className="min-w-0">
-                    <h3 className="font-serif text-[1.15rem] leading-snug">
+                    <h3 className="font-sans text-[1.4rem] font-semibold leading-snug tracking-tight text-[#f6f1e8] sm:text-[1.65rem]">
                       {item.name}
                     </h3>
                     {item.desc ? (
-                      <p className="mt-1.5 max-w-md text-xs leading-relaxed text-[#b8b0a3]">
+                      <p className="mt-2 max-w-md text-[15px] leading-relaxed text-[#d4ccc0] sm:text-base">
                         {item.desc}
                       </p>
                     ) : null}
                     {item.note ? (
-                      <small className="mt-1.5 block text-[10px] uppercase tracking-[0.12em] text-[#8b8377]">
+                      <small className="mt-2 block text-[13px] uppercase tracking-[0.12em] text-[#c2b9ab]">
                         {item.note}
                       </small>
                     ) : null}
                   </div>
-                  <strong className="whitespace-nowrap pt-1 text-sm font-medium">
+                  <strong className="whitespace-nowrap pt-1 text-lg font-semibold sm:text-xl">
                     {item.price}
                   </strong>
                 </article>
@@ -298,8 +298,8 @@ export function HallMenuExperience() {
             </p>
           </div>
           <Link
-            href="/order"
-            className="mt-6 inline-flex rounded-full bg-[#f3ead8] px-6 py-3 text-sm font-semibold text-[#171611] transition hover:bg-white sm:mt-0"
+            href="/"
+            className="mt-6 inline-flex rounded-full bg-[#f3ead8] px-6 py-3 text-base font-semibold text-[#171611] transition hover:bg-white sm:mt-0"
           >
             Оформить заказ
           </Link>
@@ -367,7 +367,7 @@ export function HallMenuExperience() {
                 </button>
               </div>
             ) : null}
-            <p className="mt-4 text-center font-serif text-xl">{lightbox.name}</p>
+            <p className="mt-4 text-center font-sans text-2xl font-semibold">{lightbox.name}</p>
           </div>
         </div>
       ) : null}

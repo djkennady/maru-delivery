@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Clock, Flame, Percent, Sparkles } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useMenu } from "@/context/MenuContext";
@@ -63,6 +64,12 @@ export function HeroBanner() {
                 <Percent className="h-3.5 w-3.5" />
                 Скидка 10% при самовывозе
               </span>
+              <Link
+                href="/menu"
+                className="inline-flex items-center rounded-full bg-white px-4 py-2 text-xs font-bold text-neutral-900 transition hover:bg-orange-100"
+              >
+                Меню в зале
+              </Link>
             </div>
           </div>
 

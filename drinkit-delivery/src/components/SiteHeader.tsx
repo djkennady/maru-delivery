@@ -55,9 +55,9 @@ export function SiteHeader({
           <div className="flex shrink-0 items-center gap-2">
             <Link
               href="/menu"
-              className="rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)] hover:text-[var(--text)]"
+              className="rounded-full bg-[var(--accent-warm)] px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-orange-600"
             >
-              Меню
+              Меню в зале
             </Link>
             <Link
               href="/account"
