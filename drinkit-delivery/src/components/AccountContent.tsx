@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Clock, CreditCard, Gift, Package, Phone, User } from "lucide-react";
 import { LoyaltyBonusCard } from "@/components/LoyaltyBonusCard";
+import { SHOW_LOYALTY_BONUSES } from "@/lib/fulfillment";
 import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
 import {
@@ -128,9 +129,9 @@ export function AccountContent() {
 
   return (
     <div className="mx-auto max-w-lg space-y-6 px-4 py-5 pb-10">
-      <LoyaltyBonusCard />
+      {SHOW_LOYALTY_BONUSES ? <LoyaltyBonusCard /> : null}
 
-      {activeRewards.length > 0 && (
+      {SHOW_LOYALTY_BONUSES && activeRewards.length > 0 && (
         <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
           <div className="mb-3 flex items-center gap-2">
             <Gift className="h-5 w-5 text-[var(--accent-warm)]" />

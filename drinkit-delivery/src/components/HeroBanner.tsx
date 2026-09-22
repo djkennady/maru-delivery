@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { Clock, Flame, Sparkles, Truck } from "lucide-react";
+import { Clock, Flame, Percent, Sparkles } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { useMenu } from "@/context/MenuContext";
 import { heroPoster, heroThumbs, heroVideo } from "@/lib/media";
 
 export function HeroBanner() {
   const { settings } = useMenu();
-  const { estimatedMinutes, freeDeliveryFrom } = settings;
+  const { estimatedMinutes } = settings;
 
   return (
     <section className="px-4 pb-2 pt-4">
@@ -50,7 +50,7 @@ export function HeroBanner() {
             </h1>
 
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/85">
-              Авторский кофе, домашняя еда и десерты — доставим горячим за{" "}
+              Авторский кофе, домашняя еда и десерты — заберите горячим за{" "}
               {estimatedMinutes} минут
             </p>
 
@@ -60,8 +60,8 @@ export function HeroBanner() {
                 {estimatedMinutes} мин
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-2 text-xs font-semibold backdrop-blur-md">
-                <Truck className="h-3.5 w-3.5" />
-                Бесплатно от {freeDeliveryFrom} ₽
+                <Percent className="h-3.5 w-3.5" />
+                Скидка 10% при самовывозе
               </span>
             </div>
           </div>

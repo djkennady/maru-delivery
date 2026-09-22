@@ -11,6 +11,7 @@ import { SbpPaymentPanel } from "@/components/SbpPaymentPanel";
 import { useCart } from "@/context/CartContext";
 import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
+import { SHOW_LOYALTY_BONUSES } from "@/lib/fulfillment";
 import {
   buildGiftBonusItem,
   calculateGiftDiscount,
@@ -153,6 +154,7 @@ export function CheckoutForm() {
   const {
     items,
     subtotal,
+    pickupDiscount,
     deliveryFee: cartDeliveryFee,
     isFreeDelivery,
     updateQuantity,
@@ -198,8 +200,9 @@ export function CheckoutForm() {
     }
   }, [availableGifts, selectedGiftId]);
 
-  const selectedGift =
-    availableGifts.find((gift) => gift.id === selectedGiftId) ?? null;
+  const selectedGift = SHOW_LOYALTY_BONUSES
+    ? availableGifts.find((gift) => gift.id === selectedGiftId) ?? null
+    : null;
   const giftEffect = selectedGift
     ? calculateGiftDiscount(
         selectedGift,
@@ -215,7 +218,11 @@ export function CheckoutForm() {
       : null;
   const deliveryFee = giftEffect?.deliveryFee ?? cartDeliveryFee;
   const giftDiscount = giftEffect?.discount ?? 0;
-  const total = calculateOrderTotal(subtotal, deliveryFee, giftDiscount);
+  const total = calculateOrderTotal(
+    subtotal,
+    deliveryFee,
+    giftDiscount + pickupDiscount,
+  );
   const orderItems = bonusItem ? [...items, bonusItem] : items;
 
   const placeOrder = async (payment: {
@@ -245,12 +252,12 @@ export function CheckoutForm() {
       body: JSON.stringify({
         name,
         phone,
-        address,
+        address: address.trim() || "Самовывоз",
         comment: orderComment || undefined,
         items: orderItems,
         subtotal,
         deliveryFee,
-        giftDiscount: giftDiscount || undefined,
+        giftDiscount: giftDiscount + pickupDiscount || undefined,
         appliedGift,
         total,
         ...payment,
@@ -349,12 +356,12 @@ export function CheckoutForm() {
           paymentId: paymentData.paymentId,
           name,
           phone,
-          address,
+          address: address.trim() || "Самовывоз",
           comment: comment.trim() || undefined,
           items: orderItems,
           subtotal,
           deliveryFee,
-          giftDiscount: giftDiscount || undefined,
+          giftDiscount: giftDiscount + pickupDiscount || undefined,
           appliedGift: selectedGift
             ? {
                 id: selectedGift.id,
@@ -574,7 +581,7 @@ export function CheckoutForm() {
           Заказ принят!
         </h2>
         <p className="mt-2 text-sm text-[var(--muted)]">
-          Оплата прошла успешно. Курьер уже готовится к выезду.
+          Оплата прошла успешно. Заказ готовится к самовывозу.
           {successGiftTitle && ` Подарок «${successGiftTitle}» применён и списан.`}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -612,15 +619,17 @@ export function CheckoutForm() {
         )}
       </section>
 
-      <GiftSelector
-        gifts={availableGifts}
-        selectedGiftId={selectedGiftId}
-        onSelect={setSelectedGiftId}
-        subtotal={subtotal}
-        baseDeliveryFee={cartDeliveryFee}
-        isFreeDelivery={isFreeDelivery}
-        getProduct={getProduct}
-      />
+      {SHOW_LOYALTY_BONUSES ? (
+        <GiftSelector
+          gifts={availableGifts}
+          selectedGiftId={selectedGiftId}
+          onSelect={setSelectedGiftId}
+          subtotal={subtotal}
+          baseDeliveryFee={cartDeliveryFee}
+          isFreeDelivery={isFreeDelivery}
+          getProduct={getProduct}
+        />
+      ) : null}
 
       <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
         <div className="space-y-2 text-sm">
@@ -640,9 +649,15 @@ export function CheckoutForm() {
               <span>−{formatPrice(giftDiscount)}</span>
             </div>
           )}
+          {pickupDiscount > 0 && (
+            <div className="flex justify-between text-[var(--accent)]">
+              <span>Скидка 10% за самовывоз</span>
+              <span>−{formatPrice(pickupDiscount)}</span>
+            </div>
+          )}
           <div className="flex justify-between text-[var(--muted)]">
-            <span>Доставка</span>
-            <span>{deliveryFee === 0 ? "Бесплатно" : formatPrice(deliveryFee)}</span>
+            <span>Самовывоз</span>
+            <span>Бесплатно</span>
           </div>
           <div className="flex justify-between border-t border-[var(--border)] pt-2 text-base font-bold text-[var(--text)]">
             <span>Итого</span>
@@ -652,7 +667,7 @@ export function CheckoutForm() {
       </section>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h2 className="text-lg font-bold text-[var(--text)]">Доставка</h2>
+        <h2 className="text-lg font-bold text-[var(--text)]">Самовывоз</h2>
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-[var(--text)]">
@@ -682,13 +697,12 @@ export function CheckoutForm() {
 
         <label className="block">
           <span className="mb-1.5 block text-sm font-medium text-[var(--text)]">
-            Адрес
+            Комментарий к самовывозу
           </span>
           <input
-            required
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Улица, дом, квартира, подъезд"
+            placeholder="Необязательно"
             className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
           />
         </label>

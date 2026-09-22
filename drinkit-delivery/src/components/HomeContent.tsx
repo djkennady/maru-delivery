@@ -9,6 +9,7 @@ import { VisualGallery } from "@/components/VisualGallery";
 import { MenuSection } from "@/components/MenuSection";
 import { ProductModal } from "@/components/ProductModal";
 import { CartBar } from "@/components/CartBar";
+import { SHOW_LOYALTY_BONUSES } from "@/lib/fulfillment";
 import type { Product } from "@/types/menu";
 
 export function HomeContent() {
@@ -17,7 +18,7 @@ export function HomeContent() {
   return (
     <>
       <HeroBanner />
-      <LoyaltyBonusCard />
+      {SHOW_LOYALTY_BONUSES ? <LoyaltyBonusCard /> : null}
       <PersonalizedGreeting onSelect={setSelectedProduct} />
       <PromoBanners />
       <VisualGallery />

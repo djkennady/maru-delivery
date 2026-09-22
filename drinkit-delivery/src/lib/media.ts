@@ -61,11 +61,11 @@ export const promos = [
     image: pexels(3491546, 500),
   },
   {
-    id: "delivery",
-    title: "Бесплатная доставка",
-    subtitle: "При заказе от 800 ₽",
+    id: "pickup",
+    title: "Скидка 10%",
+    subtitle: "При самовывозе с каждого заказа",
     gradient: "from-violet-500 to-purple-600",
-    emoji: "🚀",
+    emoji: "🛍️",
     image: pexels(1640777, 500),
   },
 ] as const;

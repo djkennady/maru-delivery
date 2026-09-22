@@ -253,7 +253,7 @@ async function formatOrderHtml(order: OrderRecord, title: string): Promise<strin
     parts.push(`🎁 ${escapeHtml(order.appliedGift.emoji)} ${escapeHtml(order.appliedGift.title)}`);
   }
   if (order.deliveryFee === 0) {
-    parts.push("🚚 Доставка бесплатно");
+    parts.push("🛍️ Самовывоз");
   } else {
     parts.push(`🚚 Доставка ${formatPrice(order.deliveryFee)}`);
   }

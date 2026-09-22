@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { useMenu } from "@/context/MenuContext";
+import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import {
   createCartItemId,
   getCartItemCount,
@@ -27,6 +28,7 @@ interface CartContextValue {
   items: CartItem[];
   itemCount: number;
   subtotal: number;
+  pickupDiscount: number;
   deliveryFee: number;
   total: number;
   isFreeDelivery: boolean;
@@ -122,9 +124,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clearCart = useCallback(() => setItems([]), []);
 
   const subtotal = useMemo(() => getCartSubtotal(items), [items]);
-  const isFreeDelivery = subtotal >= settings.freeDeliveryFrom;
-  const deliveryFee = isFreeDelivery ? 0 : settings.deliveryFee;
-  const total = subtotal + deliveryFee;
+  const pickupDiscount =
+    FULFILLMENT_MODE === "pickup" ? getPickupDiscount(subtotal) : 0;
+  const isFreeDelivery =
+    FULFILLMENT_MODE === "pickup" || subtotal >= settings.freeDeliveryFrom;
+  const deliveryFee =
+    FULFILLMENT_MODE === "pickup" ? 0 : isFreeDelivery ? 0 : settings.deliveryFee;
+  const total = Math.max(0, subtotal - pickupDiscount) + deliveryFee;
   const itemCount = useMemo(() => getCartItemCount(items), [items]);
 
   const value = useMemo(
@@ -132,6 +138,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       items,
       itemCount,
       subtotal,
+      pickupDiscount,
       deliveryFee,
       total,
       isFreeDelivery,
@@ -144,6 +151,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       items,
       itemCount,
       subtotal,
+      pickupDiscount,
       deliveryFee,
       total,
       isFreeDelivery,

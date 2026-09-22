@@ -44,7 +44,7 @@ export function SiteHeader({
                 ) : null}
                 <span className="flex items-center gap-1 truncate text-xs text-[var(--muted)]">
                   <MapPin className="h-3 w-3 shrink-0" />
-                  Алабуга · доставка
+                  Алабуга · самовывоз
                 </span>
               </p>
             </>
