@@ -53,12 +53,12 @@ export const promos = [
     image: pexels(302899, 500),
   },
   {
-    id: "combo",
-    title: "Кофе + круассан",
-    subtitle: "Комбо всего за 390 ₽",
+    id: "combo-lunch",
+    title: "Комбообеды",
+    subtitle: "От 450 ₽",
     gradient: "from-emerald-500 to-teal-500",
-    emoji: "🥐",
-    image: pexels(3491546, 500),
+    emoji: "🍱",
+    image: pexels(1640777, 500),
   },
   {
     id: "pickup",
