@@ -13,11 +13,11 @@ export function HallHub() {
     <div className="hall-theme relative z-10 min-h-screen bg-[#12110e] text-[#f6f1e8]">
       <section className="relative isolate overflow-hidden">
         <Image
-          src="/hall-menu/og.png"
-          alt="МАРУ — кухня и кофе"
+          src="/hall-menu/dishes/0005.webp"
+          alt=""
           fill
           priority
-          className="hall-ken object-cover opacity-50"
+          className="hall-ken object-cover opacity-40"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-[#12110e]/40 to-[#12110e]" />

@@ -78,11 +78,11 @@ export function HallMenuExperience() {
     <div className="hall-theme relative z-10 min-h-screen bg-[#12110e] text-[#f6f1e8]">
       <header className="relative isolate min-h-[88vh] overflow-hidden">
         <Image
-          src="/hall-menu/og.png"
+          src="/hall-menu/dishes/0005.webp"
           alt=""
           fill
           priority
-          className="hall-ken object-cover opacity-55"
+          className="hall-ken object-cover opacity-45"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-[#12110e]/45 to-[#12110e]" />
