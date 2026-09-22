@@ -54,6 +54,12 @@ export function SiteHeader({
         {!showBack && (
           <div className="flex shrink-0 items-center gap-2">
             <Link
+              href="/menu"
+              className="rounded-full px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--muted)] hover:text-[var(--text)]"
+            >
+              Меню
+            </Link>
+            <Link
               href="/account"
               className={`flex h-10 w-10 items-center justify-center rounded-full transition ${
                 hasProfile

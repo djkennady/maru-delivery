@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Rubik } from "next/font/google";
+import { Cormorant_Garamond, Inter, Rubik } from "next/font/google";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CartProvider } from "@/context/CartContext";
@@ -18,9 +18,17 @@ const rubik = Rubik({
   variable: "--font-brand",
 });
 
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "cyrillic"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+
 export const metadata: Metadata = {
-  title: "МАРУ — доставка кофе и еды",
-  description: "МАРУ — закажите кофе, чай, еду и десерты с доставкой за 25–40 минут",
+  title: "МАРУ — кухня и кофе",
+  description:
+    "МАРУ в Алабуге: меню в зале и самовывоз со скидкой 10%. Завтраки, кухня, кофе и десерты.",
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",
@@ -33,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${rubik.variable} h-full`}>
+    <html lang="ru" className={`${inter.variable} ${rubik.variable} ${cormorant.variable} h-full`}>
       <body
         data-deploy="bg-anim-2026-08-28"
         className="relative min-h-full max-w-full overflow-x-clip font-sans text-[var(--text)] antialiased"
