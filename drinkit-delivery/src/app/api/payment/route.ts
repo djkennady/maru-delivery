@@ -6,14 +6,12 @@ import {
   syncSbpSessionWithBank,
 } from "@/lib/sbp-payments-store";
 import { decodeSbpQrStorage } from "@/lib/alfa-sbp";
-import { normalizePaymentOrderDraft } from "@/lib/payment-order-draft";
+import { jsonFromError, readJsonBody } from "@/lib/api-error";
+import { quoteCheckout } from "@/lib/checkout-quote";
+import { getMenu } from "@/lib/menu-store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : "Server error";
-}
 
 async function paidOrPending(paymentId: string) {
   const session =
@@ -25,14 +23,15 @@ async function paidOrPending(paymentId: string) {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = await readJsonBody(request);
+    const payload = body && typeof body === "object" ? (body as Record<string, unknown>) : {};
 
-    if (body.action === "confirm") {
-      if (!body.paymentId) {
+    if (payload.action === "confirm") {
+      if (!payload.paymentId || typeof payload.paymentId !== "string") {
         return NextResponse.json({ error: "Payment ID required" }, { status: 400 });
       }
 
-      const result = await paidOrPending(body.paymentId);
+      const result = await paidOrPending(payload.paymentId);
       if (!result) {
         return NextResponse.json({ error: "Payment not found" }, { status: 404 });
       }
@@ -62,26 +61,19 @@ export async function POST(request: Request) {
       });
     }
 
-    if (typeof body.amount !== "number" || !body.phone) {
-      return NextResponse.json({ error: "Invalid payment data" }, { status: 400 });
-    }
-
-    const order = normalizePaymentOrderDraft(body.order);
-    if (!order) {
-      return NextResponse.json({ error: "Invalid order" }, { status: 400 });
-    }
-
-    const pageView = body.pageView === "MOBILE" ? "MOBILE" : "DESKTOP";
+    const menu = await getMenu();
+    const quoted = quoteCheckout(payload, menu, { requireAmount: true });
+    const pageView = payload.pageView === "MOBILE" ? "MOBILE" : "DESKTOP";
     const { session, paymentUrl } = await createCardSession(
-      body.amount,
-      body.phone,
+      quoted.amount,
+      quoted.draft.phone,
       pageView,
-      order,
+      quoted.draft,
     );
 
     return NextResponse.json({ session, paymentUrl, paymentId: session.id });
   } catch (error) {
-    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
+    return jsonFromError(error);
   }
 }
 
@@ -108,6 +100,6 @@ export async function GET(request: Request) {
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
-    return NextResponse.json({ error: errorMessage(error) }, { status: 500 });
+    return jsonFromError(error);
   }
 }

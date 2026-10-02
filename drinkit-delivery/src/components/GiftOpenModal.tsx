@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Gift, Sparkles, X } from "lucide-react";
+import { useState } from "react";
+import { Sparkles, X } from "lucide-react";
 import {
   LOYALTY_GIFT_OPTIONS,
   type LoyaltyGiftOption,
@@ -20,16 +20,28 @@ export function GiftOpenModal({
   onClose,
   onClaim,
 }: GiftOpenModalProps) {
+  if (!milestone) return null;
+  return (
+    <GiftOpenModalBody
+      key={milestone}
+      milestone={milestone}
+      onClose={onClose}
+      onClaim={onClaim}
+    />
+  );
+}
+
+function GiftOpenModalBody({
+  milestone,
+  onClose,
+  onClaim,
+}: {
+  milestone: LoyaltyMilestoneAmount;
+  onClose: () => void;
+  onClaim: (milestone: LoyaltyMilestoneAmount, reward: LoyaltyGiftOption) => void;
+}) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
-
-  useEffect(() => {
-    if (!milestone) return;
-    setSelectedId(null);
-    setRevealed(false);
-  }, [milestone]);
-
-  if (!milestone) return null;
 
   const options = LOYALTY_GIFT_OPTIONS[milestone];
   const selected = options.find((option) => option.id === selectedId) ?? null;

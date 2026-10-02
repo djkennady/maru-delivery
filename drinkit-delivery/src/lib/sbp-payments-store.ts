@@ -19,8 +19,9 @@ import {
   isCloudRuntime,
   isSupabaseEnabled,
 } from "@/lib/supabase-server";
+import { ClientError } from "@/lib/api-error";
 import type { PaymentOrderDraft } from "@/types/user";
-import { savePaymentOrderDraft } from "@/lib/payment-order-draft";
+import { savePaymentOrderDraftIfAbsent } from "@/lib/payment-order-draft";
 
 export type SbpPaymentStatus = "pending" | "paid" | "expired";
 
@@ -109,7 +110,10 @@ export async function createSbpSession(
   assertPersistentStorageAvailable();
 
   if (amount <= 0) {
-    throw new Error("Invalid amount");
+    throw new ClientError("Invalid amount");
+  }
+  if (draft && draft.total !== amount) {
+    throw new ClientError("Payment amount does not match order total");
   }
 
   const now = Date.now();
@@ -142,7 +146,7 @@ export async function createSbpSession(
   if (isSupabaseEnabled()) {
     const supabase = getSupabaseServerClient();
     if (!supabase) {
-      if (draft) await savePaymentOrderDraft(session.id, draft);
+      if (draft) await savePaymentOrderDraftIfAbsent(session.id, draft);
       return session;
     }
 
@@ -162,7 +166,7 @@ export async function createSbpSession(
     }
 
     if (draft) {
-      await savePaymentOrderDraft(session.id, draft);
+      await savePaymentOrderDraftIfAbsent(session.id, draft);
     }
     return session;
   }
@@ -171,7 +175,7 @@ export async function createSbpSession(
   sessions.unshift(session);
   await writeSessions(sessions.slice(0, 100));
   if (draft) {
-    await savePaymentOrderDraft(session.id, draft);
+    await savePaymentOrderDraftIfAbsent(session.id, draft);
   }
   return session;
 }
@@ -214,7 +218,10 @@ export async function createCardSession(
   assertPersistentStorageAvailable();
 
   if (amount <= 0) {
-    throw new Error("Invalid amount");
+    throw new ClientError("Invalid amount");
+  }
+  if (draft && draft.total !== amount) {
+    throw new ClientError("Payment amount does not match order total");
   }
   if (!isAlfaSbpConfigured()) {
     throw new Error(
@@ -245,7 +252,7 @@ export async function createCardSession(
 
   await persistSession(session);
   if (draft) {
-    await savePaymentOrderDraft(session.id, draft);
+    await savePaymentOrderDraftIfAbsent(session.id, draft);
   }
   return { session, paymentUrl: alfa.formUrl };
 }

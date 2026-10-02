@@ -12,6 +12,7 @@ import { useCart } from "@/context/CartContext";
 import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
 import { SHOW_LOYALTY_BONUSES } from "@/lib/fulfillment";
+import { runDeferred } from "@/lib/run-deferred";
 import {
   buildGiftBonusItem,
   calculateGiftDiscount,
@@ -161,13 +162,13 @@ export function CheckoutForm() {
     removeItem,
     clearCart,
   } = useCart();
-  const { profile, prependOrder, updateProfile, availableGifts, useGift } =
+  const { profile, prependOrder, updateProfile, availableGifts, redeemGift } =
     useUser();
   const { getProduct } = useMenu();
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState(profile.name);
+  const [phone, setPhone] = useState(profile.phone);
+  const [address, setAddress] = useState(profile.address);
   const [comment, setComment] = useState("");
   const [selectedGiftId, setSelectedGiftId] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("card");
@@ -187,21 +188,26 @@ export function CheckoutForm() {
     return new URLSearchParams(window.location.search).has("cardSession");
   });
 
-  useEffect(() => {
-    if (profile.name) setName(profile.name);
-    if (profile.phone) setPhone(profile.phone);
-    if (profile.address) setAddress(profile.address);
-  }, [profile.name, profile.phone, profile.address]);
+  if (profile.name && profile.name !== name && !name) {
+    setName(profile.name);
+  }
+  if (profile.phone && profile.phone !== phone && !phone) {
+    setPhone(profile.phone);
+  }
+  if (profile.address && profile.address !== address && !address) {
+    setAddress(profile.address);
+  }
 
-  useEffect(() => {
-    if (!selectedGiftId) return;
-    if (!availableGifts.some((gift) => gift.id === selectedGiftId)) {
-      setSelectedGiftId(null);
-    }
-  }, [availableGifts, selectedGiftId]);
+  const validGiftId =
+    selectedGiftId && availableGifts.some((gift) => gift.id === selectedGiftId)
+      ? selectedGiftId
+      : null;
+  if (selectedGiftId && !validGiftId) {
+    setSelectedGiftId(null);
+  }
 
   const selectedGift = SHOW_LOYALTY_BONUSES
-    ? availableGifts.find((gift) => gift.id === selectedGiftId) ?? null
+    ? availableGifts.find((gift) => gift.id === validGiftId) ?? null
     : null;
   const giftEffect = selectedGift
     ? calculateGiftDiscount(
@@ -302,7 +308,7 @@ export function CheckoutForm() {
       throw new Error("Не удалось сохранить заказ");
     }
     if (selectedGift) {
-      useGift(selectedGift.id, data.order.id);
+      redeemGift(selectedGift.id, data.order.id);
     }
     prependOrder(data.order);
     updateProfile({ name, phone, address });
@@ -342,7 +348,7 @@ export function CheckoutForm() {
       throw new Error("Не удалось сохранить заказ");
     }
     if (draft.appliedGift) {
-      useGift(draft.appliedGift.id, data.order.id);
+      redeemGift(draft.appliedGift.id, data.order.id);
     }
     prependOrder(data.order);
     updateProfile({
@@ -530,18 +536,19 @@ export function CheckoutForm() {
     const sessionId = params.get("cardSession");
     if (!sessionId) return;
 
-    if (params.get("failed") === "1") {
-      setError("Оплата картой не прошла. Можно выбрать другой способ или попробовать снова.");
-      sessionStorage.removeItem(CARD_DRAFT_KEY);
-      window.history.replaceState({}, "", "/checkout");
-      return;
-    }
+    return runDeferred(() => {
+      if (params.get("failed") === "1") {
+        setError("Оплата картой не прошла. Можно выбрать другой способ или попробовать снова.");
+        sessionStorage.removeItem(CARD_DRAFT_KEY);
+        window.history.replaceState({}, "", "/checkout");
+        return;
+      }
 
-    placingCardOrder.current = true;
-    setSubmitting(true);
-    setError("");
+      placingCardOrder.current = true;
+      setSubmitting(true);
+      setError("");
 
-    const waitForPaid = async () => {
+      const waitForPaid = async () => {
       for (let attempt = 0; attempt < 12; attempt += 1) {
         const confirmRes = await fetch("/api/payment", {
           method: "POST",
@@ -586,18 +593,19 @@ export function CheckoutForm() {
       );
     };
 
-    void waitForPaid()
-      .catch((error: unknown) => {
-        placingCardOrder.current = false;
-        setError(
-          error instanceof Error
-            ? error.message
-            : "Не удалось завершить оплату картой.",
-        );
-      })
-      .finally(() => {
-        setSubmitting(false);
-      });
+      void waitForPaid()
+        .catch((error: unknown) => {
+          placingCardOrder.current = false;
+          setError(
+            error instanceof Error
+              ? error.message
+              : "Не удалось завершить оплату картой.",
+          );
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+    });
     // placeCardOrderFromDraft is recreated each render
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [success]);

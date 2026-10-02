@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAdminPassword, isAuthorizedAdmin } from "@/lib/admin-auth";
+import { jsonFromError, readJsonBody } from "@/lib/api-error";
 import { getAllOrders } from "@/lib/orders-store";
 
 export async function GET(request: Request) {
@@ -17,14 +18,15 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-
-    if (body.password !== getAdminPassword()) {
+    const body = await readJsonBody(request);
+    const payload = body && typeof body === "object" ? (body as Record<string, unknown>) : {};
+    const expected = getAdminPassword();
+    if (!expected || payload.password !== expected) {
       return NextResponse.json({ error: "Invalid password" }, { status: 401 });
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    return jsonFromError(error);
   }
 }

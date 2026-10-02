@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { runDeferred } from "@/lib/run-deferred";
 import type { LoyaltyGiftOption, LoyaltyMilestoneAmount, ClaimedGift } from "@/lib/loyalty-gifts";
 import {
   createClaimedGiftId,
@@ -36,7 +37,7 @@ interface UserContextValue {
     milestone: LoyaltyMilestoneAmount,
     reward: LoyaltyGiftOption,
   ) => void;
-  useGift: (giftId: string, orderId: string) => void;
+  redeemGift: (giftId: string, orderId: string) => void;
   availableGifts: ClaimedGift[];
 }
 
@@ -69,17 +70,25 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const loyaltyPeriodId = getLoyaltyPeriodId();
 
   useEffect(() => {
-    const loadedProfile = loadProfile();
-    setProfile(loadedProfile);
-    setClaimedGifts(getClaimedGifts(loadedProfile.phone));
-    setHydrated(true);
+    return runDeferred(() => {
+      const loadedProfile = loadProfile();
+      setProfile(loadedProfile);
+      setClaimedGifts(getClaimedGifts(loadedProfile.phone));
+      setHydrated(true);
+    });
   }, []);
 
   useEffect(() => {
     if (!hydrated) return;
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-    setClaimedGifts(getClaimedGifts(profile.phone));
   }, [profile, hydrated]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    return runDeferred(() => {
+      setClaimedGifts(getClaimedGifts(profile.phone));
+    });
+  }, [hydrated, profile.phone]);
 
   const refreshOrders = useCallback(async () => {
     if (!profile.phone.trim()) {
@@ -102,7 +111,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    void refreshOrders();
+    return runDeferred(() => {
+      void refreshOrders();
+    });
   }, [hydrated, refreshOrders]);
 
   const updateProfile = useCallback((data: Partial<UserProfile>) => {
@@ -111,11 +122,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const prependOrder = useCallback((order: OrderRecord) => {
     setOrders((prev) => [order, ...prev.filter((item) => item.id !== order.id)]);
-    setProfile((prev) => ({
+    setProfile({
       name: order.name,
       phone: order.phone,
       address: order.address,
-    }));
+    });
   }, []);
 
   const claimGift = useCallback(
@@ -138,7 +149,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     [profile.phone, loyaltyPeriodId],
   );
 
-  const useGift = useCallback(
+  const redeemGift = useCallback(
     (giftId: string, orderId: string) => {
       if (!profile.phone.trim()) return;
       setClaimedGifts(markGiftUsed(profile.phone, giftId, orderId));
@@ -165,7 +176,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       refreshOrders,
       prependOrder,
       claimGift,
-      useGift,
+      redeemGift,
       availableGifts,
     }),
     [
@@ -179,7 +190,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       refreshOrders,
       prependOrder,
       claimGift,
-      useGift,
+      redeemGift,
       availableGifts,
     ],
   );

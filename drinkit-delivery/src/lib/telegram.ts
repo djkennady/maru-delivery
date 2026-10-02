@@ -380,7 +380,8 @@ function helpText(): string {
 }
 
 async function handleAuth(chat: TelegramChat, password: string): Promise<string> {
-  if (password !== getAdminPassword()) {
+  const expected = getAdminPassword();
+  if (!expected || password !== expected) {
     return "Неверный пароль. Возьмите его из входа в админку сайта.";
   }
 

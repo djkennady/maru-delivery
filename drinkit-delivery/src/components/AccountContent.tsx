@@ -100,16 +100,39 @@ function OrderCard({ order }: { order: OrderRecord }) {
 export function AccountContent() {
   const { profile, orders, availableGifts, ordersLoading, updateProfile, refreshOrders } =
     useUser();
+
+  return (
+    <AccountContentInner
+      key={`${profile.name}|${profile.phone}|${profile.address}`}
+      profile={profile}
+      orders={orders}
+      availableGifts={availableGifts}
+      ordersLoading={ordersLoading}
+      updateProfile={updateProfile}
+      refreshOrders={refreshOrders}
+    />
+  );
+}
+
+function AccountContentInner({
+  profile,
+  orders,
+  availableGifts,
+  ordersLoading,
+  updateProfile,
+  refreshOrders,
+}: {
+  profile: { name: string; phone: string; address: string };
+  orders: OrderRecord[];
+  availableGifts: ReturnType<typeof useUser>["availableGifts"];
+  ordersLoading: boolean;
+  updateProfile: ReturnType<typeof useUser>["updateProfile"];
+  refreshOrders: ReturnType<typeof useUser>["refreshOrders"];
+}) {
   const [name, setName] = useState(profile.name);
   const [phone, setPhone] = useState(profile.phone);
   const [address, setAddress] = useState(profile.address);
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    setName(profile.name);
-    setPhone(profile.phone);
-    setAddress(profile.address);
-  }, [profile]);
 
   useEffect(() => {
     const interval = setInterval(() => {

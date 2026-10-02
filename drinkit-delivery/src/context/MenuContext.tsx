@@ -10,6 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { DEFAULT_MENU } from "@/data/menu-defaults";
+import { runDeferred } from "@/lib/run-deferred";
 import type { Category, MenuData, Product } from "@/types/menu";
 
 interface MenuContextValue {
@@ -47,7 +48,9 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    void refresh();
+    return runDeferred(() => {
+      void refresh();
+    });
   }, [refresh]);
 
   const getProduct = useCallback(

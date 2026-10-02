@@ -51,7 +51,7 @@ export function slugify(text: string): string {
 }
 
 export function uniqueSlug(base: string, existing: Set<string>): string {
-  let slug = slugify(base);
+  const slug = slugify(base);
   if (!existing.has(slug)) return slug;
 
   let index = 2;

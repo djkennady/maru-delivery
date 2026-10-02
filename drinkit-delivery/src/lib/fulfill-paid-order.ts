@@ -32,6 +32,16 @@ export async function fulfillPaidPayment(
     return null;
   }
 
+  if (session.amount !== draft.total) {
+    console.error(
+      "[order] paid amount does not match checkout draft",
+      paymentId,
+      session.amount,
+      draft.total,
+    );
+    return null;
+  }
+
   const order = await createOrder({
     name: draft.name,
     phone: draft.phone,

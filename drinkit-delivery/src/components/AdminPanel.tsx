@@ -18,6 +18,7 @@ import {
 import { AdminMenuManager } from "@/components/AdminMenuManager";
 import { useMenu } from "@/context/MenuContext";
 import { ADMIN_TOKEN_KEY, getAdminHeaders } from "@/lib/admin-client";
+import { runDeferred } from "@/lib/run-deferred";
 import {
   ORDER_STATUSES,
   ORDER_STATUS_LABELS,
@@ -150,7 +151,9 @@ export function AdminPanel() {
   const [telegramNote, setTelegramNote] = useState("");
 
   useEffect(() => {
-    setAuthed(Boolean(sessionStorage.getItem(ADMIN_TOKEN_KEY)));
+    return runDeferred(() => {
+      setAuthed(Boolean(sessionStorage.getItem(ADMIN_TOKEN_KEY)));
+    });
   }, []);
 
   const loadOrders = useCallback(async () => {
@@ -180,9 +183,14 @@ export function AdminPanel() {
 
   useEffect(() => {
     if (!authed) return;
-    void loadOrders();
+    const stop = runDeferred(() => {
+      void loadOrders();
+    });
     const interval = setInterval(() => void loadOrders(), 15000);
-    return () => clearInterval(interval);
+    return () => {
+      stop();
+      clearInterval(interval);
+    };
   }, [authed, loadOrders]);
 
   const loadTelegram = useCallback(async () => {
@@ -209,7 +217,9 @@ export function AdminPanel() {
 
   useEffect(() => {
     if (!authed) return;
-    void loadTelegram();
+    return runDeferred(() => {
+      void loadTelegram();
+    });
   }, [authed, loadTelegram]);
 
   const handleLogin = async (e: React.FormEvent) => {

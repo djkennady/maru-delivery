@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useMenu } from "@/context/MenuContext";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
+import { runDeferred } from "@/lib/run-deferred";
 import {
   createCartItemId,
   getCartItemCount,
@@ -61,8 +62,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    setItems(loadStoredItems());
-    setHydrated(true);
+    return runDeferred(() => {
+      setItems(loadStoredItems());
+      setHydrated(true);
+    });
   }, []);
 
   useEffect(() => {

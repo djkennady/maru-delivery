@@ -45,6 +45,16 @@ async function readFileDrafts(): Promise<Record<string, PaymentOrderDraft>> {
   }
 }
 
+export async function savePaymentOrderDraftIfAbsent(
+  paymentId: string,
+  draft: PaymentOrderDraft,
+): Promise<PaymentOrderDraft> {
+  const existing = await getPaymentOrderDraft(paymentId);
+  if (existing) return existing;
+  await savePaymentOrderDraft(paymentId, draft);
+  return draft;
+}
+
 export async function savePaymentOrderDraft(
   paymentId: string,
   draft: PaymentOrderDraft,
@@ -56,15 +66,19 @@ export async function savePaymentOrderDraft(
     throw new Error("Invalid checkout draft");
   }
 
+  const existing = await getPaymentOrderDraft(paymentId);
+  if (existing) return;
+
   if (isSupabaseEnabled()) {
     const supabase = getSupabaseServerClient();
     if (!supabase) return;
-    const { error } = await supabase.from("app_state").upsert({
+    const { error } = await supabase.from("app_state").insert({
       key: `${STATE_PREFIX}${paymentId}`,
       value: draft,
       updated_at: new Date().toISOString(),
     });
     if (error) {
+      if (error.code === "23505") return;
       throw new Error(`Payment draft save failed: ${error.message}`);
     }
     return;
@@ -73,6 +87,7 @@ export async function savePaymentOrderDraft(
   const dir = path.dirname(DRAFTS_FILE);
   await fs.mkdir(dir, { recursive: true });
   const drafts = await readFileDrafts();
+  if (drafts[paymentId]) return;
   drafts[paymentId] = draft;
   await fs.writeFile(DRAFTS_FILE, JSON.stringify(drafts, null, 2), "utf-8");
 }

@@ -1,6 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
-type SupabaseClientLike = ReturnType<typeof createClient<any>>;
+type SupabaseClientLike = SupabaseClient;
 
 let cachedClient: SupabaseClientLike | null = null;
 

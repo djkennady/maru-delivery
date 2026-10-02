@@ -11,6 +11,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { getAdminAuthHeaders, getAdminHeaders } from "@/lib/admin-client";
+import { runDeferred } from "@/lib/run-deferred";
 import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import type { Category, Product, ProductInput, ProductTag } from "@/types/menu";
@@ -78,7 +79,9 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
   }, []);
 
   useEffect(() => {
-    void loadMenu();
+    return runDeferred(() => {
+      void loadMenu();
+    });
   }, [loadMenu]);
 
   const resetForm = () => {

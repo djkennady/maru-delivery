@@ -1,50 +1,36 @@
 import { NextResponse } from "next/server";
+import { jsonFromError, readJsonBody, ClientError } from "@/lib/api-error";
 import { confirmSbpSession } from "@/lib/sbp-payments-store";
 import { fulfillPaidPayment } from "@/lib/fulfill-paid-order";
-import { createOrder, getOrderByPaymentId, getOrdersByPhone } from "@/lib/orders-store";
-import { savePaymentOrderDraft } from "@/lib/payment-order-draft";
-import { syncOrderWithRkeeper } from "@/lib/rkeeper";
-import { ensureAdminsNotifiedAboutOrder } from "@/lib/telegram";
-import type { PaymentOrderDraft } from "@/types/user";
+import { getOrderByPaymentId, getOrdersByPhone } from "@/lib/orders-store";
+import { getPaymentOrderDraft } from "@/lib/payment-order-draft";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const body = await readJsonBody(request);
+    const payload = body && typeof body === "object" ? (body as Record<string, unknown>) : {};
+    const paymentId =
+      typeof payload.paymentId === "string" ? payload.paymentId.trim() : "";
 
-    if (
-      !body.name ||
-      !body.phone ||
-      !body.address ||
-      !body.items?.length ||
-      typeof body.total !== "number" ||
-      !body.paymentId ||
-      !body.paymentMethod
-    ) {
-      return NextResponse.json({ error: "Invalid order" }, { status: 400 });
+    if (!paymentId) {
+      throw new ClientError("Invalid order");
     }
 
-    const draft: PaymentOrderDraft = {
-      name: body.name,
-      phone: body.phone,
-      address: body.address,
-      comment: body.comment,
-      items: body.items,
-      subtotal: body.subtotal ?? body.total,
-      deliveryFee: body.deliveryFee ?? 0,
-      giftDiscount: body.giftDiscount,
-      appliedGift: body.appliedGift,
-      total: body.total,
-      paymentMethod: body.paymentMethod,
-    };
-    await savePaymentOrderDraft(body.paymentId, draft);
-
-    const existing = await getOrderByPaymentId(body.paymentId);
+    const existing = await getOrderByPaymentId(paymentId);
     if (existing) {
       return NextResponse.json({ order: existing });
     }
 
-    if (body.paymentMethod === "sbp" || body.paymentMethod === "card") {
-      const session = await confirmSbpSession(body.paymentId);
+    const draft = await getPaymentOrderDraft(paymentId);
+    if (!draft) {
+      throw new ClientError("Checkout draft not found");
+    }
+
+    if (draft.paymentMethod === "sbp" || draft.paymentMethod === "card") {
+      const session = await confirmSbpSession(paymentId);
       if (!session || session.status !== "paid") {
         return NextResponse.json(
           { error: "Оплата ещё не подтверждена банком." },
@@ -53,36 +39,20 @@ export async function POST(request: Request) {
       }
     }
 
-    const fulfilled = await fulfillPaidPayment(body.paymentId);
+    const fulfilled = await fulfillPaidPayment(paymentId);
     if (fulfilled) {
       return NextResponse.json({ order: fulfilled });
     }
 
-    const order = await createOrder({
-      ...draft,
-      paymentStatus: "paid",
-      cardLast4: body.cardLast4 ?? "----",
-      cardBrand: body.cardBrand ?? (body.paymentMethod === "sbp" ? "СБП" : "Card"),
-      paymentId: body.paymentId,
-    });
-
-    const rkeeper = await syncOrderWithRkeeper(order);
-
-    try {
-      await ensureAdminsNotifiedAboutOrder(order);
-    } catch (error) {
+    throw new ClientError("Не удалось сохранить заказ", 409);
+  } catch (error) {
+    if (!(error instanceof ClientError)) {
       console.error(
-        "[telegram] notify failed",
+        "[api/order POST]",
         error instanceof Error ? error.message : error,
       );
     }
-
-    return NextResponse.json({ order, rkeeper });
-  } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Не удалось сохранить заказ";
-    console.error("[api/order POST]", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return jsonFromError(error);
   }
 }
 
@@ -103,9 +73,6 @@ export async function GET(request: Request) {
     const orders = await getOrdersByPhone(phone);
     return NextResponse.json({ orders });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Не удалось загрузить заказы";
-    console.error("[api/order GET]", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return jsonFromError(error);
   }
 }

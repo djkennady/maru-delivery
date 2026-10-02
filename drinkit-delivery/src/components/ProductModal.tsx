@@ -34,18 +34,22 @@ const MILK_LABELS = {
 } as const;
 
 export function ProductModal({ product, onClose }: ProductModalProps) {
+  if (!product) return null;
+  return <ProductModalBody key={product.id} product={product} onClose={onClose} />;
+}
+
+function ProductModalBody({
+  product,
+  onClose,
+}: {
+  product: Product;
+  onClose: () => void;
+}) {
   const { addItem } = useCart();
   const [options, setOptions] = useState<CartItemOptions>(
-    product ? getDefaultOptions(product) : { size: "m", milk: "regular" },
+    getDefaultOptions(product),
   );
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    if (product) {
-      setOptions(getDefaultOptions(product));
-      setQuantity(1);
-    }
-  }, [product]);
 
   useEffect(() => {
     if (!product) return;
@@ -59,8 +63,6 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
       document.body.style.overflow = "";
     };
   }, [product, onClose]);
-
-  if (!product) return null;
 
   const unitPrice = getProductPrice(product, options);
   const availableSizes = SIZES.filter((size) => product.sizes?.[size]);

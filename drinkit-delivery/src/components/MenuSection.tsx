@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import { useMenu } from "@/context/MenuContext";
 import { getCategoryImage } from "@/lib/media";
@@ -35,9 +35,17 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
   );
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
 
+  const resolvedCategory =
+    categories.some((category) => category.id === activeCategory)
+      ? activeCategory
+      : (categories[0]?.id ?? activeCategory);
+  if (categories.length > 0 && resolvedCategory !== activeCategory) {
+    setActiveCategory(resolvedCategory);
+  }
+
   const filteredProducts = useMemo(
-    () => products.filter((p) => p.categoryId === activeCategory),
-    [products, activeCategory],
+    () => products.filter((p) => p.categoryId === resolvedCategory),
+    [products, resolvedCategory],
   );
 
   const groupedProducts = useMemo(
@@ -45,25 +53,23 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     [filteredProducts],
   );
 
-  const visibleGroups = useMemo(() => {
-    if (!activeGroup) return groupedProducts;
-    return groupedProducts.filter((group) => group.name === activeGroup);
-  }, [groupedProducts, activeGroup]);
+  const defaultGroup = groupedProducts[0]?.name ?? null;
+  const resolvedGroup =
+    activeGroup && groupedProducts.some((group) => group.name === activeGroup)
+      ? activeGroup
+      : defaultGroup;
+  if (resolvedGroup !== activeGroup) {
+    setActiveGroup(resolvedGroup);
+  }
 
-  const activeCategoryData = categories.find((c) => c.id === activeCategory);
+  const visibleGroups = useMemo(() => {
+    if (!resolvedGroup) return groupedProducts;
+    return groupedProducts.filter((group) => group.name === resolvedGroup);
+  }, [groupedProducts, resolvedGroup]);
+
+  const activeCategoryData = categories.find((c) => c.id === resolvedCategory);
   const categoryName = activeCategoryData?.name ?? "";
   const hasSubgroups = groupedProducts.length > 1;
-
-  useEffect(() => {
-    if (!categories.length) return;
-    if (!categories.some((category) => category.id === activeCategory)) {
-      setActiveCategory(categories[0].id);
-    }
-  }, [categories, activeCategory]);
-
-  useEffect(() => {
-    setActiveGroup(groupedProducts[0]?.name ?? null);
-  }, [activeCategory, groupedProducts]);
 
   return (
     <>
@@ -77,7 +83,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
           <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
             <div className="flex w-max gap-2">
               {categories.map((category) => {
-                const active = activeCategory === category.id;
+                const active = resolvedCategory === category.id;
                 return (
                   <button
                     key={category.id}
@@ -116,7 +122,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
             <div className="mt-3 w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
               <div className="flex w-max gap-2">
                 {groupedProducts.map((group) => {
-                  const active = activeGroup === group.name;
+                  const active = resolvedGroup === group.name;
                   return (
                     <button
                       key={group.name}
@@ -146,7 +152,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
       <section className="mx-auto w-full max-w-lg min-w-0 px-4 py-5 pb-32">
         <div className="relative mb-4 h-28 overflow-hidden rounded-[1.5rem]">
           <Image
-            src={getCategoryImage(activeCategory, activeCategoryData)}
+            src={getCategoryImage(resolvedCategory, activeCategoryData)}
             alt={categoryName}
             fill
             className="object-cover"
