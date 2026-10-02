@@ -22,6 +22,7 @@ import {
 import { ClientError } from "@/lib/api-error";
 import type { PaymentOrderDraft } from "@/types/user";
 import { savePaymentOrderDraftIfAbsent } from "@/lib/payment-order-draft";
+import { dataFile } from "@/lib/data-file";
 
 export type SbpPaymentStatus = "pending" | "paid" | "expired";
 
@@ -36,16 +37,18 @@ export interface SbpPaymentSession {
   paidAt?: string;
 }
 
-const SBP_FILE = path.join(process.cwd(), "data", "sbp-payments.json");
+function sbpFile(): string {
+  return dataFile("sbp-payments.json");
+}
 const SBP_TABLE = "sbp_payment_sessions";
 
 async function ensureStore() {
-  const dir = path.dirname(SBP_FILE);
+  const dir = path.dirname(sbpFile());
   await fs.mkdir(dir, { recursive: true });
   try {
-    await fs.access(SBP_FILE);
+    await fs.access(sbpFile());
   } catch {
-    await fs.writeFile(SBP_FILE, "[]", "utf-8");
+    await fs.writeFile(sbpFile(), "[]", "utf-8");
   }
 }
 
@@ -76,7 +79,7 @@ async function readSessions(): Promise<SbpPaymentSession[]> {
   }
 
   await ensureStore();
-  const raw = await fs.readFile(SBP_FILE, "utf-8");
+  const raw = await fs.readFile(sbpFile(), "utf-8");
   const parsed = JSON.parse(raw) as SbpPaymentSession[];
   return Array.isArray(parsed) ? parsed : [];
 }
@@ -84,7 +87,7 @@ async function readSessions(): Promise<SbpPaymentSession[]> {
 async function writeSessions(sessions: SbpPaymentSession[]) {
   if (isSupabaseEnabled()) return;
   await ensureStore();
-  await fs.writeFile(SBP_FILE, JSON.stringify(sessions, null, 2), "utf-8");
+  await fs.writeFile(sbpFile(), JSON.stringify(sessions, null, 2), "utf-8");
 }
 
 function createSessionId(prefix: "sbp" | "card"): string {

@@ -19,6 +19,7 @@ import {
   calculateOrderTotal,
 } from "@/lib/gift-discount";
 import { getProductImage } from "@/lib/media";
+import { applyLoadedProfile, profileSnapshotKey } from "@/lib/checkout-profile-fields";
 import { formatPrice } from "@/lib/pricing";
 import type { CartItem } from "@/types/menu";
 import type { AppliedGift, OrderRecord, PaymentMethod, PaymentOrderDraft } from "@/types/user";
@@ -183,19 +184,28 @@ export function CheckoutForm() {
   const [error, setError] = useState("");
   const placingSbpOrder = useRef(false);
   const placingCardOrder = useRef(false);
+  const [dirtyFields, setDirtyFields] = useState({
+    name: false,
+    phone: false,
+    address: false,
+  });
+  const [appliedProfileKey, setAppliedProfileKey] = useState("");
   const [resumingCard] = useState(() => {
     if (typeof window === "undefined") return false;
     return new URLSearchParams(window.location.search).has("cardSession");
   });
 
-  if (profile.name && profile.name !== name && !name) {
-    setName(profile.name);
-  }
-  if (profile.phone && profile.phone !== phone && !phone) {
-    setPhone(profile.phone);
-  }
-  if (profile.address && profile.address !== address && !address) {
-    setAddress(profile.address);
+  const nextProfileKey = profileSnapshotKey(profile);
+  if (nextProfileKey !== appliedProfileKey) {
+    setAppliedProfileKey(nextProfileKey);
+    const next = applyLoadedProfile(
+      { name, phone, address },
+      profile,
+      dirtyFields,
+    );
+    if (next.name !== name) setName(next.name);
+    if (next.phone !== phone) setPhone(next.phone);
+    if (next.address !== address) setAddress(next.address);
   }
 
   const validGiftId =
@@ -732,8 +742,12 @@ export function CheckoutForm() {
           </span>
           <input
             required
+            data-testid="checkout-name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setDirtyFields((current) => ({ ...current, name: true }));
+              setName(e.target.value);
+            }}
             className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
           />
         </label>
@@ -745,8 +759,12 @@ export function CheckoutForm() {
           <input
             required
             type="tel"
+            data-testid="checkout-phone"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => {
+              setDirtyFields((current) => ({ ...current, phone: true }));
+              setPhone(e.target.value);
+            }}
             placeholder="+7"
             className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
           />
@@ -757,8 +775,12 @@ export function CheckoutForm() {
             Комментарий к самовывозу
           </span>
           <input
+            data-testid="checkout-address"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={(e) => {
+              setDirtyFields((current) => ({ ...current, address: true }));
+              setAddress(e.target.value);
+            }}
             placeholder="Необязательно"
             className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
           />

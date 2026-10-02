@@ -7,6 +7,7 @@ import {
   getSupabaseServerClient,
   isSupabaseEnabled,
 } from "@/lib/supabase-server";
+import { dataFile } from "@/lib/data-file";
 import type {
   Category,
   CategoryInput,
@@ -16,20 +17,22 @@ import type {
   ProductTag,
 } from "@/types/menu";
 
-const MENU_FILE = path.join(process.cwd(), "data", "menu.json");
+function menuFile(): string {
+  return dataFile("menu.json");
+}
 const APP_STATE_TABLE = "app_state";
 const MENU_STATE_KEY = "menu";
 export const CURRENT_MENU_VERSION = 5;
 
 async function ensureStore() {
-  const dir = path.dirname(MENU_FILE);
+  const dir = path.dirname(menuFile());
   await fs.mkdir(dir, { recursive: true });
 
   try {
-    await fs.access(MENU_FILE);
+    await fs.access(menuFile());
   } catch {
     await fs.writeFile(
-      MENU_FILE,
+      menuFile(),
       JSON.stringify(DEFAULT_MENU, null, 2),
       "utf-8",
     );
@@ -153,9 +156,9 @@ async function writeMenu(menu: MenuData) {
 
   assertPersistentStorageAvailable();
 
-  const dir = path.dirname(MENU_FILE);
+  const dir = path.dirname(menuFile());
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(MENU_FILE, JSON.stringify(menu, null, 2), "utf-8");
+  await fs.writeFile(menuFile(), JSON.stringify(menu, null, 2), "utf-8");
 }
 
 export async function resetMenuToDefaults(): Promise<MenuData> {
@@ -184,7 +187,7 @@ export async function getMenu(): Promise<MenuData> {
   }
 
   await ensureStore();
-  const raw = await fs.readFile(MENU_FILE, "utf-8");
+  const raw = await fs.readFile(menuFile(), "utf-8");
   try {
     const parsed = JSON.parse(raw) as Partial<MenuData>;
     return normalizeMenu(parsed);

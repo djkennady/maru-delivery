@@ -4,9 +4,12 @@ import {
   getSupabaseServerClient,
   isSupabaseEnabled,
 } from "@/lib/supabase-server";
+import { dataFile } from "@/lib/data-file";
 import type { PaymentOrderDraft } from "@/types/user";
 
-const DRAFTS_FILE = path.join(process.cwd(), "data", "payment-drafts.json");
+function draftsFile(): string {
+  return dataFile("payment-drafts.json");
+}
 const STATE_PREFIX = "payment_draft:";
 
 function isDraft(value: unknown): value is PaymentOrderDraft {
@@ -31,7 +34,7 @@ export function normalizePaymentOrderDraft(
 
 async function readFileDrafts(): Promise<Record<string, PaymentOrderDraft>> {
   try {
-    const raw = await fs.readFile(DRAFTS_FILE, "utf-8");
+    const raw = await fs.readFile(draftsFile(), "utf-8");
     const parsed = JSON.parse(raw) as Record<string, unknown>;
     if (!parsed || typeof parsed !== "object") return {};
     const drafts: Record<string, PaymentOrderDraft> = {};
@@ -84,12 +87,12 @@ export async function savePaymentOrderDraft(
     return;
   }
 
-  const dir = path.dirname(DRAFTS_FILE);
+  const dir = path.dirname(draftsFile());
   await fs.mkdir(dir, { recursive: true });
   const drafts = await readFileDrafts();
   if (drafts[paymentId]) return;
   drafts[paymentId] = draft;
-  await fs.writeFile(DRAFTS_FILE, JSON.stringify(drafts, null, 2), "utf-8");
+  await fs.writeFile(draftsFile(), JSON.stringify(drafts, null, 2), "utf-8");
 }
 
 export async function getPaymentOrderDraft(

@@ -5,10 +5,13 @@ import {
   getSupabaseServerClient,
   isSupabaseEnabled,
 } from "@/lib/supabase-server";
+import { dataFile } from "@/lib/data-file";
 import { normalizeRuPhone } from "@/lib/phone";
 import type { NewOrderInput, OrderRecord, OrderStatus } from "@/types/user";
 
-const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
+function ordersFile(): string {
+  return dataFile("orders.json");
+}
 const ORDERS_TABLE = "orders";
 
 function normalizePhone(phone: string): string {
@@ -16,12 +19,12 @@ function normalizePhone(phone: string): string {
 }
 
 async function ensureStore() {
-  const dir = path.dirname(ORDERS_FILE);
+  const dir = path.dirname(ordersFile());
   await fs.mkdir(dir, { recursive: true });
   try {
-    await fs.access(ORDERS_FILE);
+    await fs.access(ordersFile());
   } catch {
-    await fs.writeFile(ORDERS_FILE, "[]", "utf-8");
+    await fs.writeFile(ordersFile(), "[]", "utf-8");
   }
 }
 
@@ -64,7 +67,7 @@ async function readOrders(): Promise<OrderRecord[]> {
   }
 
   await ensureStore();
-  const raw = await fs.readFile(ORDERS_FILE, "utf-8");
+  const raw = await fs.readFile(ordersFile(), "utf-8");
   const parsed = JSON.parse(raw) as Partial<OrderRecord>[];
   if (!Array.isArray(parsed)) return [];
   return parsed.map(normalizeOrder);
@@ -96,7 +99,7 @@ function normalizeOrder(order: Partial<OrderRecord>): OrderRecord {
 async function writeOrders(orders: OrderRecord[]) {
   if (isSupabaseEnabled()) return;
   await ensureStore();
-  await fs.writeFile(ORDERS_FILE, JSON.stringify(orders, null, 2), "utf-8");
+  await fs.writeFile(ordersFile(), JSON.stringify(orders, null, 2), "utf-8");
 }
 
 export async function createOrder(input: NewOrderInput): Promise<OrderRecord> {
