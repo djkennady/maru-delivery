@@ -19,6 +19,8 @@ import {
   isCloudRuntime,
   isSupabaseEnabled,
 } from "@/lib/supabase-server";
+import type { PaymentOrderDraft } from "@/types/user";
+import { savePaymentOrderDraft } from "@/lib/payment-order-draft";
 
 export type SbpPaymentStatus = "pending" | "paid" | "expired";
 
@@ -102,6 +104,7 @@ function buildQrPayload(id: string, amount: number): string {
 export async function createSbpSession(
   amount: number,
   phone: string,
+  draft?: PaymentOrderDraft | null,
 ): Promise<SbpPaymentSession> {
   assertPersistentStorageAvailable();
 
@@ -138,7 +141,10 @@ export async function createSbpSession(
 
   if (isSupabaseEnabled()) {
     const supabase = getSupabaseServerClient();
-    if (!supabase) return session;
+    if (!supabase) {
+      if (draft) await savePaymentOrderDraft(session.id, draft);
+      return session;
+    }
 
     const { error } = await supabase.from(SBP_TABLE).insert({
       id: session.id,
@@ -155,12 +161,18 @@ export async function createSbpSession(
       throw new Error(`Supabase SBP create failed: ${error.message}`);
     }
 
+    if (draft) {
+      await savePaymentOrderDraft(session.id, draft);
+    }
     return session;
   }
 
   const sessions = await readSessions();
   sessions.unshift(session);
   await writeSessions(sessions.slice(0, 100));
+  if (draft) {
+    await savePaymentOrderDraft(session.id, draft);
+  }
   return session;
 }
 
@@ -197,6 +209,7 @@ export async function createCardSession(
   amount: number,
   phone: string,
   pageView: "DESKTOP" | "MOBILE" = "DESKTOP",
+  draft?: PaymentOrderDraft | null,
 ): Promise<{ session: SbpPaymentSession; paymentUrl: string }> {
   assertPersistentStorageAvailable();
 
@@ -231,6 +244,9 @@ export async function createCardSession(
   };
 
   await persistSession(session);
+  if (draft) {
+    await savePaymentOrderDraft(session.id, draft);
+  }
   return { session, paymentUrl: alfa.formUrl };
 }
 
@@ -315,7 +331,7 @@ async function markSbpSessionPaid(id: string): Promise<SbpPaymentSession | null>
     }
     if (!data) return null;
 
-    return {
+    const paidSession: SbpPaymentSession = {
       id: data.id,
       amount: data.amount,
       phone: data.phone,
@@ -325,6 +341,8 @@ async function markSbpSessionPaid(id: string): Promise<SbpPaymentSession | null>
       expiresAt: data.expires_at,
       paidAt: data.paid_at ?? undefined,
     };
+    await fulfillPaidSession(id);
+    return paidSession;
   }
 
   const sessions = await readSessions();
@@ -338,7 +356,21 @@ async function markSbpSessionPaid(id: string): Promise<SbpPaymentSession | null>
   };
   sessions[index] = paidSession;
   await writeSessions(sessions);
+  await fulfillPaidSession(id);
   return paidSession;
+}
+
+async function fulfillPaidSession(paymentId: string) {
+  try {
+    const { fulfillPaidPayment } = await import("@/lib/fulfill-paid-order");
+    await fulfillPaidPayment(paymentId);
+  } catch (error) {
+    console.error(
+      "[order] fulfill after payment failed",
+      paymentId,
+      error instanceof Error ? error.message : error,
+    );
+  }
 }
 
 async function markSbpSessionExpired(id: string): Promise<SbpPaymentSession | null> {
@@ -374,7 +406,12 @@ export async function syncSbpSessionWithBank(
 ): Promise<SbpPaymentSession | null> {
   const session = await getSbpSession(id);
   if (!session) return null;
-  if (session.status !== "pending") return session;
+  if (session.status !== "pending") {
+    if (session.status === "paid") {
+      await fulfillPaidSession(id);
+    }
+    return session;
+  }
   if (!isAlfaSbpConfigured()) return session;
 
   const stored = decodeSbpQrStorage(session.qrPayload);

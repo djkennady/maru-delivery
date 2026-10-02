@@ -6,6 +6,7 @@ import {
   syncSbpSessionWithBank,
 } from "@/lib/sbp-payments-store";
 import { decodeSbpQrStorage } from "@/lib/alfa-sbp";
+import { normalizePaymentOrderDraft } from "@/lib/payment-order-draft";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -65,11 +66,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid payment data" }, { status: 400 });
     }
 
+    const order = normalizePaymentOrderDraft(body.order);
+    if (!order) {
+      return NextResponse.json({ error: "Invalid order" }, { status: 400 });
+    }
+
     const pageView = body.pageView === "MOBILE" ? "MOBILE" : "DESKTOP";
     const { session, paymentUrl } = await createCardSession(
       body.amount,
       body.phone,
       pageView,
+      order,
     );
 
     return NextResponse.json({ session, paymentUrl, paymentId: session.id });

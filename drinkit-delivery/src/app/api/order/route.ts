@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { confirmSbpSession } from "@/lib/sbp-payments-store";
+import { fulfillPaidPayment } from "@/lib/fulfill-paid-order";
 import { createOrder, getOrderByPaymentId, getOrdersByPhone } from "@/lib/orders-store";
+import { savePaymentOrderDraft } from "@/lib/payment-order-draft";
 import { syncOrderWithRkeeper } from "@/lib/rkeeper";
 import { notifyAdminsAboutOrder } from "@/lib/telegram";
+import type { PaymentOrderDraft } from "@/types/user";
 
 export async function POST(request: Request) {
   try {
@@ -20,6 +23,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid order" }, { status: 400 });
     }
 
+    const draft: PaymentOrderDraft = {
+      name: body.name,
+      phone: body.phone,
+      address: body.address,
+      comment: body.comment,
+      items: body.items,
+      subtotal: body.subtotal ?? body.total,
+      deliveryFee: body.deliveryFee ?? 0,
+      giftDiscount: body.giftDiscount,
+      appliedGift: body.appliedGift,
+      total: body.total,
+      paymentMethod: body.paymentMethod,
+    };
+    await savePaymentOrderDraft(body.paymentId, draft);
+
     const existing = await getOrderByPaymentId(body.paymentId);
     if (existing) {
       return NextResponse.json({ order: existing });
@@ -35,19 +53,14 @@ export async function POST(request: Request) {
       }
     }
 
+    const fulfilled = await fulfillPaidPayment(body.paymentId);
+    if (fulfilled) {
+      return NextResponse.json({ order: fulfilled });
+    }
+
     const order = await createOrder({
-      name: body.name,
-      phone: body.phone,
-      address: body.address,
-      comment: body.comment,
-      items: body.items,
-      subtotal: body.subtotal ?? body.total,
-      deliveryFee: body.deliveryFee ?? 0,
-      giftDiscount: body.giftDiscount,
-      appliedGift: body.appliedGift,
-      total: body.total,
+      ...draft,
       paymentStatus: "paid",
-      paymentMethod: body.paymentMethod,
       cardLast4: body.cardLast4 ?? "----",
       cardBrand: body.cardBrand ?? (body.paymentMethod === "sbp" ? "СБП" : "Card"),
       paymentId: body.paymentId,

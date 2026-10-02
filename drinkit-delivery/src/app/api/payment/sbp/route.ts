@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import QRCode from "qrcode";
 import { decodeSbpQrStorage } from "@/lib/alfa-sbp";
+import { normalizePaymentOrderDraft } from "@/lib/payment-order-draft";
 import {
   confirmSbpSession,
   createSbpSession,
@@ -72,7 +73,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid payment data" }, { status: 400 });
     }
 
-    const session = await createSbpSession(body.amount, body.phone);
+    const order = normalizePaymentOrderDraft(body.order);
+    if (!order) {
+      return NextResponse.json({ error: "Invalid order" }, { status: 400 });
+    }
+
+    const session = await createSbpSession(body.amount, body.phone, order);
     const payload = await sessionResponse(session);
     return NextResponse.json(payload);
   } catch (error) {

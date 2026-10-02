@@ -46,6 +46,20 @@ export interface OrderRecord {
   paymentId: string;
 }
 
+export interface PaymentOrderDraft {
+  name: string;
+  phone: string;
+  address: string;
+  comment?: string;
+  items: CartItem[];
+  subtotal: number;
+  deliveryFee: number;
+  giftDiscount?: number;
+  appliedGift?: AppliedGift;
+  total: number;
+  paymentMethod: PaymentMethod;
+}
+
 export interface NewOrderInput {
   name: string;
   phone: string;

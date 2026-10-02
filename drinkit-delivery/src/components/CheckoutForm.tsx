@@ -20,7 +20,7 @@ import {
 import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import type { CartItem } from "@/types/menu";
-import type { AppliedGift, OrderRecord, PaymentMethod } from "@/types/user";
+import type { AppliedGift, OrderRecord, PaymentMethod, PaymentOrderDraft } from "@/types/user";
 
 const MILK_LABELS = {
   regular: "Обычное",
@@ -225,6 +225,36 @@ export function CheckoutForm() {
   );
   const orderItems = bonusItem ? [...items, bonusItem] : items;
 
+  const buildCheckoutOrder = (): PaymentOrderDraft => {
+    const appliedGift: AppliedGift | undefined = selectedGift
+      ? {
+          id: selectedGift.id,
+          title: selectedGift.title,
+          emoji: selectedGift.emoji,
+          discount: giftDiscount,
+          bonusProductId: giftEffect?.bonusProductId,
+          bonusProductName: giftEffect?.bonusProductName,
+        }
+      : undefined;
+    const orderComment = [comment.trim(), giftEffect?.orderNote]
+      .filter(Boolean)
+      .join("\n");
+
+    return {
+      name,
+      phone,
+      address: address.trim() || "Самовывоз",
+      comment: orderComment || undefined,
+      items: orderItems,
+      subtotal,
+      deliveryFee,
+      giftDiscount: giftDiscount + pickupDiscount || undefined,
+      appliedGift,
+      total,
+      paymentMethod,
+    };
+  };
+
   const placeOrder = async (payment: {
     paymentId: string;
     paymentMethod: PaymentMethod;
@@ -342,6 +372,7 @@ export function CheckoutForm() {
             amount: total,
             phone,
             pageView: window.innerWidth < 768 ? "MOBILE" : "DESKTOP",
+            order: { ...buildCheckoutOrder(), paymentMethod: "card" },
           }),
         });
 
@@ -384,7 +415,11 @@ export function CheckoutForm() {
         const sbpRes = await fetch("/api/payment/sbp", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount: total, phone }),
+          body: JSON.stringify({
+            amount: total,
+            phone,
+            order: { ...buildCheckoutOrder(), paymentMethod: "sbp" },
+          }),
         });
 
         const sbpData = await sbpRes.json();
