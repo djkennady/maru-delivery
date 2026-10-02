@@ -11,7 +11,14 @@ const ORDERS_FILE = path.join(process.cwd(), "data", "orders.json");
 const ORDERS_TABLE = "orders";
 
 function normalizePhone(phone: string): string {
-  return phone.replace(/\D/g, "");
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("8")) {
+    return `7${digits.slice(1)}`;
+  }
+  if (digits.length === 10) {
+    return `7${digits}`;
+  }
+  return digits;
 }
 
 async function ensureStore() {
@@ -135,12 +142,18 @@ export async function createOrder(input: NewOrderInput): Promise<OrderRecord> {
     });
 
     if (error) {
+      if (error.code === "23505" && input.paymentId) {
+        const existing = await getOrderByPaymentId(input.paymentId);
+        if (existing) return existing;
+      }
       throw new Error(`Supabase order create failed: ${error.message}`);
     }
     return record;
   }
 
   const orders = await readOrders();
+  const existing = orders.find((order) => order.paymentId === input.paymentId);
+  if (existing) return existing;
   orders.unshift(record);
   await writeOrders(orders);
   return record;
@@ -168,32 +181,34 @@ export async function getOrderByPaymentId(
       .from(ORDERS_TABLE)
       .select("*")
       .eq("payment_id", paymentId)
-      .maybeSingle();
+      .order("created_at", { ascending: true })
+      .limit(1);
 
     if (error) {
       throw new Error(`Supabase order fetch failed: ${error.message}`);
     }
-    if (!data) return null;
+    const row = Array.isArray(data) ? data[0] : data;
+    if (!row) return null;
 
     return normalizeOrder({
-      id: data.id,
-      createdAt: data.created_at,
-      name: data.name,
-      phone: data.phone,
-      address: data.address,
-      comment: data.comment ?? undefined,
-      items: data.items,
-      subtotal: data.subtotal,
-      deliveryFee: data.delivery_fee,
-      giftDiscount: data.gift_discount ?? undefined,
-      appliedGift: data.applied_gift ?? undefined,
-      total: data.total,
-      status: data.status,
-      paymentStatus: data.payment_status,
-      paymentMethod: data.payment_method,
-      cardLast4: data.card_last4,
-      cardBrand: data.card_brand,
-      paymentId: data.payment_id,
+      id: row.id,
+      createdAt: row.created_at,
+      name: row.name,
+      phone: row.phone,
+      address: row.address,
+      comment: row.comment ?? undefined,
+      items: row.items,
+      subtotal: row.subtotal,
+      deliveryFee: row.delivery_fee,
+      giftDiscount: row.gift_discount ?? undefined,
+      appliedGift: row.applied_gift ?? undefined,
+      total: row.total,
+      status: row.status,
+      paymentStatus: row.payment_status,
+      paymentMethod: row.payment_method,
+      cardLast4: row.card_last4,
+      cardBrand: row.card_brand,
+      paymentId: row.payment_id,
     });
   }
 

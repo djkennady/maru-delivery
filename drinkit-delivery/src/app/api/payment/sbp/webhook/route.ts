@@ -5,11 +5,23 @@ import { syncSbpSessionByAlfaIds } from "@/lib/sbp-payments-store";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function firstParam(
+  params: Record<string, string>,
+  ...names: string[]
+): string | undefined {
+  for (const name of names) {
+    const value = params[name] || params[name.toLowerCase()];
+    if (value) return value;
+  }
+  return undefined;
+}
+
 async function readCallbackParams(request: Request): Promise<Record<string, string>> {
   const params: Record<string, string> = {};
   const url = new URL(request.url);
   url.searchParams.forEach((value, key) => {
     params[key] = value;
+    params[key.toLowerCase()] = value;
   });
 
   if (request.method === "GET") return params;
@@ -24,6 +36,7 @@ async function readCallbackParams(request: Request): Promise<Record<string, stri
       for (const [key, value] of Object.entries(parsed)) {
         if (typeof value === "string" || typeof value === "number") {
           params[key] = String(value);
+          params[key.toLowerCase()] = String(value);
         }
       }
     } catch {
@@ -34,6 +47,7 @@ async function readCallbackParams(request: Request): Promise<Record<string, stri
 
   new URLSearchParams(raw).forEach((value, key) => {
     params[key] = value;
+    params[key.toLowerCase()] = value;
   });
   return params;
 }
@@ -41,10 +55,23 @@ async function readCallbackParams(request: Request): Promise<Record<string, stri
 async function handleCallback(request: Request) {
   try {
     const params = await readCallbackParams(request);
-    const orderNumber = params.orderNumber || params.order_number;
-    const orderId = params.mdOrder || params.orderId || params.order_id;
+    const orderNumber = firstParam(
+      params,
+      "orderNumber",
+      "order_number",
+      "ordernumber",
+    );
+    const orderId = firstParam(
+      params,
+      "mdOrder",
+      "mdorder",
+      "orderId",
+      "order_id",
+      "orderid",
+    );
 
     if (!orderNumber && !orderId) {
+      console.warn("[sbp webhook] missing order ids", Object.keys(params));
       return NextResponse.json({ ok: false, error: "missing order" }, { status: 200 });
     }
 
@@ -53,8 +80,12 @@ async function handleCallback(request: Request) {
       await fulfillPaidPayment(session.id);
     }
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ ok: false }, { status: 200 });
+  } catch (error) {
+    console.error(
+      "[sbp webhook]",
+      error instanceof Error ? error.message : error,
+    );
+    return NextResponse.json({ ok: false }, { status: 500 });
   }
 }
 

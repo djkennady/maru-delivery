@@ -49,7 +49,12 @@ export async function savePaymentOrderDraft(
   paymentId: string,
   draft: PaymentOrderDraft,
 ): Promise<void> {
-  if (!paymentId || !isDraft(draft)) return;
+  if (!paymentId) {
+    throw new Error("Payment draft requires paymentId");
+  }
+  if (!isDraft(draft)) {
+    throw new Error("Invalid checkout draft");
+  }
 
   if (isSupabaseEnabled()) {
     const supabase = getSupabaseServerClient();

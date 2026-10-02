@@ -2,7 +2,7 @@ import { createOrder, getOrderByPaymentId } from "@/lib/orders-store";
 import { getPaymentOrderDraft } from "@/lib/payment-order-draft";
 import { getSbpSession } from "@/lib/sbp-payments-store";
 import { syncOrderWithRkeeper } from "@/lib/rkeeper";
-import { notifyAdminsAboutOrder } from "@/lib/telegram";
+import { ensureAdminsNotifiedAboutOrder } from "@/lib/telegram";
 import type { OrderRecord } from "@/types/user";
 
 export async function fulfillPaidPayment(
@@ -11,7 +11,17 @@ export async function fulfillPaidPayment(
   if (!paymentId) return null;
 
   const existing = await getOrderByPaymentId(paymentId);
-  if (existing) return existing;
+  if (existing) {
+    try {
+      await ensureAdminsNotifiedAboutOrder(existing);
+    } catch (error) {
+      console.error(
+        "[telegram] notify retry failed",
+        error instanceof Error ? error.message : error,
+      );
+    }
+    return existing;
+  }
 
   const session = await getSbpSession(paymentId);
   if (!session || session.status !== "paid") return null;
@@ -50,7 +60,7 @@ export async function fulfillPaidPayment(
   }
 
   try {
-    await notifyAdminsAboutOrder(order);
+    await ensureAdminsNotifiedAboutOrder(order);
   } catch (error) {
     console.error(
       "[telegram] notify failed",

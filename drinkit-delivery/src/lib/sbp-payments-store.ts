@@ -250,6 +250,10 @@ export async function createCardSession(
   return { session, paymentUrl: alfa.formUrl };
 }
 
+function isLocallyTimedOut(session: SbpPaymentSession): boolean {
+  return new Date(session.expiresAt).getTime() < Date.now();
+}
+
 export async function getSbpSession(id: string): Promise<SbpPaymentSession | null> {
   if (isSupabaseEnabled()) {
     const supabase = getSupabaseServerClient();
@@ -266,7 +270,7 @@ export async function getSbpSession(id: string): Promise<SbpPaymentSession | nul
     }
     if (!data) return null;
 
-    const session: SbpPaymentSession = {
+    return {
       id: data.id,
       amount: data.amount,
       phone: data.phone,
@@ -276,40 +280,10 @@ export async function getSbpSession(id: string): Promise<SbpPaymentSession | nul
       expiresAt: data.expires_at,
       paidAt: data.paid_at ?? undefined,
     };
-
-    if (
-      session.status === "pending" &&
-      new Date(session.expiresAt).getTime() < Date.now()
-    ) {
-      const { error: updateError } = await supabase
-        .from(SBP_TABLE)
-        .update({ status: "expired" })
-        .eq("id", id);
-
-      if (updateError) {
-        throw new Error(`Supabase SBP expire update failed: ${updateError.message}`);
-      }
-      session.status = "expired";
-    }
-
-    return session;
   }
 
   const sessions = await readSessions();
-  const session = sessions.find((item) => item.id === id);
-  if (!session) return null;
-
-  if (
-    session.status === "pending" &&
-    new Date(session.expiresAt).getTime() < Date.now()
-  ) {
-    session.status = "expired";
-    await writeSessions(
-      sessions.map((item) => (item.id === id ? session : item)),
-    );
-  }
-
-  return session;
+  return sessions.find((item) => item.id === id) ?? null;
 }
 
 async function markSbpSessionPaid(id: string): Promise<SbpPaymentSession | null> {
@@ -406,32 +380,47 @@ export async function syncSbpSessionWithBank(
 ): Promise<SbpPaymentSession | null> {
   const session = await getSbpSession(id);
   if (!session) return null;
-  if (session.status !== "pending") {
-    if (session.status === "paid") {
-      await fulfillPaidSession(id);
-    }
+  if (session.status === "paid") {
+    await fulfillPaidSession(id);
     return session;
   }
-  if (!isAlfaSbpConfigured()) return session;
 
-  const stored = decodeSbpQrStorage(session.qrPayload);
-  const status = await getAlfaOrderStatus({
-    orderNumber: session.id,
-    orderId: stored.mdOrder,
-  });
+  if (isAlfaSbpConfigured()) {
+    const stored = decodeSbpQrStorage(session.qrPayload);
+    try {
+      const status = await getAlfaOrderStatus({
+        orderNumber: session.id,
+        orderId: stored.mdOrder,
+      });
 
-  if (isAlfaPaymentSuccessful(status.orderStatus)) {
-    if (status.orderStatus === 1 && stored.mdOrder) {
-      try {
-        await captureAlfaHold(stored.mdOrder, status.amountKopecks);
-      } catch {
-        /* холд можно завершить в кабинете банка */
+      if (isAlfaPaymentSuccessful(status.orderStatus)) {
+        if (status.orderStatus === 1 && stored.mdOrder) {
+          try {
+            await captureAlfaHold(stored.mdOrder, status.amountKopecks);
+          } catch {
+            /* холд можно завершить в кабинете банка */
+          }
+        }
+        return markSbpSessionPaid(id);
       }
+
+      if (isAlfaPaymentRejected(status.orderStatus)) {
+        return markSbpSessionExpired(id);
+      }
+    } catch (error) {
+      if (session.status === "expired") {
+        console.error(
+          "[sbp] bank status after local expiry",
+          id,
+          error instanceof Error ? error.message : error,
+        );
+        return session;
+      }
+      throw error;
     }
-    return markSbpSessionPaid(id);
   }
 
-  if (isAlfaPaymentRejected(status.orderStatus)) {
+  if (session.status === "pending" && isLocallyTimedOut(session)) {
     return markSbpSessionExpired(id);
   }
 
@@ -460,6 +449,13 @@ export async function confirmSbpSession(id: string): Promise<SbpPaymentSession |
 
   const current = await getSbpSession(id);
   if (!current) return null;
-  if (current.status === "expired" || current.status === "paid") return current;
+  if (current.status === "paid") {
+    await fulfillPaidSession(id);
+    return current;
+  }
+  if (current.status === "expired") return current;
+  if (isLocallyTimedOut(current)) {
+    return markSbpSessionExpired(id);
+  }
   return markSbpSessionPaid(id);
 }

@@ -28,6 +28,19 @@ function returnUrl(): string {
   return env("ALFA_SBP_RETURN_URL") || DEFAULT_RETURN_URL;
 }
 
+function publicSiteUrl(): string {
+  return (env("ALFA_SBP_RETURN_URL") || DEFAULT_RETURN_URL).replace(
+    /\/checkout\/?$/i,
+    "",
+  );
+}
+
+export function alfaPaymentCallbackUrl(): string {
+  const explicit = env("ALFA_SBP_CALLBACK_URL");
+  if (explicit) return explicit;
+  return `${publicSiteUrl()}/api/payment/sbp/webhook`;
+}
+
 export function cardPaymentReturnUrl(sessionId: string, failed = false): string {
   const url = new URL(returnUrl());
   url.searchParams.set("cardSession", sessionId);
@@ -185,6 +198,7 @@ export async function registerAlfaOrder(input: {
     description: input.description.slice(0, 512),
     language: "ru",
     pageView: input.pageView ?? "DESKTOP",
+    dynamicCallbackUrl: alfaPaymentCallbackUrl(),
   });
 
   if (!isAlfaSuccess(registered) || typeof registered.orderId !== "string") {

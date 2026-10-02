@@ -556,14 +556,28 @@ export function CheckoutForm() {
         }
         if (confirmRes.ok && confirmData.session?.status === "paid") {
           const raw = sessionStorage.getItem(CARD_DRAFT_KEY);
-          if (!raw) {
-            throw new Error(
-              "Оплата прошла, но данные заказа не найдены. Напишите нам, мы проверим платёж.",
-            );
+          if (raw) {
+            const draft = JSON.parse(raw) as CardCheckoutDraft;
+            await placeCardOrderFromDraft({ ...draft, paymentId: sessionId });
+            return;
           }
-          const draft = JSON.parse(raw) as CardCheckoutDraft;
-          await placeCardOrderFromDraft({ ...draft, paymentId: sessionId });
-          return;
+
+          const paidRes = await fetch(
+            `/api/order?paymentId=${encodeURIComponent(sessionId)}`,
+            { cache: "no-store" },
+          );
+          const paidData = (await paidRes.json()) as { order?: OrderRecord };
+          if (paidRes.ok && paidData.order) {
+            prependOrder(paidData.order);
+            clearCart();
+            setSuccess(true);
+            window.history.replaceState({}, "", "/checkout");
+            return;
+          }
+
+          throw new Error(
+            "Оплата прошла, но данные заказа не найдены. Напишите нам, мы проверим платёж.",
+          );
         }
         await new Promise((resolve) => window.setTimeout(resolve, 2000));
       }

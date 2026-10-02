@@ -288,8 +288,30 @@ async function sendToChat(
   });
 }
 
-export async function notifyAdminsAboutOrder(order: OrderRecord): Promise<void> {
-  if (!isTelegramConfigured()) return;
+const NOTIFIED_PREFIX = "telegram_notified:";
+const notifiedOrderIds = new Set<string>();
+
+async function wasOrderNotified(orderId: string): Promise<boolean> {
+  if (!orderId) return false;
+  if (notifiedOrderIds.has(orderId)) return true;
+  const stored = await readState<boolean>(`${NOTIFIED_PREFIX}${orderId}`, false);
+  return stored === true;
+}
+
+async function markOrderNotified(orderId: string): Promise<void> {
+  notifiedOrderIds.add(orderId);
+  try {
+    await writeState(`${NOTIFIED_PREFIX}${orderId}`, true);
+  } catch (error) {
+    console.error(
+      "[telegram] notified flag",
+      error instanceof Error ? error.message : error,
+    );
+  }
+}
+
+export async function notifyAdminsAboutOrder(order: OrderRecord): Promise<boolean> {
+  if (!isTelegramConfigured()) return false;
 
   try {
     if (!(globalThis as { __maruTelegramWebhook?: boolean }).__maruTelegramWebhook) {
@@ -306,23 +328,36 @@ export async function notifyAdminsAboutOrder(order: OrderRecord): Promise<void> 
   const chatIds = await getAdminChatIds();
   if (chatIds.length === 0) {
     console.warn("[telegram] no admin chats subscribed");
-    return;
+    return false;
   }
 
   const text = await formatOrderHtml(order, "Новый заказ MARU");
   const keyboard = statusKeyboard(order.id);
 
-  await Promise.allSettled(
-    chatIds.map((chatId) =>
-      sendToChat(chatId, text, { reply_markup: keyboard }).catch((error: unknown) => {
-        console.error(
-          "[telegram] send failed",
-          chatId,
-          error instanceof Error ? error.message : error,
-        );
-      }),
-    ),
+  const results = await Promise.allSettled(
+    chatIds.map((chatId) => sendToChat(chatId, text, { reply_markup: keyboard })),
   );
+
+  let sent = false;
+  for (const result of results) {
+    if (result.status === "fulfilled") {
+      sent = true;
+      continue;
+    }
+    console.error(
+      "[telegram] send failed",
+      result.reason instanceof Error ? result.reason.message : result.reason,
+    );
+  }
+  return sent;
+}
+
+export async function ensureAdminsNotifiedAboutOrder(
+  order: OrderRecord,
+): Promise<void> {
+  if (await wasOrderNotified(order.id)) return;
+  const sent = await notifyAdminsAboutOrder(order);
+  if (sent) await markOrderNotified(order.id);
 }
 
 async function isAuthorizedChat(chatId: number): Promise<boolean> {

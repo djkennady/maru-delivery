@@ -4,7 +4,7 @@ import { fulfillPaidPayment } from "@/lib/fulfill-paid-order";
 import { createOrder, getOrderByPaymentId, getOrdersByPhone } from "@/lib/orders-store";
 import { savePaymentOrderDraft } from "@/lib/payment-order-draft";
 import { syncOrderWithRkeeper } from "@/lib/rkeeper";
-import { notifyAdminsAboutOrder } from "@/lib/telegram";
+import { ensureAdminsNotifiedAboutOrder } from "@/lib/telegram";
 import type { PaymentOrderDraft } from "@/types/user";
 
 export async function POST(request: Request) {
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
     const rkeeper = await syncOrderWithRkeeper(order);
 
     try {
-      await notifyAdminsAboutOrder(order);
+      await ensureAdminsNotifiedAboutOrder(order);
     } catch (error) {
       console.error(
         "[telegram] notify failed",
@@ -88,8 +88,14 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const phone = new URL(request.url).searchParams.get("phone");
+    const params = new URL(request.url).searchParams;
+    const paymentId = params.get("paymentId");
+    if (paymentId) {
+      const order = await getOrderByPaymentId(paymentId);
+      return NextResponse.json({ order, orders: order ? [order] : [] });
+    }
 
+    const phone = params.get("phone");
     if (!phone) {
       return NextResponse.json({ error: "Phone required" }, { status: 400 });
     }

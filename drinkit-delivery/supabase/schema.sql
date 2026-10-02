@@ -26,7 +26,7 @@ create table if not exists public.orders (
 );
 
 create index if not exists orders_phone_idx on public.orders (phone);
-create index if not exists orders_payment_id_idx on public.orders (payment_id);
+create unique index if not exists orders_payment_id_uidx on public.orders (payment_id);
 
 create table if not exists public.sbp_payment_sessions (
   id text primary key,
