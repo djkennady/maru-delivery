@@ -10,8 +10,13 @@ import {
   type ReactNode,
 } from "react";
 import { useMenu } from "@/context/MenuContext";
+import {
+  canOrderBreakfastProduct,
+  isBreakfastProduct,
+} from "@/lib/breakfast-hours";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { runDeferred } from "@/lib/run-deferred";
+import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import {
   createCartItemId,
   getCartItemCount,
@@ -57,7 +62,8 @@ function loadStoredItems(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const { settings } = useMenu();
+  const { settings, getProduct } = useMenu();
+  const breakfastOpen = useBreakfastMenuOpen();
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
@@ -73,8 +79,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items, hydrated]);
 
+  useEffect(() => {
+    if (!hydrated || breakfastOpen) return;
+    setItems((prev) => {
+      const next = prev.filter(
+        (item) => !isBreakfastProduct(getProduct(item.productId)),
+      );
+      return next.length === prev.length ? prev : next;
+    });
+  }, [breakfastOpen, getProduct, hydrated]);
+
   const addItem = useCallback(
     (product: Product, options?: CartItemOptions) => {
+      if (!canOrderBreakfastProduct(product)) return;
       const resolvedOptions = options ?? getDefaultOptions(product);
       const key = getCartItemKey(product.id, resolvedOptions);
       const unitPrice = getProductPrice(product, resolvedOptions);

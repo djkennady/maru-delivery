@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Minus, Plus, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import {
+  BREAKFAST_UNAVAILABLE_MESSAGE,
+  isBreakfastProduct,
+} from "@/lib/breakfast-hours";
 import { getProductImage } from "@/lib/media";
+import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import {
   formatPrice,
   getDefaultOptions,
@@ -46,6 +51,8 @@ function ProductModalBody({
   onClose: () => void;
 }) {
   const { addItem } = useCart();
+  const breakfastOpen = useBreakfastMenuOpen();
+  const canOrder = !isBreakfastProduct(product) || breakfastOpen;
   const [options, setOptions] = useState<CartItemOptions>(
     getDefaultOptions(product),
   );
@@ -68,6 +75,7 @@ function ProductModalBody({
   const availableSizes = SIZES.filter((size) => product.sizes?.[size]);
 
   const handleAdd = () => {
+    if (!canOrder) return;
     for (let i = 0; i < quantity; i++) {
       addItem(product, options);
     }
@@ -185,14 +193,20 @@ function ProductModalBody({
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={handleAdd}
-          className="mt-6 flex w-full items-center justify-between rounded-2xl bg-gradient-to-r from-[var(--accent-warm)] to-[var(--accent)] px-5 py-4 text-white shadow-lg shadow-orange-500/25 transition hover:opacity-95 active:scale-[0.99]"
-        >
-          <span className="font-semibold">В корзину</span>
-          <span className="font-bold">{formatPrice(unitPrice * quantity)}</span>
-        </button>
+        {canOrder ? (
+          <button
+            type="button"
+            onClick={handleAdd}
+            className="mt-6 flex w-full items-center justify-between rounded-2xl bg-gradient-to-r from-[var(--accent-warm)] to-[var(--accent)] px-5 py-4 text-white shadow-lg shadow-orange-500/25 transition hover:opacity-95 active:scale-[0.99]"
+          >
+            <span className="font-semibold">В корзину</span>
+            <span className="font-bold">{formatPrice(unitPrice * quantity)}</span>
+          </button>
+        ) : (
+          <p className="mt-6 rounded-2xl bg-[var(--surface)] px-4 py-3 text-center text-sm text-[var(--muted)]">
+            {BREAKFAST_UNAVAILABLE_MESSAGE}
+          </p>
+        )}
         </div>
       </div>
     </div>

@@ -6,9 +6,11 @@ import { ChevronRight, Plus } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
+import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
 import { getFirstName, getPaidOrders } from "@/lib/loyalty";
 import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
+import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import type { Product } from "@/types/menu";
 
 interface PersonalizedGreetingProps {
@@ -18,6 +20,7 @@ interface PersonalizedGreetingProps {
 export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
   const { profile, orders, hasProfile } = useUser();
   const { getProduct } = useMenu();
+  const breakfastOpen = useBreakfastMenuOpen();
   const { addItem } = useCart();
 
   const favorite = useMemo(() => {
@@ -27,9 +30,10 @@ export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
 
     const product = getProduct(lastItem.productId);
     if (!product) return null;
+    if (!breakfastOpen && product.categoryId === BREAKFAST_CATEGORY_ID) return null;
 
     return { product, options: lastItem.options, unitPrice: lastItem.unitPrice };
-  }, [orders, getProduct]);
+  }, [orders, getProduct, breakfastOpen]);
 
   if (!hasProfile || !favorite) return null;
 

@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { useMenu } from "@/context/MenuContext";
+import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
 import { getCategoryImage } from "@/lib/media";
+import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import { ProductCard } from "./ProductCard";
 import { FeaturedHits } from "./FeaturedHits";
 import type { Product } from "@/types/menu";
@@ -30,22 +32,37 @@ function buildGroups(products: Product[]) {
 
 export function MenuSection({ onSelect }: MenuSectionProps) {
   const { categories, products } = useMenu();
+  const breakfastOpen = useBreakfastMenuOpen();
+  const shopCategories = useMemo(
+    () =>
+      breakfastOpen
+        ? categories
+        : categories.filter((category) => category.id !== BREAKFAST_CATEGORY_ID),
+    [categories, breakfastOpen],
+  );
+  const shopProducts = useMemo(
+    () =>
+      breakfastOpen
+        ? products
+        : products.filter((product) => product.categoryId !== BREAKFAST_CATEGORY_ID),
+    [products, breakfastOpen],
+  );
   const [activeCategory, setActiveCategory] = useState(
-    () => categories[0]?.id ?? "new",
+    () => shopCategories[0]?.id ?? "new",
   );
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
 
   const resolvedCategory =
-    categories.some((category) => category.id === activeCategory)
+    shopCategories.some((category) => category.id === activeCategory)
       ? activeCategory
-      : (categories[0]?.id ?? activeCategory);
-  if (categories.length > 0 && resolvedCategory !== activeCategory) {
+      : (shopCategories[0]?.id ?? activeCategory);
+  if (shopCategories.length > 0 && resolvedCategory !== activeCategory) {
     setActiveCategory(resolvedCategory);
   }
 
   const filteredProducts = useMemo(
-    () => products.filter((p) => p.categoryId === resolvedCategory),
-    [products, resolvedCategory],
+    () => shopProducts.filter((p) => p.categoryId === resolvedCategory),
+    [shopProducts, resolvedCategory],
   );
 
   const groupedProducts = useMemo(
@@ -67,7 +84,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     return groupedProducts.filter((group) => group.name === resolvedGroup);
   }, [groupedProducts, resolvedGroup]);
 
-  const activeCategoryData = categories.find((c) => c.id === resolvedCategory);
+  const activeCategoryData = shopCategories.find((c) => c.id === resolvedCategory);
   const categoryName = activeCategoryData?.name ?? "";
   const hasSubgroups = groupedProducts.length > 1;
 
@@ -82,7 +99,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
           </p>
           <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
             <div className="flex w-max gap-2">
-              {categories.map((category) => {
+              {shopCategories.map((category) => {
                 const active = resolvedCategory === category.id;
                 return (
                   <button

@@ -1,4 +1,8 @@
 import { ClientError } from "@/lib/api-error";
+import {
+  BREAKFAST_UNAVAILABLE_MESSAGE,
+  canOrderBreakfastProduct,
+} from "@/lib/breakfast-hours";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { getProductPrice } from "@/lib/pricing";
 import { isValidRuPhone, normalizeRuPhone } from "@/lib/phone";
@@ -56,7 +60,11 @@ function validateMilk(product: Product, milk: unknown): MilkOption {
   return option;
 }
 
-function quoteItem(raw: unknown, catalog: Map<string, Product>): CartItem {
+function quoteItem(
+  raw: unknown,
+  catalog: Map<string, Product>,
+  now: Date,
+): CartItem {
   const item = asRecord(raw);
   if (!item) {
     throw new ClientError("Invalid cart item");
@@ -66,6 +74,9 @@ function quoteItem(raw: unknown, catalog: Map<string, Product>): CartItem {
   const product = catalog.get(productId);
   if (!product) {
     throw new ClientError("Unknown product");
+  }
+  if (!canOrderBreakfastProduct(product, now)) {
+    throw new ClientError(BREAKFAST_UNAVAILABLE_MESSAGE);
   }
 
   const quantity = item.quantity;
@@ -102,7 +113,7 @@ function quoteItem(raw: unknown, catalog: Map<string, Product>): CartItem {
 export function quoteCheckout(
   body: unknown,
   menu: MenuData,
-  options: { requireAmount?: boolean } = {},
+  options: { requireAmount?: boolean; now?: Date } = {},
 ): QuotedCheckout {
   const payload = asRecord(body);
   if (!payload) {
@@ -142,8 +153,9 @@ export function quoteCheckout(
     throw new ClientError("Invalid order");
   }
 
+  const now = options.now ?? new Date();
   const catalog = new Map(menu.products.map((product) => [product.id, product]));
-  const items = orderRaw.items.map((item) => quoteItem(item, catalog));
+  const items = orderRaw.items.map((item) => quoteItem(item, catalog, now));
   const subtotal = items.reduce(
     (sum, item) => sum + item.unitPrice * item.quantity,
     0,
