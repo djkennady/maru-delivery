@@ -3,8 +3,10 @@
 import Image from "next/image";
 import { Plus, Star } from "lucide-react";
 import { useMenu } from "@/context/MenuContext";
+import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
 import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
+import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import type { Product } from "@/types/menu";
 
 interface FeaturedHitsProps {
@@ -13,9 +15,16 @@ interface FeaturedHitsProps {
 
 export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
   const { products } = useMenu();
+  const breakfastOpen = useBreakfastMenuOpen();
   const hits = products
     .filter((product) => product.tags?.includes("hit"))
+    .filter(
+      (product) =>
+        breakfastOpen || product.categoryId !== BREAKFAST_CATEGORY_ID,
+    )
     .slice(0, 6);
+
+  if (hits.length === 0) return null;
 
   return (
     <section className="px-4 pb-3 pt-3">

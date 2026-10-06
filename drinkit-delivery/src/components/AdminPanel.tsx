@@ -20,9 +20,9 @@ import { useMenu } from "@/context/MenuContext";
 import { ADMIN_TOKEN_KEY, getAdminHeaders } from "@/lib/admin-client";
 import { runDeferred } from "@/lib/run-deferred";
 import {
-  ORDER_STATUSES,
   ORDER_STATUS_LABELS,
   ORDER_STATUS_STYLES,
+  PICKUP_STATUS_BUTTONS,
 } from "@/lib/order-status";
 import { formatPrice } from "@/lib/pricing";
 import { getPaymentLabel } from "@/lib/payment";
@@ -63,20 +63,45 @@ function AdminOrderCard({
             {formatDate(order.createdAt)}
           </p>
         </div>
-        <select
-          value={order.status}
-          disabled={updating}
-          onChange={(e) =>
-            onStatusChange(order.id, e.target.value as OrderStatus)
-          }
-          className={`rounded-full border-0 px-3 py-1.5 text-xs font-semibold outline-none ${ORDER_STATUS_STYLES[order.status]}`}
+        <span
+          className={`rounded-full px-3 py-1.5 text-xs font-semibold ${ORDER_STATUS_STYLES[order.status]}`}
         >
-          {ORDER_STATUSES.map((status) => (
-            <option key={status} value={status}>
+          {ORDER_STATUS_LABELS[order.status]}
+        </span>
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-2">
+        {PICKUP_STATUS_BUTTONS.map((status) => {
+          const active = order.status === status;
+          return (
+            <button
+              key={status}
+              type="button"
+              disabled={updating}
+              aria-pressed={active}
+              onClick={() => onStatusChange(order.id, status)}
+              className={`rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${
+                active
+                  ? ORDER_STATUS_STYLES[status]
+                  : "bg-[var(--surface)] text-[var(--muted)] ring-1 ring-[var(--border)] hover:text-[var(--text)]"
+              }`}
+            >
               {ORDER_STATUS_LABELS[status]}
-            </option>
-          ))}
-        </select>
+            </button>
+          );
+        })}
+        <button
+          type="button"
+          disabled={updating || order.status === "cancelled"}
+          onClick={() => onStatusChange(order.id, "cancelled")}
+          className={`rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${
+            order.status === "cancelled"
+              ? ORDER_STATUS_STYLES.cancelled
+              : "bg-[var(--surface)] text-[var(--muted)] ring-1 ring-[var(--border)] hover:text-red-600"
+          }`}
+        >
+          {ORDER_STATUS_LABELS.cancelled}
+        </button>
       </div>
 
       <div className="mt-3 grid gap-2 text-sm text-[var(--muted)]">

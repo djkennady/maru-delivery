@@ -266,8 +266,22 @@ function statusKeyboard(orderId: string) {
   return {
     inline_keyboard: [
       [
-        { text: "В пути", callback_data: `st:${orderId}:on_the_way` },
-        { text: "Доставлен", callback_data: `st:${orderId}:delivered` },
+        {
+          text: ORDER_STATUS_LABELS.preparing,
+          callback_data: `st:${orderId}:preparing`,
+        },
+      ],
+      [
+        {
+          text: ORDER_STATUS_LABELS.on_the_way,
+          callback_data: `st:${orderId}:on_the_way`,
+        },
+      ],
+      [
+        {
+          text: ORDER_STATUS_LABELS.delivered,
+          callback_data: `st:${orderId}:delivered`,
+        },
       ],
       [{ text: "Отменить", callback_data: `st:${orderId}:cancelled` }],
     ],

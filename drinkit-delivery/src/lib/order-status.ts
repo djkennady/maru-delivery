@@ -7,10 +7,16 @@ export const ORDER_STATUSES: OrderStatus[] = [
   "cancelled",
 ];
 
+export const PICKUP_STATUS_BUTTONS: Exclude<OrderStatus, "cancelled">[] = [
+  "preparing",
+  "on_the_way",
+  "delivered",
+];
+
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
-  preparing: "Готовится",
-  on_the_way: "В пути",
-  delivered: "Доставлен",
+  preparing: "Заказ принят",
+  on_the_way: "Готов к выдаче",
+  delivered: "Выдан",
   cancelled: "Отменён",
 };
 

@@ -180,4 +180,48 @@ describe("quoteCheckout", () => {
       ),
     ).toThrow(/Invalid quantity/);
   });
+
+  it("rejects breakfast after 11:00 MSK and allows it during the window", () => {
+    const breakfast = DEFAULT_MENU.products.find(
+      (product) => product.id === "english-breakfast",
+    );
+    if (!breakfast) throw new Error("english-breakfast missing from catalog");
+
+    const unitPrice = breakfast.basePrice;
+    const total = unitPrice - getPickupDiscount(unitPrice);
+    const breakfastOrder = {
+      amount: total,
+      phone: "+79990001122",
+      order: {
+        name: "Тест",
+        phone: "+79990001122",
+        address: "Самовывоз",
+        items: [
+          {
+            id: "line-1",
+            productId: "english-breakfast",
+            quantity: 1,
+            options: { size: "m", milk: "regular" },
+            unitPrice: 1,
+          },
+        ],
+        total: 1,
+        paymentMethod: "sbp",
+      },
+    };
+
+    expect(() =>
+      quoteCheckout(breakfastOrder, DEFAULT_MENU, {
+        requireAmount: true,
+        now: new Date("2026-10-06T08:00:00.000Z"),
+      }),
+    ).toThrow(/Завтраки доступны/);
+
+    const quoted = quoteCheckout(breakfastOrder, DEFAULT_MENU, {
+      requireAmount: true,
+      now: new Date("2026-10-06T05:00:00.000Z"),
+    });
+    expect(quoted.draft.items[0].productId).toBe("english-breakfast");
+    expect(quoted.amount).toBe(total);
+  });
 });

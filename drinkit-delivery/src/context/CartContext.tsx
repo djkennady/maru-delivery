@@ -10,8 +10,13 @@ import {
   type ReactNode,
 } from "react";
 import { useMenu } from "@/context/MenuContext";
+import {
+  canOrderBreakfastProduct,
+  isBreakfastProduct,
+} from "@/lib/breakfast-hours";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { runDeferred } from "@/lib/run-deferred";
+import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import {
   createCartItemId,
   getCartItemCount,
@@ -57,7 +62,8 @@ function loadStoredItems(): CartItem[] {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const { settings } = useMenu();
+  const { settings, getProduct } = useMenu();
+  const breakfastOpen = useBreakfastMenuOpen();
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
@@ -73,8 +79,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items, hydrated]);
 
+  const shopItems = useMemo(() => {
+    if (breakfastOpen) return items;
+    return items.filter(
+      (item) => !isBreakfastProduct(getProduct(item.productId)),
+    );
+  }, [breakfastOpen, getProduct, items]);
+
   const addItem = useCallback(
     (product: Product, options?: CartItemOptions) => {
+      if (!canOrderBreakfastProduct(product)) return;
       const resolvedOptions = options ?? getDefaultOptions(product);
       const key = getCartItemKey(product.id, resolvedOptions);
       const unitPrice = getProductPrice(product, resolvedOptions);
@@ -126,7 +140,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = useCallback(() => setItems([]), []);
 
-  const subtotal = useMemo(() => getCartSubtotal(items), [items]);
+  const subtotal = useMemo(() => getCartSubtotal(shopItems), [shopItems]);
   const pickupDiscount =
     FULFILLMENT_MODE === "pickup" ? getPickupDiscount(subtotal) : 0;
   const isFreeDelivery =
@@ -134,11 +148,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const deliveryFee =
     FULFILLMENT_MODE === "pickup" ? 0 : isFreeDelivery ? 0 : settings.deliveryFee;
   const total = Math.max(0, subtotal - pickupDiscount) + deliveryFee;
-  const itemCount = useMemo(() => getCartItemCount(items), [items]);
+  const itemCount = useMemo(() => getCartItemCount(shopItems), [shopItems]);
 
   const value = useMemo(
     () => ({
-      items,
+      items: shopItems,
       itemCount,
       subtotal,
       pickupDiscount,
@@ -151,7 +165,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       clearCart,
     }),
     [
-      items,
+      shopItems,
       itemCount,
       subtotal,
       pickupDiscount,
