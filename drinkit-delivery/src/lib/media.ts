@@ -45,12 +45,12 @@ export function getCategoryImage(
 
 export const promos = [
   {
-    id: "happy-hour",
-    title: "−15% на кофе",
-    subtitle: "С 8:00 до 11:00 каждый день",
+    id: "birthday-pizza",
+    title: "Пицца именинникам в подарок",
+    subtitle: "*при заказе от 3000 ₽",
     gradient: "from-orange-500 to-rose-500",
-    emoji: "☀️",
-    image: pexels(302899, 500),
+    emoji: "🍕",
+    image: "/hall-menu/dishes/0075.webp",
   },
   {
     id: "combo-lunch",
