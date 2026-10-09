@@ -209,7 +209,7 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 270,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/stock/cappuccino.webp",
       "group": "Кофе с молоком",
       "sizes": {
         "s": 220,
