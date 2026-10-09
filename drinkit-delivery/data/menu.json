@@ -274,7 +274,7 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 400,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0142.webp",
       "group": "Фирменный кофе",
       "sizes": {
         "s": 350,
@@ -329,7 +329,7 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 400,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0130.webp",
       "group": "Фирменный кофе",
       "sizes": {
         "s": 350,
@@ -452,7 +452,7 @@
       "description": "",
       "emoji": "🍵",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0144.webp",
       "group": "Матча",
       "sizes": {
         "m": 420,
@@ -544,7 +544,7 @@
       "description": "",
       "emoji": "🧊",
       "basePrice": 300,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0127.webp",
       "group": "Айс-кофе",
       "sizes": {
         "s": 260,
@@ -563,7 +563,7 @@
       "description": "",
       "emoji": "🧊",
       "basePrice": 320,
-      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0134.webp",
       "group": "Айс-кофе",
       "sizes": {
         "m": 320,
@@ -594,7 +594,7 @@
       "description": "",
       "emoji": "🧊",
       "basePrice": 300,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0146.webp",
       "group": "Айс-кофе",
       "sizes": {
         "s": 260,
@@ -609,7 +609,7 @@
       "description": "",
       "emoji": "🫐",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0168.webp",
       "group": "Летние напитки",
       "tags": [
         "new"
@@ -622,7 +622,7 @@
       "description": "",
       "emoji": "🍑",
       "basePrice": 440,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0166.webp",
       "group": "Летние напитки"
     },
     {
@@ -632,7 +632,7 @@
       "description": "",
       "emoji": "🥒",
       "basePrice": 390,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0172.webp",
       "group": "Летние напитки"
     },
     {
@@ -642,7 +642,7 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0150.webp",
       "group": "Смузи"
     },
     {
@@ -665,7 +665,7 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 510,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0152.webp",
       "group": "Смузи"
     },
     {
@@ -685,7 +685,7 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 650,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0156.webp",
       "group": "Авторские чаи"
     },
     {
@@ -695,7 +695,7 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0154.webp",
       "group": "Авторские чаи"
     },
     {
@@ -705,7 +705,7 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0158.webp",
       "group": "Авторские чаи"
     },
     {
@@ -765,7 +765,7 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0140.webp",
       "group": "Милкшейки"
     },
     {
@@ -775,7 +775,7 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 360,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/0136.webp",
       "group": "Какао"
     },
     {

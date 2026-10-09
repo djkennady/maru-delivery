@@ -1,3 +1,4 @@
+import { catalogDrinkImageUrl } from "@/lib/drink-photos";
 import type { Category } from "@/types/menu";
 
 const pexels = (id: number, w = 600) =>
@@ -31,8 +32,7 @@ export const galleryImages = [
 ];
 
 export function getProductImage(productId: string, imageUrl?: string): string {
-  if (imageUrl) return imageUrl;
-  return fallbackProductImage;
+  return catalogDrinkImageUrl(productId, imageUrl) || fallbackProductImage;
 }
 
 export function getCategoryImage(
@@ -45,12 +45,12 @@ export function getCategoryImage(
 
 export const promos = [
   {
-    id: "happy-hour",
-    title: "−15% на кофе",
-    subtitle: "С 8:00 до 11:00 каждый день",
+    id: "birthday-pizza",
+    title: "Пицца именинникам в подарок",
+    subtitle: "*при заказе от 3000 ₽",
     gradient: "from-orange-500 to-rose-500",
-    emoji: "☀️",
-    image: pexels(302899, 500),
+    emoji: "🍕",
+    image: "/hall-menu/dishes/0075.webp",
   },
   {
     id: "combo-lunch",

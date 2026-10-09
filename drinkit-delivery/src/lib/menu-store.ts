@@ -8,6 +8,7 @@ import {
   isSupabaseEnabled,
 } from "@/lib/supabase-server";
 import { dataFile } from "@/lib/data-file";
+import { catalogDrinkImageUrl } from "@/lib/drink-photos";
 import type {
   Category,
   CategoryInput,
@@ -131,11 +132,22 @@ function normalizeMenu(data: Partial<MenuData>): MenuData {
   };
 }
 
-function withCurrentMenuVersion(menu: MenuData): MenuData {
+function applyDrinkPhotos(menu: MenuData): MenuData {
   return {
     ...menu,
-    menuVersion: CURRENT_MENU_VERSION,
+    products: menu.products.map((product) => {
+      const imageUrl = catalogDrinkImageUrl(product.id, product.imageUrl);
+      if (!imageUrl || imageUrl === product.imageUrl) return product;
+      return { ...product, imageUrl };
+    }),
   };
+}
+
+function withCurrentMenuVersion(menu: MenuData): MenuData {
+  return applyDrinkPhotos({
+    ...menu,
+    menuVersion: CURRENT_MENU_VERSION,
+  });
 }
 
 function needsMenuReseed(menu: MenuData): boolean {
@@ -176,7 +188,7 @@ export async function getMenu(): Promise<MenuData> {
     try {
       const supabaseMenu = await readMenuFromSupabase();
       if (supabaseMenu && !needsMenuReseed(supabaseMenu)) {
-        return supabaseMenu;
+        return applyDrinkPhotos(supabaseMenu);
       }
 
       return await resetMenuToDefaults();
@@ -190,10 +202,10 @@ export async function getMenu(): Promise<MenuData> {
   const raw = await fs.readFile(menuFile(), "utf-8");
   try {
     const parsed = JSON.parse(raw) as Partial<MenuData>;
-    return normalizeMenu(parsed);
+    return applyDrinkPhotos(normalizeMenu(parsed));
   } catch {
     await writeMenu(DEFAULT_MENU);
-    return DEFAULT_MENU;
+    return applyDrinkPhotos(DEFAULT_MENU);
   }
 }
 
