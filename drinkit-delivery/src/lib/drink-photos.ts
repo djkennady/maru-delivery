@@ -129,10 +129,60 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
   },
 ];
 
-export const DRINK_PHOTO_BY_PRODUCT_ID: Record<string, string> =
-  Object.fromEntries(
-    DRINK_PHOTO_PAIRS.map((pair) => [pair.productId, pair.primary]),
-  );
+const stock = (id: string) => `/hall-menu/drinks/stock/${id}.webp`;
+
+/** Internet stock photos for drinks that have no Yandex studio pair. */
+export const STOCK_DRINK_PHOTOS: { productId: string; hallName?: string; path: string }[] = [
+  { productId: "americano", hallName: "Американо", path: stock("americano") },
+  { productId: "filter-coffee", hallName: "Фильтр-кофе", path: stock("filter-coffee") },
+  { productId: "espresso", hallName: "Эспрессо", path: stock("espresso") },
+  { productId: "cappuccino", hallName: "Капучино", path: stock("cappuccino") },
+  { productId: "latte", hallName: "Латте", path: stock("latte") },
+  { productId: "flat-white", hallName: "Флэт уайт", path: stock("flat-white") },
+  { productId: "spanish-latte", hallName: "Испанский латте", path: stock("spanish-latte") },
+  { productId: "salted-caramel-latte", hallName: "Латте солёная карамель", path: stock("salted-caramel-latte") },
+  { productId: "raf-vanilla", hallName: "Раф ваниль", path: stock("raf-vanilla") },
+  { productId: "strawberry-matcha", hallName: "Клубничная матча", path: stock("strawberry-matcha") },
+  { productId: "cold-brew-classic", hallName: "Колд брю классический", path: stock("cold-brew-classic") },
+  { productId: "cold-brew-orange", hallName: "Колд брю апельсин", path: stock("cold-brew-orange") },
+  { productId: "cold-brew-mango", hallName: "Колд брю манго", path: stock("cold-brew-mango") },
+  { productId: "cold-brew-tonic", hallName: "Колд брю тоник", path: stock("cold-brew-tonic") },
+  { productId: "iced-pistachio-latte", hallName: "Айс фисташковый латте", path: stock("iced-pistachio-latte") },
+  { productId: "smoothie-tropical", hallName: "Тропическое солнце", path: stock("smoothie-tropical") },
+  { productId: "tea-assam", hallName: "Ассам", path: stock("tea-assam") },
+  { productId: "tea-sencha", hallName: "Сенча", path: stock("tea-sencha") },
+  { productId: "tea-milk", hallName: "Молочный", path: stock("tea-milk") },
+  { productId: "tea-earl-grey", hallName: "Эрл Грей", path: stock("tea-earl-grey") },
+  { productId: "tea-jasmine", hallName: "Жасмин", path: stock("tea-jasmine") },
+  { productId: "tea-tatar", hallName: "Татарский", path: stock("tea-tatar") },
+  { productId: "tea-rooibos", hallName: "Ройбуш", path: stock("tea-rooibos") },
+  { productId: "tea-altai", hallName: "Алтайский", path: stock("tea-altai") },
+  { productId: "tea-peach-jasmine", hallName: "Персик · Жасмин", path: stock("tea-peach-jasmine") },
+  { productId: "tea-apple-cinnamon", hallName: "Яблоко · Корица · Ваниль", path: stock("tea-apple-cinnamon") },
+  { productId: "fresh-orange", hallName: "Апельсиновый фреш", path: stock("fresh-orange") },
+  { productId: "fresh-grapefruit", hallName: "Грейпфрутовый фреш", path: stock("fresh-grapefruit") },
+  { productId: "fresh-orange-carrot", hallName: "Апельсин · Морковь", path: stock("fresh-orange-carrot") },
+  { productId: "cocoa-salted-caramel", hallName: "Какао солёная карамель", path: stock("cocoa-salted-caramel") },
+  { productId: "hot-chocolate", hallName: "Горячий шоколад", path: stock("hot-chocolate") },
+  { productId: "milkshake-pistachio", hallName: "Фисташковый милкшейк", path: stock("milkshake-pistachio") },
+  { productId: "mors", hallName: "Морс", path: stock("mors") },
+  { productId: "water", hallName: "Вода с газом / без газа", path: stock("water") },
+  { productId: "cola-zero", hallName: "Cola Zero", path: stock("cola-zero") },
+  { productId: "tonic-drink", hallName: "Тоник", path: stock("tonic-drink") },
+  { productId: "nitro-black", path: stock("nitro-black") },
+  { productId: "nitro-vanilla", path: stock("nitro-vanilla") },
+  { productId: "nitro-orange", path: stock("nitro-orange") },
+  { productId: "shot-pistachio", path: stock("shot-pistachio") },
+  { productId: "shot-orange", path: stock("shot-orange") },
+  { productId: "shot-salted-caramel", path: stock("shot-salted-caramel") },
+  { productId: "shot-coconut", path: stock("shot-coconut") },
+  { productId: "coffee-tasting-set", path: stock("coffee-tasting-set") },
+];
+
+export const DRINK_PHOTO_BY_PRODUCT_ID: Record<string, string> = {
+  ...Object.fromEntries(STOCK_DRINK_PHOTOS.map((item) => [item.productId, item.path])),
+  ...Object.fromEntries(DRINK_PHOTO_PAIRS.map((pair) => [pair.productId, pair.primary])),
+};
 
 export function catalogDrinkImageUrl(
   productId: string,
