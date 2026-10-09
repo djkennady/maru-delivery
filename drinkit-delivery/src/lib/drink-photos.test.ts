@@ -11,6 +11,9 @@ describe("drink photo assignments", () => {
       HALL_SECTIONS.flatMap((section) => section.items.map((item) => item.name)),
     );
 
+    const ids = DRINK_PHOTO_PAIRS.map((pair) => pair.productId);
+    expect(new Set(ids).size).toBe(ids.length);
+
     for (const pair of DRINK_PHOTO_PAIRS) {
       const product = products.get(pair.productId);
       expect(product, pair.productId).toBeTruthy();
