@@ -164,7 +164,7 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 230,
-      "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/stock/americano.webp",
       "group": "Чёрный кофе",
       "sizes": {
         "s": 180,
