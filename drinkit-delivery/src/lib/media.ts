@@ -1,3 +1,4 @@
+import { catalogDrinkImageUrl } from "@/lib/drink-photos";
 import type { Category } from "@/types/menu";
 
 const pexels = (id: number, w = 600) =>
@@ -31,8 +32,7 @@ export const galleryImages = [
 ];
 
 export function getProductImage(productId: string, imageUrl?: string): string {
-  if (imageUrl) return imageUrl;
-  return fallbackProductImage;
+  return catalogDrinkImageUrl(productId, imageUrl) || fallbackProductImage;
 }
 
 export function getCategoryImage(
