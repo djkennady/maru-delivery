@@ -6,10 +6,9 @@ export default async function OrderPage() {
   await connection();
 
   return (
-    <>
-      <SiteHeader />
+    <div className="drinkit-skin">
+      <SiteHeader variant="drinkit" />
       <HomeContent />
-      <div hidden data-deploy="bg-anim-2026-08-28" />
-    </>
+    </div>
   );
 }

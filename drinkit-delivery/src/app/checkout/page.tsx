@@ -3,9 +3,14 @@ import { CheckoutForm } from "@/components/CheckoutForm";
 
 export default function CheckoutPage() {
   return (
-    <>
-      <SiteHeader showBack backHref="/order" backLabel="Корзина" />
+    <div className="drinkit-skin min-h-full">
+      <SiteHeader
+        variant="drinkit"
+        showBack
+        backHref="/order"
+        backLabel="К меню"
+      />
       <CheckoutForm />
-    </>
+    </div>
   );
 }

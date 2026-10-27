@@ -347,6 +347,41 @@ body {
   animation: bg-grain-reverse 4s ease-in-out infinite;
 }
 
+/* Drinkit-inspired shop skin (scoped to /order) */
+.drinkit-skin {
+  --bg: #000000;
+  --card: #1a1a1a;
+  --surface: #222222;
+  --text: #ffffff;
+  --muted: #8a8a8a;
+  --border: #2e2e2e;
+  --accent: #3b82f6;
+  --accent-soft: #1e3a5f;
+  --accent-warm: #60a5fa;
+  --accent-warm-soft: #172554;
+  --accent-purple: #8b5cf6;
+  background: #000;
+  color: #fff;
+  min-height: 100%;
+}
+
+.drinkit-skin .drinkit-tab-active {
+  color: #fff;
+}
+
+.drinkit-skin .drinkit-tab {
+  color: #6b6b6b;
+}
+
+.drinkit-skin .drinkit-subtab-active {
+  color: #fff;
+  box-shadow: inset 0 -2px 0 #fff;
+}
+
+body:has(.drinkit-skin) .site-animated-bg {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-bg-blob-1,
   .animate-bg-blob-2,

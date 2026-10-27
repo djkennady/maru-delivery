@@ -1,10 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useMenu } from "@/context/MenuContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
-import { getCategoryImage } from "@/lib/media";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import { ProductCard } from "./ProductCard";
 import { FeaturedHits } from "./FeaturedHits";
@@ -19,7 +17,7 @@ function buildGroups(products: Product[]) {
   const map = new Map<string, Product[]>();
 
   for (const product of products) {
-    const groupName = product.group?.trim() || "Меню";
+    const groupName = product.group?.trim() || "меню";
     if (!map.has(groupName)) {
       map.set(groupName, []);
       order.push(groupName);
@@ -47,18 +45,22 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
         : products.filter((product) => product.categoryId !== BREAKFAST_CATEGORY_ID),
     [products, breakfastOpen],
   );
-  const [activeCategory, setActiveCategory] = useState(
-    () => shopCategories[0]?.id ?? "new",
-  );
+
+  const [activeCategory, setActiveCategory] = useState<string>("");
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const groupRefs = useRef<Record<string, HTMLElement | null>>({});
+
+  useEffect(() => {
+    if (shopCategories.length === 0) return;
+    if (!shopCategories.some((category) => category.id === activeCategory)) {
+      setActiveCategory(shopCategories[0].id);
+    }
+  }, [shopCategories, activeCategory]);
 
   const resolvedCategory =
     shopCategories.some((category) => category.id === activeCategory)
       ? activeCategory
-      : (shopCategories[0]?.id ?? activeCategory);
-  if (shopCategories.length > 0 && resolvedCategory !== activeCategory) {
-    setActiveCategory(resolvedCategory);
-  }
+      : (shopCategories[0]?.id ?? "");
 
   const filteredProducts = useMemo(
     () => shopProducts.filter((p) => p.categoryId === resolvedCategory),
@@ -70,35 +72,28 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     [filteredProducts],
   );
 
-  const defaultGroup = groupedProducts[0]?.name ?? null;
-  const resolvedGroup =
-    activeGroup && groupedProducts.some((group) => group.name === activeGroup)
-      ? activeGroup
-      : defaultGroup;
-  if (resolvedGroup !== activeGroup) {
-    setActiveGroup(resolvedGroup);
-  }
+  useEffect(() => {
+    setActiveGroup(groupedProducts[0]?.name ?? null);
+  }, [resolvedCategory, groupedProducts]);
 
-  const visibleGroups = useMemo(() => {
-    if (!resolvedGroup) return groupedProducts;
-    return groupedProducts.filter((group) => group.name === resolvedGroup);
-  }, [groupedProducts, resolvedGroup]);
-
-  const activeCategoryData = shopCategories.find((c) => c.id === resolvedCategory);
-  const categoryName = activeCategoryData?.name ?? "";
   const hasSubgroups = groupedProducts.length > 1;
+  const showForYou = resolvedCategory === shopCategories[0]?.id;
+
+  const scrollToGroup = (name: string) => {
+    setActiveGroup(name);
+    const el = groupRefs.current[name];
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 140;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
 
   return (
     <>
-      <FeaturedHits onSelect={onSelect} />
-
-      <section className="sticky top-16 z-40 w-full max-w-[100vw] overflow-x-clip border-b border-orange-200/50 bg-white/70 py-3 backdrop-blur-xl backdrop-saturate-150">
-        <div className="mx-auto w-full max-w-lg min-w-0 px-4">
-          <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[var(--muted)]">
-            меню
-          </p>
-          <div className="w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
-            <div className="flex w-max gap-2">
+      <section className="sticky top-14 z-40 border-b border-white/5 bg-black/90 backdrop-blur-xl">
+        <div className="mx-auto w-full max-w-lg px-4 pt-2">
+          <div className="overflow-x-auto scrollbar-hide">
+            <div className="flex w-max gap-5 pb-2">
               {shopCategories.map((category) => {
                 const active = resolvedCategory === category.id;
                 return (
@@ -106,29 +101,11 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                     key={category.id}
                     type="button"
                     onClick={() => setActiveCategory(category.id)}
-                    className={`relative h-20 w-24 min-w-24 max-w-24 flex-none overflow-hidden rounded-2xl transition ${
-                      active
-                        ? "ring-2 ring-[var(--accent-warm)]"
-                        : "opacity-80 hover:opacity-100"
+                    className={`shrink-0 pb-1 text-[15px] font-semibold lowercase tracking-tight transition ${
+                      active ? "drinkit-tab-active" : "drinkit-tab hover:text-white/80"
                     }`}
                   >
-                    <Image
-                      src={getCategoryImage(category.id, category)}
-                      alt={category.name}
-                      fill
-                      className="object-cover"
-                      sizes="96px"
-                    />
-                    <div
-                      className={`absolute inset-0 ${
-                        active
-                          ? "bg-gradient-to-t from-[var(--accent-warm)]/90 to-[var(--accent-warm)]/20"
-                          : "bg-gradient-to-t from-black/70 to-black/10"
-                      }`}
-                    />
-                    <span className="absolute inset-x-0 bottom-2 px-1 text-center text-[11px] font-bold leading-tight text-white">
-                      {category.name}
-                    </span>
+                    {category.name}
                   </button>
                 );
               })}
@@ -136,68 +113,53 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
           </div>
 
           {hasSubgroups ? (
-            <div className="mt-3 w-full min-w-0 overflow-x-auto overscroll-x-contain scrollbar-hide">
-              <div className="flex w-max gap-2">
+            <div className="overflow-x-auto scrollbar-hide">
+              <div className="flex w-max gap-4 pb-2 pt-1">
                 {groupedProducts.map((group) => {
-                  const active = resolvedGroup === group.name;
+                  const active = activeGroup === group.name;
                   return (
                     <button
                       key={group.name}
                       type="button"
-                      onClick={() => setActiveGroup(group.name)}
-                      className={`shrink-0 rounded-full px-3.5 py-2 text-xs font-semibold transition ${
+                      onClick={() => scrollToGroup(group.name)}
+                      className={`shrink-0 pb-2 text-[12px] font-medium lowercase tracking-wide transition ${
                         active
-                          ? "bg-[var(--accent-warm)] text-white shadow-md shadow-orange-300/40"
-                          : "bg-white text-[var(--text)] ring-1 ring-orange-100 hover:bg-orange-50"
+                          ? "drinkit-subtab-active"
+                          : "text-white/35 hover:text-white/70"
                       }`}
                     >
                       {group.name}
-                      <span
-                        className={`ml-1.5 tabular-nums ${active ? "text-orange-100" : "text-[var(--muted)]"}`}
-                      >
-                        {group.items.length}
-                      </span>
                     </button>
                   );
                 })}
               </div>
             </div>
-          ) : null}
+          ) : (
+            <div className="h-1" />
+          )}
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-lg min-w-0 px-4 py-5 pb-32">
-        <div className="relative mb-4 h-28 overflow-hidden rounded-[1.5rem]">
-          <Image
-            src={getCategoryImage(resolvedCategory, activeCategoryData)}
-            alt={categoryName}
-            fill
-            className="object-cover"
-            sizes="512px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-center px-5">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-orange-200">
-              Категория
-            </p>
-            <h2 className="text-2xl font-black text-white">{categoryName}</h2>
-          </div>
-        </div>
+      {showForYou ? <FeaturedHits onSelect={onSelect} /> : null}
 
-        <div className="space-y-4">
-          {filteredProducts.length === 0 ? (
-            <p className="rounded-2xl border border-dashed border-[var(--border)] bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
-              В этой категории пока пусто
-            </p>
-          ) : (
-            visibleGroups.map((group) => (
-              <div key={group.name}>
-                {!hasSubgroups ? (
-                  <h3 className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[var(--accent-warm)]">
-                    {group.name}
-                  </h3>
-                ) : null}
-                <div className="space-y-4">
+      <section className="mx-auto w-full max-w-lg px-3 pb-36 pt-3">
+        {filteredProducts.length === 0 ? (
+          <p className="rounded-2xl bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
+            В этой категории пока пусто
+          </p>
+        ) : (
+          <div className="space-y-8">
+            {groupedProducts.map((group) => (
+              <div
+                key={group.name}
+                ref={(node) => {
+                  groupRefs.current[group.name] = node;
+                }}
+              >
+                <h3 className="mb-3 px-1 text-[13px] font-medium lowercase tracking-wide text-white/55">
+                  {group.name}
+                </h3>
+                <div className="grid grid-cols-2 gap-2.5">
                   {group.items.map((product) => (
                     <ProductCard
                       key={product.id}
@@ -207,9 +169,9 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   ))}
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

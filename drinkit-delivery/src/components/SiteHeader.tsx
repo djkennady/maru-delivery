@@ -11,16 +11,81 @@ interface SiteHeaderProps {
   showBack?: boolean;
   backHref?: string;
   backLabel?: string;
+  variant?: "light" | "drinkit";
 }
 
 export function SiteHeader({
   showBack = false,
   backHref = "/",
   backLabel = "Назад",
+  variant = "light",
 }: SiteHeaderProps) {
   const { itemCount } = useCart();
   const { profile, hasProfile } = useUser();
   const firstName = hasProfile ? getFirstName(profile.name) : null;
+  const drinkit = variant === "drinkit";
+
+  if (drinkit) {
+    return (
+      <header className="sticky top-0 z-50 border-b border-white/5 bg-black/85 backdrop-blur-xl">
+        <div className="mx-auto flex h-14 max-w-lg items-center justify-between gap-3 px-4">
+          <div className="flex min-w-0 items-center gap-2.5">
+            {showBack ? (
+              <Link href={backHref} className="flex min-w-0 items-center gap-2">
+                <BrandLogo size="sm" linked={false} variant="onDark" />
+                <span className="truncate text-sm font-semibold text-white">
+                  {backLabel}
+                </span>
+              </Link>
+            ) : (
+              <>
+                <BrandLogo size="sm" variant="onDark" />
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-white">
+                    {firstName ? `привет, ${firstName}` : "МАРУ"}
+                  </p>
+                  <p className="flex items-center gap-1 truncate text-[11px] text-white/45">
+                    <MapPin className="h-3 w-3 shrink-0" />
+                    Алабуга · самовывоз · −10%
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+
+          {!showBack ? (
+            <div className="flex shrink-0 items-center gap-2">
+              <Link
+                href="/menu"
+                className="rounded-full bg-white/10 px-3 py-2 text-[11px] font-semibold text-white/85 transition hover:bg-white/15"
+              >
+                Зал
+              </Link>
+              <Link
+                href="/account"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/80"
+                aria-label="Личный кабинет"
+              >
+                <User className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/checkout"
+                className="relative flex h-9 w-9 items-center justify-center rounded-full bg-[#3b82f6] text-white"
+                aria-label="Корзина самовывоза"
+              >
+                <ShoppingBag className="h-4 w-4" />
+                {itemCount > 0 ? (
+                  <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-black">
+                    {itemCount}
+                  </span>
+                ) : null}
+              </Link>
+            </div>
+          ) : null}
+        </div>
+      </header>
+    );
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-orange-200/50 bg-white/45 backdrop-blur-xl backdrop-saturate-150">
