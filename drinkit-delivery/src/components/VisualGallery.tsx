@@ -30,7 +30,7 @@ function GalleryTile({
 export function VisualGallery() {
   return (
     <section className="px-4 py-4 md:px-6">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <div className="mb-3">
           <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/40">
             атмосфера

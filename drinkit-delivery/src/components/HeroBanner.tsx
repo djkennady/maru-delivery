@@ -13,7 +13,7 @@ export function HeroBanner() {
 
   return (
     <section className="px-4 pb-3 pt-4 md:px-6">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <div className="relative overflow-hidden rounded-[2rem] shadow-2xl shadow-blue-500/10 ring-1 ring-white/10 md:min-h-[340px] lg:min-h-[380px]">
           <div className="absolute inset-0">
             <video

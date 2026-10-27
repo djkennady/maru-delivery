@@ -28,7 +28,7 @@ export function SiteHeader({
   if (drinkit) {
     return (
       <header className="sticky top-0 z-50 border-b border-white/5 bg-black/85 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 md:px-6">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 md:px-6">
           <div className="flex min-w-0 items-center gap-2.5">
             {showBack ? (
               <Link href={backHref} className="flex min-w-0 items-center gap-2">

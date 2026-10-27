@@ -4,7 +4,7 @@ import { promos } from "@/lib/media";
 export function PromoBanners() {
   return (
     <section className="px-4 py-4 md:px-6">
-      <div className="mx-auto max-w-6xl min-w-0">
+      <div className="mx-auto max-w-7xl min-w-0">
         <div className="mb-3 flex items-end justify-between gap-3">
           <div>
             <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/40">

@@ -91,7 +91,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
   return (
     <>
       <section className="sticky top-14 z-40 border-b border-white/5 bg-black/80 backdrop-blur-xl">
-        <div className="mx-auto w-full max-w-6xl px-4 pt-2 md:px-6">
+        <div className="mx-auto w-full max-w-7xl px-4 pt-2 md:px-6">
           <div className="overflow-x-auto scrollbar-hide">
             <div className="flex w-max gap-5 pb-2">
               {shopCategories.map((category) => {
@@ -142,7 +142,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
       {showForYou ? <FeaturedHits onSelect={onSelect} /> : null}
 
-      <section className="mx-auto w-full max-w-6xl px-3 pb-36 pt-4 md:px-6">
+      <section className="mx-auto w-full max-w-7xl px-3 pb-36 pt-4 md:px-6">
         {filteredProducts.length === 0 ? (
           <p className="rounded-2xl bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
             В этой категории пока пусто
