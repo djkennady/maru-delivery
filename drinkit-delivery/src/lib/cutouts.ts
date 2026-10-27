@@ -1,10 +1,10 @@
 /** Local transparent cutouts for Drinkit-style floating heroes. */
 
+/** Prefer clean glass/food silhouettes; skip tray shots with messy edges. */
 const CUTOUT_IDS = new Set([
   "americano",
   "beef-stroganoff",
   "burger-beef",
-  "cappuccino",
   "english-breakfast",
   "honey-cake",
   "iced-latte",
