@@ -25,7 +25,6 @@ export function CategoryHero({
   const theme = getCategoryTheme(categoryId);
   const cutout = getProductCutout(product.id);
   const imageSrc = cutout ?? getProductImage(product.id, product.imageUrl);
-  const floating = Boolean(cutout);
 
   return (
     <section
@@ -41,7 +40,7 @@ export function CategoryHero({
         }}
       />
       <div
-        className="drinkit-sheet-wash pointer-events-none absolute left-1/2 top-10 h-64 w-64 -translate-x-1/2 rounded-full blur-3xl"
+        className="drinkit-sheet-wash pointer-events-none absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full blur-3xl"
         style={{ background: theme.glow }}
       />
 
@@ -54,48 +53,37 @@ export function CategoryHero({
         }`}
         aria-label={`${product.name}, ${formatPrice(product.basePrice)}`}
       >
-        <p className="mb-4 text-[11px] font-medium lowercase tracking-[0.2em] text-white/40">
+        <p className="mb-3 text-[11px] font-medium lowercase tracking-[0.2em] text-white/40">
           {categoryName}
         </p>
 
-        <div
-          className={`drinkit-hero-breath relative ${
-            floating
-              ? "aspect-square w-[78%] max-w-[360px] md:max-w-[400px]"
-              : "aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-[2rem] shadow-[0_30px_80px_rgba(0,0,0,0.45)] md:max-w-[380px]"
-          }`}
-        >
-          {floating ? (
-            <>
-              <div
-                className="absolute inset-[12%] rounded-full blur-3xl opacity-80"
-                style={{ background: theme.glow }}
-              />
-              <Image
-                src={imageSrc}
-                alt={product.name}
-                fill
-                priority
-                className="object-contain drop-shadow-[0_28px_50px_rgba(0,0,0,0.5)]"
-                sizes="(max-width: 768px) 78vw, 400px"
-              />
-            </>
-          ) : (
-            <>
-              <Image
-                src={imageSrc}
-                alt={product.name}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 768px) 80vw, 380px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-            </>
-          )}
+        <div className="drinkit-hero-breath relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px]">
+          <div
+            className="absolute inset-[16%] rounded-full blur-3xl opacity-75"
+            style={{ background: theme.glow }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              WebkitMaskImage:
+                "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
+              maskImage:
+                "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
+            }}
+          >
+            <Image
+              src={imageSrc}
+              alt={product.name}
+              fill
+              priority
+              unoptimized={Boolean(cutout)}
+              className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+              sizes="(max-width: 768px) 86vw, 480px"
+            />
+          </div>
         </div>
 
-        <h2 className="font-display mt-5 max-w-[18rem] text-[1.45rem] font-semibold leading-tight text-white md:max-w-md md:text-[1.75rem]">
+        <h2 className="font-display mt-3 max-w-[18rem] text-[1.45rem] font-semibold leading-tight text-white md:max-w-md md:text-[1.75rem]">
           {product.name}
         </h2>
         <p className="mt-1.5 text-sm font-medium text-white/55 md:text-[15px]">
