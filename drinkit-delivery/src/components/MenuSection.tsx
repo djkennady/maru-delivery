@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { useMenu } from "@/context/MenuContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
+import { hasProductCutout } from "@/lib/cutouts";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import { CategoryHero } from "./CategoryHero";
 import { ProductCard } from "./ProductCard";
@@ -32,6 +33,10 @@ function buildGroups(products: Product[]) {
 function pickHeroProduct(products: Product[]): Product | null {
   if (products.length === 0) return null;
   return (
+    products.find(
+      (product) => product.tags?.includes("hit") && hasProductCutout(product.id),
+    ) ??
+    products.find((product) => hasProductCutout(product.id)) ??
     products.find((product) => product.tags?.includes("hit")) ??
     products.find((product) => product.tags?.includes("new")) ??
     products[0]

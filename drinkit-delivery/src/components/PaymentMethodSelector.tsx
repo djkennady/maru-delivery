@@ -39,12 +39,12 @@ export function PaymentMethodSelector({
             type="button"
             disabled={disabled}
             onClick={() => onChange(method.id)}
-            className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-semibold transition disabled:opacity-60 ${
+            className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3.5 text-sm font-semibold transition disabled:opacity-60 ${
               active
                 ? method.id === "sbp"
-                  ? "border-[#7B2D8E] bg-[#7B2D8E]/10 text-[#7B2D8E]"
-                  : "border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)]"
-                : "border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)]"
+                  ? "border-[#a855f7]/50 bg-[#7B2D8E]/25 text-[#e9d5ff]"
+                  : "border-[#3b82f6]/50 bg-[#3b82f6]/20 text-[#93c5fd]"
+                : "border-white/10 bg-white/[0.04] text-white/45 hover:text-white/80"
             }`}
           >
             <Icon className="h-4 w-4" />

@@ -45,7 +45,7 @@ export function HeroBanner() {
                 Самовывоз в Алабуге · кухня, кофе и атмосфера
               </p>
 
-              <h1 className="mt-3 text-[2rem] font-black leading-[1.05] tracking-tight md:text-4xl lg:text-5xl">
+              <h1 className="font-display mt-3 text-[2rem] font-semibold leading-[1.05] tracking-tight md:text-4xl lg:text-5xl">
                 <span className="text-shimmer">Вкус, который</span>
                 <br />
                 хочется повторить

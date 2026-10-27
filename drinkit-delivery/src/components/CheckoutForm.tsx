@@ -69,10 +69,10 @@ function CartLineItem({
 
   return (
     <article
-      className={`flex gap-3 overflow-hidden rounded-2xl border bg-[var(--card)] shadow-sm ${
+      className={`flex gap-3 overflow-hidden rounded-[1.5rem] border bg-white/[0.04] backdrop-blur-sm ${
         isGiftBonus
-          ? "border-[var(--accent)]/30 ring-1 ring-[var(--accent)]/20"
-          : "border-[var(--border)]"
+          ? "border-[#3b82f6]/35 ring-1 ring-[#3b82f6]/20"
+          : "border-white/8"
       }`}
     >
       <div className="relative aspect-square w-24 shrink-0 sm:w-28">
@@ -88,16 +88,16 @@ function CartLineItem({
         <div className="flex items-start justify-between gap-2">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="font-semibold text-[var(--text)]">
+              <h3 className="font-display font-semibold text-white">
                 {product?.name ?? item.productId}
               </h3>
               {isGiftBonus && (
-                <span className="rounded-full bg-[var(--accent-soft)] px-2 py-0.5 text-[10px] font-bold uppercase text-[var(--accent)]">
+                <span className="rounded-full bg-[#3b82f6]/20 px-2 py-0.5 text-[10px] font-bold uppercase text-[#93c5fd]">
                   Подарок
                 </span>
               )}
             </div>
-            <p className="mt-0.5 text-xs text-[var(--muted)]">
+            <p className="mt-0.5 text-xs text-white/45">
               {sizeLabel}
               {milkLabel ? ` · ${milkLabel}` : ""}
             </p>
@@ -106,7 +106,7 @@ function CartLineItem({
             <button
               type="button"
               onClick={() => onRemove(item.id)}
-              className="shrink-0 rounded-lg p-1.5 text-[var(--muted)] transition hover:bg-red-50 hover:text-red-500"
+              className="shrink-0 rounded-lg p-1.5 text-white/40 transition hover:bg-white/10 hover:text-red-300"
               aria-label="Удалить"
             >
               <Trash2 className="h-4 w-4" />
@@ -115,31 +115,31 @@ function CartLineItem({
         </div>
         <div className="mt-2 flex items-center justify-between">
           {isGiftBonus ? (
-            <span className="text-xs text-[var(--muted)]">Добавится к заказу</span>
+            <span className="text-xs text-white/45">Добавится к заказу</span>
           ) : (
-            <div className="flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5">
+            <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-1.5 py-0.5">
               <button
                 type="button"
                 onClick={() => onUpdate?.(item.id, item.quantity - 1)}
-                className="flex h-7 w-7 items-center justify-center rounded-full transition hover:bg-[var(--border)]"
+                className="flex h-7 w-7 items-center justify-center rounded-full text-white transition hover:bg-white/10"
               >
                 <Minus className="h-3.5 w-3.5" />
               </button>
-              <span className="min-w-5 text-center text-sm font-semibold">
+              <span className="min-w-5 text-center text-sm font-semibold text-white">
                 {item.quantity}
               </span>
               <button
                 type="button"
                 onClick={() => onUpdate?.(item.id, item.quantity + 1)}
-                className="flex h-7 w-7 items-center justify-center rounded-full transition hover:bg-[var(--border)]"
+                className="flex h-7 w-7 items-center justify-center rounded-full text-white transition hover:bg-white/10"
               >
                 <Plus className="h-3.5 w-3.5" />
               </button>
             </div>
           )}
           <span
-            className={`font-bold ${
-              isGiftBonus ? "text-[var(--accent)]" : "text-[var(--text)]"
+            className={`font-semibold ${
+              isGiftBonus ? "text-[#93c5fd]" : "text-white"
             }`}
           >
             {isGiftBonus || item.unitPrice === 0
@@ -623,16 +623,15 @@ export function CheckoutForm() {
   if (items.length === 0 && !success && !resumingCard) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <p className="text-5xl">🛍️</p>
-        <h2 className="mt-4 text-xl font-bold text-[var(--text)]">
+        <p className="font-display text-xl font-semibold text-white">
           Корзина пуста
-        </h2>
-        <p className="mt-2 text-[var(--muted)]">
-          Добавьте напитки или еду из меню
+        </p>
+        <p className="mt-2 text-white/45">
+          Добавьте напитки или еду из меню самовывоза
         </p>
         <Link
           href="/order"
-          className="mt-6 inline-block rounded-2xl bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-emerald-600"
+          className="mt-6 inline-block rounded-full bg-[#3b82f6] px-6 py-3 font-semibold text-white shadow-[0_12px_30px_rgba(59,130,246,0.28)] transition hover:brightness-110"
         >
           К меню
         </Link>
@@ -643,24 +642,23 @@ export function CheckoutForm() {
   if (success) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 text-center">
-        <p className="text-5xl">✅</p>
-        <h2 className="mt-4 text-xl font-bold text-[var(--text)]">
+        <p className="font-display text-xl font-semibold text-white">
           Заказ принят!
-        </h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
+        </p>
+        <p className="mt-2 text-sm text-white/45">
           Оплата прошла успешно. Заказ готовится к самовывозу.
           {successGiftTitle && ` Подарок «${successGiftTitle}» применён и списан.`}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/account"
-            className="inline-block rounded-2xl bg-[var(--accent)] px-6 py-3 font-semibold text-white transition hover:bg-emerald-600"
+            className="inline-block rounded-full bg-[#3b82f6] px-6 py-3 font-semibold text-white transition hover:brightness-110"
           >
             Личный кабинет
           </Link>
           <Link
             href="/order"
-            className="inline-block rounded-2xl border border-[var(--border)] bg-[var(--card)] px-6 py-3 font-semibold text-[var(--text)] transition hover:border-[var(--accent)]"
+            className="inline-block rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 font-semibold text-white transition hover:bg-white/[0.08]"
           >
             Заказать ещё
           </Link>
@@ -670,9 +668,16 @@ export function CheckoutForm() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-6 px-4 py-5 pb-10">
+    <div className="relative z-10 mx-auto max-w-lg space-y-6 px-4 py-5 pb-16 md:max-w-2xl md:px-6">
       <section className="space-y-3">
-        <h2 className="text-lg font-bold text-[var(--text)]">Ваш заказ</h2>
+        <div>
+          <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/35">
+            checkout
+          </p>
+          <h2 className="font-display text-lg font-semibold text-white md:text-xl">
+            Ваш заказ
+          </h2>
+        </div>
         {items.map((item) => (
           <CartLineItem
             key={item.id}
@@ -698,35 +703,35 @@ export function CheckoutForm() {
         />
       ) : null}
 
-      <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+      <section className="rounded-[1.5rem] border border-white/8 bg-white/[0.04] p-4 backdrop-blur-sm">
         <div className="space-y-2 text-sm">
-          <div className="flex justify-between text-[var(--muted)]">
+          <div className="flex justify-between text-white/45">
             <span>Сумма</span>
             <span>{formatPrice(subtotal)}</span>
           </div>
           {bonusItem && (
-            <div className="flex justify-between text-[var(--accent)]">
+            <div className="flex justify-between text-[#93c5fd]">
               <span>Подарок в заказе</span>
               <span>Бесплатно</span>
             </div>
           )}
           {giftDiscount > 0 && (
-            <div className="flex justify-between text-[var(--accent-warm)]">
+            <div className="flex justify-between text-[#fdba74]">
               <span>Подарок</span>
               <span>−{formatPrice(giftDiscount)}</span>
             </div>
           )}
           {pickupDiscount > 0 && (
-            <div className="flex justify-between text-[var(--accent)]">
+            <div className="flex justify-between text-[#93c5fd]">
               <span>Скидка 10% за самовывоз</span>
               <span>−{formatPrice(pickupDiscount)}</span>
             </div>
           )}
-          <div className="flex justify-between text-[var(--muted)]">
+          <div className="flex justify-between text-white/45">
             <span>Самовывоз</span>
             <span>Бесплатно</span>
           </div>
-          <div className="flex justify-between border-t border-[var(--border)] pt-2 text-base font-bold text-[var(--text)]">
+          <div className="flex justify-between border-t border-white/10 pt-2 text-base font-semibold text-white">
             <span>Итого</span>
             <span>{formatPrice(total)}</span>
           </div>
@@ -734,10 +739,12 @@ export function CheckoutForm() {
       </section>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <h2 className="text-lg font-bold text-[var(--text)]">Самовывоз</h2>
+        <h2 className="font-display text-lg font-semibold text-white">
+          Самовывоз
+        </h2>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-[var(--text)]">
+          <span className="mb-1.5 block text-sm font-medium text-white/70">
             Имя
           </span>
           <input
@@ -748,12 +755,12 @@ export function CheckoutForm() {
               setDirtyFields((current) => ({ ...current, name: true }));
               setName(e.target.value);
             }}
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#3b82f6]/60"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-[var(--text)]">
+          <span className="mb-1.5 block text-sm font-medium text-white/70">
             Телефон
           </span>
           <input
@@ -766,12 +773,12 @@ export function CheckoutForm() {
               setPhone(e.target.value);
             }}
             placeholder="+7"
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#3b82f6]/60"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-[var(--text)]">
+          <span className="mb-1.5 block text-sm font-medium text-white/70">
             Комментарий к самовывозу
           </span>
           <input
@@ -782,12 +789,12 @@ export function CheckoutForm() {
               setAddress(e.target.value);
             }}
             placeholder="Необязательно"
-            className="w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#3b82f6]/60"
           />
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm font-medium text-[var(--text)]">
+          <span className="mb-1.5 block text-sm font-medium text-white/70">
             Комментарий
           </span>
           <textarea
@@ -795,12 +802,14 @@ export function CheckoutForm() {
             onChange={(e) => setComment(e.target.value)}
             rows={3}
             placeholder="Домофон, этаж, пожелания…"
-            className="w-full resize-none rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-[var(--text)] outline-none transition focus:border-[var(--accent)]"
+            className="w-full resize-none rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#3b82f6]/60"
           />
         </label>
 
         <div className="space-y-3">
-          <h2 className="text-lg font-bold text-[var(--text)]">Способ оплаты</h2>
+          <h2 className="font-display text-lg font-semibold text-white">
+            Способ оплаты
+          </h2>
           <PaymentMethodSelector
             value={paymentMethod}
             onChange={(method) => {
@@ -822,14 +831,14 @@ export function CheckoutForm() {
             confirming={submitting}
           />
         ) : (
-          <section className="rounded-2xl border border-dashed border-[#7B2D8E]/30 bg-[#7B2D8E]/5 p-4 text-sm text-[var(--muted)]">
+          <section className="rounded-[1.5rem] border border-dashed border-white/15 bg-white/[0.03] p-4 text-sm text-white/45">
             После нажатия «Получить QR» откроется код для оплаты через приложение
             банка по СБП.
           </section>
         )}
 
         {error && (
-          <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+          <p className="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
             {error}
           </p>
         )}
@@ -838,10 +847,10 @@ export function CheckoutForm() {
           <button
             type="submit"
             disabled={submitting}
-            className={`flex w-full items-center justify-center rounded-2xl px-5 py-4 font-semibold text-white shadow-lg transition disabled:opacity-60 ${
+            className={`flex w-full items-center justify-center rounded-full px-5 py-4 font-semibold text-white shadow-lg transition hover:brightness-110 disabled:opacity-60 ${
               paymentMethod === "sbp"
-                ? "bg-[#7B2D8E] shadow-purple-500/20 hover:bg-[#692677]"
-                : "bg-[var(--accent)] shadow-emerald-500/25 hover:bg-emerald-600"
+                ? "bg-[#7B2D8E] shadow-purple-500/20"
+                : "bg-[#3b82f6] shadow-[0_12px_30px_rgba(59,130,246,0.28)]"
             }`}
           >
             {submitting
