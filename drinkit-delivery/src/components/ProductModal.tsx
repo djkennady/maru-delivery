@@ -87,18 +87,22 @@ function ProductModalBody({
     <div className="drinkit-fade fixed inset-0 z-[100] flex items-stretch justify-center bg-black/80 backdrop-blur-sm">
       <div className="drinkit-sheet-in relative flex h-full w-full max-w-lg flex-col overflow-hidden">
         <div
-          className="absolute inset-0 transition-colors duration-700"
+          className="absolute inset-0"
           style={{
-            background: `linear-gradient(180deg, ${theme.from} 0%, ${theme.via} 48%, ${theme.to} 100%)`,
+            background: `linear-gradient(180deg, ${theme.from} 0%, ${theme.mid} 42%, ${theme.to} 100%)`,
           }}
         />
         <div
-          className="drinkit-glow pointer-events-none absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full blur-2xl"
-          style={{ background: `radial-gradient(circle, ${theme.glow}, transparent 70%)` }}
+          className="drinkit-sheet-wash pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(120% 90% at 50% 28%, ${theme.wash}, transparent 72%)`,
+          }}
         />
         <div
-          className="drinkit-aurora pointer-events-none absolute -right-10 bottom-24 h-56 w-56 rounded-full blur-3xl opacity-70"
-          style={{ background: `radial-gradient(circle, ${theme.glow}, transparent 72%)` }}
+          className="drinkit-sheet-wash-soft pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background: `linear-gradient(180deg, ${theme.wash} 0%, transparent 38%, transparent 62%, ${theme.wash} 100%)`,
+          }}
         />
 
         <div className="relative z-10 flex items-center justify-between px-4 pb-2 pt-4">

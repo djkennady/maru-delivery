@@ -556,6 +556,34 @@ body:has(.drinkit-skin) .site-animated-bg {
   animation: drinkit-glow 4.5s ease-in-out infinite;
 }
 
+@keyframes drinkit-sheet-wash {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes drinkit-sheet-wash-soft {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.drinkit-sheet-wash {
+  animation: drinkit-sheet-wash 7s ease-in-out infinite;
+}
+
+.drinkit-sheet-wash-soft {
+  animation: drinkit-sheet-wash-soft 9s ease-in-out infinite;
+}
+
 .drinkit-aurora {
   animation: drinkit-aurora 18s ease-in-out infinite;
 }
@@ -602,6 +630,8 @@ body:has(.drinkit-skin) .site-animated-bg {
   .drinkit-soft-float,
   .drinkit-ken,
   .drinkit-glow,
+  .drinkit-sheet-wash,
+  .drinkit-sheet-wash-soft,
   .drinkit-aurora,
   .drinkit-aurora-delay,
   .drinkit-aurora-slow,
