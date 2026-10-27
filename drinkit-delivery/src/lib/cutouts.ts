@@ -3,6 +3,7 @@
 const CUTOUT_IDS = new Set([
   "americano",
   "beef-stroganoff",
+  "burger-beef",
   "cappuccino",
   "english-breakfast",
   "honey-cake",
