@@ -101,7 +101,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                     key={category.id}
                     type="button"
                     onClick={() => setActiveCategory(category.id)}
-                    className={`shrink-0 pb-1 text-[15px] font-semibold lowercase tracking-tight transition ${
+                    className={`shrink-0 pb-1 text-[15px] font-semibold lowercase tracking-tight transition duration-300 ${
                       active ? "drinkit-tab-active" : "drinkit-tab hover:text-white/80"
                     }`}
                   >
@@ -160,11 +160,12 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   {group.name}
                 </h3>
                 <div className="grid grid-cols-2 gap-2.5">
-                  {group.items.map((product) => (
+                  {group.items.map((product, index) => (
                     <ProductCard
                       key={product.id}
                       product={product}
                       onSelect={onSelect}
+                      index={index}
                     />
                   ))}
                 </div>

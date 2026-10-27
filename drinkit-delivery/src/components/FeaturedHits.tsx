@@ -46,15 +46,23 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
               key={product.id}
               type="button"
               onClick={() => onSelect(product)}
-              className="relative h-[280px] w-[78%] min-w-[78%] max-w-[320px] flex-none overflow-hidden rounded-[1.75rem] text-left"
+              className="drinkit-rise relative h-[280px] w-[78%] min-w-[78%] max-w-[320px] flex-none overflow-hidden rounded-[1.75rem] text-left transition duration-300 active:scale-[0.98]"
+              style={{ animationDelay: `${index * 70}ms` }}
             >
-              <Image
-                src={getProductImage(product.id, product.imageUrl)}
-                alt={product.name}
-                fill
-                className="object-cover"
-                sizes="320px"
-                priority={index === 0}
+              <div className="absolute inset-0 overflow-hidden">
+                <Image
+                  src={getProductImage(product.id, product.imageUrl)}
+                  alt={product.name}
+                  fill
+                  className="drinkit-ken object-cover"
+                  sizes="320px"
+                  priority={index === 0}
+                />
+              </div>
+              <div
+                className={`drinkit-glow absolute -inset-8 bg-[radial-gradient(circle_at_50%_80%,rgba(59,130,246,0.35),transparent_60%)] ${
+                  index % 2 === 0 ? "" : "bg-[radial-gradient(circle_at_50%_80%,rgba(249,115,22,0.28),transparent_60%)]"
+                }`}
               />
               <div
                 className={`absolute inset-0 bg-gradient-to-t ${

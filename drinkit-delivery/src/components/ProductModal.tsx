@@ -82,15 +82,16 @@ function ProductModalBody({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-stretch justify-center bg-black">
-      <div className="relative flex h-full w-full max-w-lg flex-col overflow-hidden">
+    <div className="drinkit-fade fixed inset-0 z-[100] flex items-stretch justify-center bg-black/90 backdrop-blur-sm">
+      <div className="drinkit-sheet-in relative flex h-full w-full max-w-lg flex-col overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[#1a1030] via-[#0a0a0a] to-black" />
+        <div className="drinkit-glow pointer-events-none absolute left-1/2 top-24 h-64 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.28),transparent_70%)]" />
 
         <div className="relative z-10 flex items-center justify-between px-4 pb-2 pt-4">
           <button
             type="button"
             onClick={onClose}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition hover:bg-white/15"
             aria-label="Назад"
           >
             <ChevronLeft className="h-5 w-5" />
@@ -102,7 +103,7 @@ function ProductModalBody({
         </div>
 
         <div className="relative z-10 flex-1 overflow-y-auto px-4 pb-36">
-          <div className="relative mx-auto mt-2 aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem]">
+          <div className="drinkit-soft-float relative mx-auto mt-2 aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] shadow-[0_20px_60px_rgba(59,130,246,0.18)]">
             <Image
               src={getProductImage(product.id, product.imageUrl)}
               alt={product.name}
@@ -206,7 +207,7 @@ function ProductModalBody({
               <button
                 type="button"
                 onClick={handleAdd}
-                className="flex flex-1 items-center justify-center rounded-full bg-[#3b82f6] px-5 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-500/30 transition active:scale-[0.99]"
+                className="flex flex-1 items-center justify-center rounded-full bg-[#3b82f6] px-5 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:brightness-110 active:scale-[0.98]"
               >
                 + {formatPrice(unitPrice * quantity)}
               </button>

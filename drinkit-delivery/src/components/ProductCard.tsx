@@ -11,21 +11,23 @@ const TAG_LABELS = { hit: "хит", new: "new" } as const;
 interface ProductCardProps {
   product: Product;
   onSelect: (product: Product) => void;
+  index?: number;
 }
 
-export function ProductCard({ product, onSelect }: ProductCardProps) {
+export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) {
   return (
     <button
       type="button"
       onClick={() => onSelect(product)}
-      className="group flex w-full flex-col overflow-hidden rounded-[1.35rem] bg-[var(--card)] text-left transition active:scale-[0.98]"
+      className="drinkit-rise group flex w-full flex-col overflow-hidden rounded-[1.35rem] bg-[var(--card)] text-left transition duration-300 hover:-translate-y-0.5 hover:bg-[#222] active:scale-[0.98]"
+      style={{ animationDelay: `${Math.min(index, 8) * 45}ms` }}
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#111]">
         <Image
           src={getProductImage(product.id, product.imageUrl)}
           alt={product.name}
           fill
-          className="object-cover transition duration-500 group-hover:scale-105"
+          className="object-cover transition duration-700 ease-out group-hover:scale-110"
           sizes="(max-width: 512px) 48vw, 240px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />

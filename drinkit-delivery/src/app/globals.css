@@ -382,6 +382,105 @@ body:has(.drinkit-skin) .site-animated-bg {
   display: none;
 }
 
+@keyframes drinkit-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drinkit-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drinkit-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drinkit-cart-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drinkit-soft-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes drinkit-ken {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.12) translate3d(-1.5%, 1%, 0);
+  }
+}
+
+@keyframes drinkit-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.drinkit-rise {
+  animation: drinkit-rise 0.55s cubic-bezier(0.22, 0.8, 0.2, 1) both;
+}
+
+.drinkit-sheet-in {
+  animation: drinkit-sheet-in 0.42s cubic-bezier(0.22, 0.9, 0.2, 1) both;
+}
+
+.drinkit-fade {
+  animation: drinkit-fade 0.35s ease both;
+}
+
+.drinkit-cart-in {
+  animation: drinkit-cart-in 0.45s cubic-bezier(0.22, 0.9, 0.2, 1) both;
+}
+
+.drinkit-soft-float {
+  animation: drinkit-soft-float 5s ease-in-out infinite;
+}
+
+.drinkit-ken {
+  animation: drinkit-ken 14s ease-in-out alternate infinite;
+}
+
+.drinkit-glow {
+  animation: drinkit-glow 4.5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-bg-blob-1,
   .animate-bg-blob-2,
@@ -400,7 +499,14 @@ body:has(.drinkit-skin) .site-animated-bg {
   .animate-float,
   .text-shimmer,
   .hall-ken,
-  .hall-reveal {
+  .hall-reveal,
+  .drinkit-rise,
+  .drinkit-sheet-in,
+  .drinkit-fade,
+  .drinkit-cart-in,
+  .drinkit-soft-float,
+  .drinkit-ken,
+  .drinkit-glow {
     animation: none;
   }
 }
