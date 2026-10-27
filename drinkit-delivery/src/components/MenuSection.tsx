@@ -90,7 +90,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
   return (
     <>
-      <section className="sticky top-14 z-40 border-b border-white/5 bg-black/80 backdrop-blur-xl">
+      <section className="sticky top-14 z-40 border-b border-white/5 bg-transparent backdrop-blur-md supports-[backdrop-filter]:bg-white/[0.03]">
         <div className="mx-auto w-full max-w-7xl px-4 pt-2 md:px-6">
           <div className="overflow-x-auto scrollbar-hide">
             <div className="flex w-max gap-5 pb-2">

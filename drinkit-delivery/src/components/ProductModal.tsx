@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, Minus, Plus } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -9,6 +9,7 @@ import {
   isBreakfastProduct,
 } from "@/lib/breakfast-hours";
 import { getProductImage } from "@/lib/media";
+import { getProductTheme } from "@/lib/product-theme";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import {
   formatPrice,
@@ -53,6 +54,7 @@ function ProductModalBody({
   const { addItem } = useCart();
   const breakfastOpen = useBreakfastMenuOpen();
   const canOrder = !isBreakfastProduct(product) || breakfastOpen;
+  const theme = useMemo(() => getProductTheme(product.id), [product.id]);
   const [options, setOptions] = useState<CartItemOptions>(
     getDefaultOptions(product),
   );
@@ -82,10 +84,22 @@ function ProductModalBody({
   };
 
   return (
-    <div className="drinkit-fade fixed inset-0 z-[100] flex items-stretch justify-center bg-black/90 backdrop-blur-sm">
+    <div className="drinkit-fade fixed inset-0 z-[100] flex items-stretch justify-center bg-black/80 backdrop-blur-sm">
       <div className="drinkit-sheet-in relative flex h-full w-full max-w-lg flex-col overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1030] via-[#0a0a0a] to-black" />
-        <div className="drinkit-glow pointer-events-none absolute left-1/2 top-24 h-64 w-64 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.28),transparent_70%)]" />
+        <div
+          className="absolute inset-0 transition-colors duration-700"
+          style={{
+            background: `linear-gradient(180deg, ${theme.from} 0%, ${theme.via} 48%, ${theme.to} 100%)`,
+          }}
+        />
+        <div
+          className="drinkit-glow pointer-events-none absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full blur-2xl"
+          style={{ background: `radial-gradient(circle, ${theme.glow}, transparent 70%)` }}
+        />
+        <div
+          className="drinkit-aurora pointer-events-none absolute -right-10 bottom-24 h-56 w-56 rounded-full blur-3xl opacity-70"
+          style={{ background: `radial-gradient(circle, ${theme.glow}, transparent 72%)` }}
+        />
 
         <div className="relative z-10 flex items-center justify-between px-4 pb-2 pt-4">
           <button
@@ -96,14 +110,17 @@ function ProductModalBody({
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
-          <h2 className="max-w-[70%] truncate text-center text-[15px] font-semibold text-white">
+          <h2 className="font-display max-w-[70%] truncate text-center text-[15px] font-semibold text-white">
             {product.name}
           </h2>
           <span className="h-10 w-10" />
         </div>
 
         <div className="relative z-10 flex-1 overflow-y-auto px-4 pb-36">
-          <div className="drinkit-soft-float relative mx-auto mt-2 aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem] shadow-[0_20px_60px_rgba(59,130,246,0.18)]">
+          <div
+            className="relative mx-auto mt-2 aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem]"
+            style={{ boxShadow: `0 24px 70px ${theme.ctaShadow}` }}
+          >
             <Image
               src={getProductImage(product.id, product.imageUrl)}
               alt={product.name}
@@ -112,7 +129,7 @@ function ProductModalBody({
               sizes="420px"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
           </div>
 
           {product.description?.trim() ? (
@@ -135,7 +152,7 @@ function ProductModalBody({
                     className={`min-w-[4.5rem] shrink-0 rounded-2xl px-3 py-3 text-sm font-semibold transition ${
                       options.size === size
                         ? "bg-white text-black"
-                        : "bg-[#1c1c1c] text-white/70"
+                        : "bg-white/8 text-white/70"
                     }`}
                   >
                     <span className="block uppercase">{SIZE_LABELS[size]}</span>
@@ -163,9 +180,14 @@ function ProductModalBody({
                     onClick={() => setOptions((prev) => ({ ...prev, milk }))}
                     className={`flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-[1.25rem] px-2 text-center text-[12px] font-medium transition ${
                       options.milk === milk
-                        ? "bg-[#2563eb] text-white"
-                        : "bg-[#1c1c1c] text-white/75"
+                        ? "text-white"
+                        : "bg-white/8 text-white/75"
                     }`}
+                    style={
+                      options.milk === milk
+                        ? { backgroundColor: theme.cta }
+                        : undefined
+                    }
                   >
                     {MILK_LABELS[milk]}
                   </button>
@@ -174,7 +196,7 @@ function ProductModalBody({
             </div>
           ) : null}
 
-          <div className="mt-6 flex items-center justify-between rounded-2xl bg-[#1c1c1c] px-4 py-3">
+          <div className="mt-6 flex items-center justify-between rounded-2xl bg-white/8 px-4 py-3">
             <p className="text-sm font-medium text-white/70">Количество</p>
             <div className="flex items-center gap-3">
               <button
@@ -198,22 +220,26 @@ function ProductModalBody({
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black via-black/95 to-transparent px-4 pb-6 pt-10">
+        <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black via-black/80 to-transparent px-4 pb-6 pt-10">
           {canOrder ? (
             <div className="flex items-center gap-3">
-              <p className="rounded-full bg-[#1c1c1c] px-4 py-3 text-sm font-medium text-white/70">
+              <p className="rounded-full bg-white/8 px-4 py-3 text-sm font-medium text-white/70">
                 самовывоз
               </p>
               <button
                 type="button"
                 onClick={handleAdd}
-                className="flex flex-1 items-center justify-center rounded-full bg-[#3b82f6] px-5 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:brightness-110 active:scale-[0.98]"
+                className="flex flex-1 items-center justify-center rounded-full px-5 py-3.5 text-[15px] font-semibold text-white transition hover:brightness-110 active:scale-[0.98]"
+                style={{
+                  backgroundColor: theme.cta,
+                  boxShadow: `0 12px 30px ${theme.ctaShadow}`,
+                }}
               >
                 + {formatPrice(unitPrice * quantity)}
               </button>
             </div>
           ) : (
-            <p className="rounded-2xl bg-[#1c1c1c] px-4 py-3 text-center text-sm text-white/55">
+            <p className="rounded-2xl bg-white/8 px-4 py-3 text-center text-sm text-white/55">
               {BREAKFAST_UNAVAILABLE_MESSAGE}
             </p>
           )}

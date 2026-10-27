@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Rubik } from "next/font/google";
+import { Cormorant_Garamond, Manrope, Rubik, Unbounded } from "next/font/google";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CartProvider } from "@/context/CartContext";
@@ -7,7 +7,7 @@ import { MenuProvider } from "@/context/MenuContext";
 import { UserProvider } from "@/context/UserContext";
 import "./globals.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
   variable: "--font-sans",
 });
@@ -16,6 +16,12 @@ const rubik = Rubik({
   subsets: ["latin", "cyrillic"],
   weight: ["800", "900"],
   variable: "--font-brand",
+});
+
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700"],
+  variable: "--font-display",
 });
 
 const cormorant = Cormorant_Garamond({
@@ -41,7 +47,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" className={`${inter.variable} ${rubik.variable} ${cormorant.variable} h-full`}>
+    <html
+      lang="ru"
+      className={`${manrope.variable} ${rubik.variable} ${unbounded.variable} ${cormorant.variable} h-full`}
+    >
       <body
         data-deploy="bg-anim-2026-08-28"
         className="relative min-h-full max-w-full overflow-x-clip font-sans text-[var(--text)] antialiased"
