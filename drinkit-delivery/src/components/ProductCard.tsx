@@ -47,7 +47,7 @@ export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) 
 
       <div className="flex items-end justify-between gap-2 px-3 pb-3 pt-2.5">
         <div className="min-w-0">
-          <h3 className="line-clamp-2 text-[13px] font-semibold leading-snug text-white">
+          <h3 className="font-display line-clamp-2 text-[13px] font-semibold leading-snug text-white">
             {product.name}
           </h3>
           <p className="mt-1 text-sm font-medium text-white/90">

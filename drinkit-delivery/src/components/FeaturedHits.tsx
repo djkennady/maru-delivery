@@ -31,7 +31,7 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
         <div className="mb-3 flex items-end justify-between px-1">
           <div>
             <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/35">
-              for you
+              для тебя
             </p>
             <h2 className="font-display text-lg font-semibold lowercase text-white md:text-2xl">
               хиты мару

@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import { useMenu } from "@/context/MenuContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
+import { CategoryHero } from "./CategoryHero";
 import { ProductCard } from "./ProductCard";
 import { FeaturedHits } from "./FeaturedHits";
 import type { Product } from "@/types/menu";
@@ -28,6 +29,15 @@ function buildGroups(products: Product[]) {
   return order.map((name) => ({ name, items: map.get(name)! }));
 }
 
+function pickHeroProduct(products: Product[]): Product | null {
+  if (products.length === 0) return null;
+  return (
+    products.find((product) => product.tags?.includes("hit")) ??
+    products.find((product) => product.tags?.includes("new")) ??
+    products[0]
+  );
+}
+
 export function MenuSection({ onSelect }: MenuSectionProps) {
   const { categories, products } = useMenu();
   const breakfastOpen = useBreakfastMenuOpen();
@@ -48,13 +58,19 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
+  const [heroDirection, setHeroDirection] = useState<1 | -1>(1);
   const groupRefs = useRef<Record<string, HTMLElement | null>>({});
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const prevCategoryIndex = useRef(0);
 
   const resolvedCategory =
     selectedCategory &&
     shopCategories.some((category) => category.id === selectedCategory)
       ? selectedCategory
       : (shopCategories[0]?.id ?? "");
+
+  const activeCategory =
+    shopCategories.find((category) => category.id === resolvedCategory) ?? null;
 
   const filteredProducts = useMemo(
     () => shopProducts.filter((p) => p.categoryId === resolvedCategory),
@@ -72,11 +88,28 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
       : (groupedProducts[0]?.name ?? null);
 
   const hasSubgroups = groupedProducts.length > 1;
-  const showForYou = resolvedCategory === shopCategories[0]?.id;
+  const isForYou = resolvedCategory === shopCategories[0]?.id;
+  const heroProduct = useMemo(
+    () => (isForYou ? null : pickHeroProduct(filteredProducts)),
+    [isForYou, filteredProducts],
+  );
 
   const selectCategory = (id: string) => {
+    const nextIndex = shopCategories.findIndex((category) => category.id === id);
+    const prevIndex = prevCategoryIndex.current;
+    if (nextIndex >= 0) {
+      setHeroDirection(nextIndex >= prevIndex ? 1 : -1);
+      prevCategoryIndex.current = nextIndex;
+    }
     setSelectedCategory(id);
     setSelectedGroup(null);
+
+    requestAnimationFrame(() => {
+      const el = contentRef.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 112;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    });
   };
 
   const scrollToGroup = (name: string) => {
@@ -90,29 +123,33 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
   return (
     <>
-      <section className="sticky top-14 z-40 border-b border-white/5 bg-transparent backdrop-blur-md supports-[backdrop-filter]:bg-white/[0.03]">
+      <section className="sticky top-14 z-40 border-b border-white/5 bg-transparent backdrop-blur-md supports-[backdrop-filter]:bg-black/25">
         <div className="mx-auto w-full max-w-7xl px-4 pt-2 md:px-6">
           <div className="overflow-x-auto scrollbar-hide">
             <div className="flex w-max gap-5 pb-2">
-              {shopCategories.map((category) => {
+              {shopCategories.map((category, index) => {
                 const active = resolvedCategory === category.id;
+                const label =
+                  index === 0 ? "для тебя" : category.name.toLowerCase();
                 return (
                   <button
                     key={category.id}
                     type="button"
                     onClick={() => selectCategory(category.id)}
                     className={`shrink-0 pb-1 text-[15px] font-semibold lowercase tracking-tight transition duration-300 ${
-                      active ? "drinkit-tab-active" : "drinkit-tab hover:text-white/80"
+                      active
+                        ? "drinkit-tab-active"
+                        : "drinkit-tab hover:text-white/80"
                     }`}
                   >
-                    {category.name}
+                    {label}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {hasSubgroups ? (
+          {hasSubgroups && !isForYou ? (
             <div className="overflow-x-auto scrollbar-hide">
               <div className="flex w-max gap-4 pb-2 pt-1">
                 {groupedProducts.map((group) => {
@@ -140,40 +177,54 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
         </div>
       </section>
 
-      {showForYou ? <FeaturedHits onSelect={onSelect} /> : null}
+      <div ref={contentRef}>
+        {isForYou ? <FeaturedHits onSelect={onSelect} /> : null}
 
-      <section className="mx-auto w-full max-w-7xl px-3 pb-36 pt-4 md:px-6">
-        {filteredProducts.length === 0 ? (
-          <p className="rounded-2xl bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
-            В этой категории пока пусто
-          </p>
-        ) : (
-          <div className="space-y-8">
-            {groupedProducts.map((group) => (
-              <div
-                key={group.name}
-                ref={(node) => {
-                  groupRefs.current[group.name] = node;
-                }}
-              >
-                <h3 className="mb-3 px-1 text-[13px] font-medium lowercase tracking-wide text-white/55 md:text-sm">
-                  {group.name}
-                </h3>
-                <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
-                  {group.items.map((product, index) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      onSelect={onSelect}
-                      index={index}
-                    />
-                  ))}
+        {!isForYou && heroProduct && activeCategory ? (
+          <CategoryHero
+            categoryId={activeCategory.id}
+            categoryName={activeCategory.name}
+            product={heroProduct}
+            onSelect={onSelect}
+            direction={heroDirection}
+          />
+        ) : null}
+
+        <section className="mx-auto w-full max-w-7xl px-3 pb-36 pt-4 md:px-6">
+          {filteredProducts.length === 0 ? (
+            <p className="rounded-2xl bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
+              В этой категории пока пусто
+            </p>
+          ) : (
+            <div className="space-y-8" key={resolvedCategory}>
+              {groupedProducts.map((group) => (
+                <div
+                  key={group.name}
+                  ref={(node) => {
+                    groupRefs.current[group.name] = node;
+                  }}
+                >
+                  <h3 className="font-display mb-3 px-1 text-[15px] font-semibold lowercase tracking-wide text-white md:text-base">
+                    {isForYou && group.name === groupedProducts[0]?.name
+                      ? "меню"
+                      : group.name}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
+                    {group.items.map((product, index) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onSelect={onSelect}
+                        index={index}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </>
   );
 }
