@@ -14,6 +14,8 @@ interface MenuSectionProps {
   onSelect: (product: Product) => void;
 }
 
+const FOR_YOU_TAB = "for-you";
+
 function buildGroups(products: Product[]) {
   const order: string[] = [];
   const map = new Map<string, Product[]>();
@@ -61,26 +63,40 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     [products, breakfastOpen],
   );
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const tabs = useMemo(
+    () => [
+      { id: FOR_YOU_TAB, name: "для тебя" },
+      ...shopCategories.map((category) => ({
+        id: category.id,
+        name: category.name.toLowerCase(),
+      })),
+    ],
+    [shopCategories],
+  );
+
+  const [selectedTab, setSelectedTab] = useState(FOR_YOU_TAB);
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const [heroDirection, setHeroDirection] = useState<1 | -1>(1);
   const groupRefs = useRef<Record<string, HTMLElement | null>>({});
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const prevCategoryIndex = useRef(0);
+  const prevTabIndex = useRef(0);
 
-  const resolvedCategory =
-    selectedCategory &&
-    shopCategories.some((category) => category.id === selectedCategory)
-      ? selectedCategory
-      : (shopCategories[0]?.id ?? "");
+  const resolvedTab = tabs.some((tab) => tab.id === selectedTab)
+    ? selectedTab
+    : FOR_YOU_TAB;
 
-  const activeCategory =
-    shopCategories.find((category) => category.id === resolvedCategory) ?? null;
+  const isForYou = resolvedTab === FOR_YOU_TAB;
+  const activeCategory = isForYou
+    ? null
+    : (shopCategories.find((category) => category.id === resolvedTab) ?? null);
 
-  const filteredProducts = useMemo(
-    () => shopProducts.filter((p) => p.categoryId === resolvedCategory),
-    [shopProducts, resolvedCategory],
-  );
+  const filteredProducts = useMemo(() => {
+    if (isForYou) {
+      const hits = shopProducts.filter((product) => product.tags?.includes("hit"));
+      return hits.length > 0 ? hits : shopProducts.slice(0, 12);
+    }
+    return shopProducts.filter((product) => product.categoryId === resolvedTab);
+  }, [shopProducts, resolvedTab, isForYou]);
 
   const groupedProducts = useMemo(
     () => buildGroups(filteredProducts),
@@ -92,21 +108,20 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
       ? selectedGroup
       : (groupedProducts[0]?.name ?? null);
 
-  const hasSubgroups = groupedProducts.length > 1;
-  const isForYou = resolvedCategory === shopCategories[0]?.id;
+  const hasSubgroups = !isForYou && groupedProducts.length > 1;
   const heroProduct = useMemo(
     () => (isForYou ? null : pickHeroProduct(filteredProducts)),
     [isForYou, filteredProducts],
   );
 
-  const selectCategory = (id: string) => {
-    const nextIndex = shopCategories.findIndex((category) => category.id === id);
-    const prevIndex = prevCategoryIndex.current;
+  const selectTab = (id: string) => {
+    const nextIndex = tabs.findIndex((tab) => tab.id === id);
+    const prevIndex = prevTabIndex.current;
     if (nextIndex >= 0) {
       setHeroDirection(nextIndex >= prevIndex ? 1 : -1);
-      prevCategoryIndex.current = nextIndex;
+      prevTabIndex.current = nextIndex;
     }
-    setSelectedCategory(id);
+    setSelectedTab(id);
     setSelectedGroup(null);
 
     requestAnimationFrame(() => {
@@ -132,29 +147,27 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
         <div className="mx-auto w-full max-w-7xl px-4 pt-2 md:px-6">
           <div className="overflow-x-auto scrollbar-hide">
             <div className="flex w-max gap-5 pb-2">
-              {shopCategories.map((category, index) => {
-                const active = resolvedCategory === category.id;
-                const label =
-                  index === 0 ? "для тебя" : category.name.toLowerCase();
+              {tabs.map((tab) => {
+                const active = resolvedTab === tab.id;
                 return (
                   <button
-                    key={category.id}
+                    key={tab.id}
                     type="button"
-                    onClick={() => selectCategory(category.id)}
+                    onClick={() => selectTab(tab.id)}
                     className={`shrink-0 pb-1 text-[15px] font-semibold lowercase tracking-tight transition duration-300 ${
                       active
                         ? "drinkit-tab-active"
                         : "drinkit-tab hover:text-white/80"
                     }`}
                   >
-                    {label}
+                    {tab.name}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {hasSubgroups && !isForYou ? (
+          {hasSubgroups ? (
             <div className="overflow-x-auto scrollbar-hide">
               <div className="flex w-max gap-4 pb-2 pt-1">
                 {groupedProducts.map((group) => {
@@ -201,7 +214,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
               В этой категории пока пусто
             </p>
           ) : (
-            <div className="space-y-8" key={resolvedCategory}>
+            <div className="space-y-8" key={resolvedTab}>
               {groupedProducts.map((group) => (
                 <div
                   key={group.name}
@@ -210,9 +223,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   }}
                 >
                   <h3 className="font-display mb-3 px-1 text-[15px] font-semibold lowercase tracking-wide text-white md:text-base">
-                    {isForYou && group.name === groupedProducts[0]?.name
-                      ? "меню"
-                      : group.name}
+                    {isForYou ? "подборка" : group.name}
                   </h3>
                   <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
                     {group.items.map((product, index) => (
