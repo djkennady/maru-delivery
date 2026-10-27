@@ -26,27 +26,27 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
   if (hits.length === 0) return null;
 
   return (
-    <section className="px-3 pb-2 pt-3">
-      <div className="mx-auto max-w-lg">
+    <section className="px-3 pb-2 pt-4 md:px-6">
+      <div className="mx-auto max-w-6xl">
         <div className="mb-3 flex items-end justify-between px-1">
           <div>
             <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/35">
               for you
             </p>
-            <h2 className="text-lg font-semibold lowercase text-white">
+            <h2 className="text-lg font-semibold lowercase text-white md:text-2xl">
               хиты мару
             </h2>
           </div>
           <p className="text-[11px] font-medium text-[#60a5fa]">самовывоз −10%</p>
         </div>
 
-        <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide">
+        <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide md:grid md:grid-cols-3 lg:grid-cols-4 md:overflow-visible">
           {hits.map((product, index) => (
             <button
               key={product.id}
               type="button"
               onClick={() => onSelect(product)}
-              className="drinkit-rise relative h-[280px] w-[78%] min-w-[78%] max-w-[320px] flex-none overflow-hidden rounded-[1.75rem] text-left transition duration-300 active:scale-[0.98]"
+              className="drinkit-rise relative h-[280px] w-[78%] min-w-[78%] max-w-[320px] flex-none overflow-hidden rounded-[1.75rem] text-left transition duration-300 active:scale-[0.98] md:h-[300px] md:w-auto md:min-w-0 md:max-w-none"
               style={{ animationDelay: `${index * 70}ms` }}
             >
               <div className="absolute inset-0 overflow-hidden">

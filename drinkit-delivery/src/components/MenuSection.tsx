@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useMenu } from "@/context/MenuContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
@@ -46,20 +46,14 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     [products, breakfastOpen],
   );
 
-  const [activeCategory, setActiveCategory] = useState<string>("");
-  const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedGroup, setSelectedGroup] = useState<string | null>(null);
   const groupRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  useEffect(() => {
-    if (shopCategories.length === 0) return;
-    if (!shopCategories.some((category) => category.id === activeCategory)) {
-      setActiveCategory(shopCategories[0].id);
-    }
-  }, [shopCategories, activeCategory]);
-
   const resolvedCategory =
-    shopCategories.some((category) => category.id === activeCategory)
-      ? activeCategory
+    selectedCategory &&
+    shopCategories.some((category) => category.id === selectedCategory)
+      ? selectedCategory
       : (shopCategories[0]?.id ?? "");
 
   const filteredProducts = useMemo(
@@ -72,15 +66,21 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     [filteredProducts],
   );
 
-  useEffect(() => {
-    setActiveGroup(groupedProducts[0]?.name ?? null);
-  }, [resolvedCategory, groupedProducts]);
+  const resolvedGroup =
+    selectedGroup && groupedProducts.some((group) => group.name === selectedGroup)
+      ? selectedGroup
+      : (groupedProducts[0]?.name ?? null);
 
   const hasSubgroups = groupedProducts.length > 1;
   const showForYou = resolvedCategory === shopCategories[0]?.id;
 
+  const selectCategory = (id: string) => {
+    setSelectedCategory(id);
+    setSelectedGroup(null);
+  };
+
   const scrollToGroup = (name: string) => {
-    setActiveGroup(name);
+    setSelectedGroup(name);
     const el = groupRefs.current[name];
     if (el) {
       const top = el.getBoundingClientRect().top + window.scrollY - 140;
@@ -90,8 +90,8 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
   return (
     <>
-      <section className="sticky top-14 z-40 border-b border-white/5 bg-black/90 backdrop-blur-xl">
-        <div className="mx-auto w-full max-w-lg px-4 pt-2">
+      <section className="sticky top-14 z-40 border-b border-white/5 bg-black/80 backdrop-blur-xl">
+        <div className="mx-auto w-full max-w-6xl px-4 pt-2 md:px-6">
           <div className="overflow-x-auto scrollbar-hide">
             <div className="flex w-max gap-5 pb-2">
               {shopCategories.map((category) => {
@@ -100,7 +100,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   <button
                     key={category.id}
                     type="button"
-                    onClick={() => setActiveCategory(category.id)}
+                    onClick={() => selectCategory(category.id)}
                     className={`shrink-0 pb-1 text-[15px] font-semibold lowercase tracking-tight transition duration-300 ${
                       active ? "drinkit-tab-active" : "drinkit-tab hover:text-white/80"
                     }`}
@@ -116,7 +116,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
             <div className="overflow-x-auto scrollbar-hide">
               <div className="flex w-max gap-4 pb-2 pt-1">
                 {groupedProducts.map((group) => {
-                  const active = activeGroup === group.name;
+                  const active = resolvedGroup === group.name;
                   return (
                     <button
                       key={group.name}
@@ -142,7 +142,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
 
       {showForYou ? <FeaturedHits onSelect={onSelect} /> : null}
 
-      <section className="mx-auto w-full max-w-lg px-3 pb-36 pt-3">
+      <section className="mx-auto w-full max-w-6xl px-3 pb-36 pt-4 md:px-6">
         {filteredProducts.length === 0 ? (
           <p className="rounded-2xl bg-[var(--card)] px-4 py-10 text-center text-[var(--muted)]">
             В этой категории пока пусто
@@ -156,10 +156,10 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   groupRefs.current[group.name] = node;
                 }}
               >
-                <h3 className="mb-3 px-1 text-[13px] font-medium lowercase tracking-wide text-white/55">
+                <h3 className="mb-3 px-1 text-[13px] font-medium lowercase tracking-wide text-white/55 md:text-sm">
                   {group.name}
                 </h3>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
                   {group.items.map((product, index) => (
                     <ProductCard
                       key={product.id}

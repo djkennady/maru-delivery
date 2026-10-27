@@ -13,47 +13,50 @@ function GalleryTile({
   priority?: boolean;
 }) {
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`relative overflow-hidden ring-1 ring-white/10 ${className}`}>
       <Image
         src={photo.src}
         alt={photo.alt}
         fill
-        className="object-cover"
+        className="object-cover transition duration-700 hover:scale-105"
         sizes={sizes}
         priority={priority}
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
     </div>
   );
 }
 
 export function VisualGallery() {
   return (
-    <section className="px-4 py-4">
-      <div className="mx-auto max-w-lg">
+    <section className="px-4 py-4 md:px-6">
+      <div className="mx-auto max-w-6xl">
         <div className="mb-3">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent)]">
-            Атмосфера
+          <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/40">
+            атмосфера
           </p>
-          <h2 className="text-xl font-black text-[var(--text)]">
-            Как у нас в кофейне
+          <h2 className="text-xl font-semibold lowercase text-white md:text-2xl">
+            как у нас в кофейне
           </h2>
+          <p className="mt-1 max-w-2xl text-sm text-white/55">
+            Не только еда в корзине — зал, стойка бариста и настроение МАРУ.
+          </p>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="grid gap-3 md:grid-cols-3">
           <GalleryTile
             photo={galleryImages[0]}
-            className="aspect-[16/10] rounded-[1.75rem]"
-            sizes="(max-width: 512px) 100vw, 512px"
+            className="aspect-[16/10] rounded-[1.75rem] md:col-span-2 md:aspect-auto md:min-h-[280px]"
+            sizes="(max-width: 768px) 100vw, 70vw"
             priority
           />
-
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-1">
             {galleryImages.slice(1, 3).map((photo) => (
               <GalleryTile
                 key={photo.src}
                 photo={photo}
-                className="aspect-[4/3] rounded-2xl"
-                sizes="(max-width: 512px) 50vw, 256px"
+                className="aspect-[4/3] rounded-2xl md:min-h-[134px]"
+                sizes="(max-width: 768px) 50vw, 30vw"
               />
             ))}
           </div>

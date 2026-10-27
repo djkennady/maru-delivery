@@ -360,7 +360,7 @@ body {
   --accent-warm: #60a5fa;
   --accent-warm-soft: #172554;
   --accent-purple: #8b5cf6;
-  background: #000;
+  background: transparent;
   color: #fff;
   min-height: 100%;
 }
@@ -453,6 +453,66 @@ body:has(.drinkit-skin) .site-animated-bg {
   }
 }
 
+@keyframes drinkit-aurora {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(8%, 6%) scale(1.08);
+  }
+  66% {
+    transform: translate(-6%, 10%) scale(0.94);
+  }
+}
+
+@keyframes drinkit-aurora-delay {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-10%, 8%) scale(1.12);
+  }
+}
+
+@keyframes drinkit-aurora-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(12%, -8%) scale(1.1);
+  }
+  80% {
+    transform: translate(-8%, -4%) scale(0.96);
+  }
+}
+
+@keyframes drinkit-beam {
+  0%,
+  100% {
+    transform: translateX(-30%) skewX(-8deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(35%) skewX(-8deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes drinkit-beam-reverse {
+  0%,
+  100% {
+    transform: translateX(25%) skewX(6deg);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateX(-30%) skewX(6deg);
+    opacity: 0.75;
+  }
+}
+
 .drinkit-rise {
   animation: drinkit-rise 0.55s cubic-bezier(0.22, 0.8, 0.2, 1) both;
 }
@@ -481,6 +541,26 @@ body:has(.drinkit-skin) .site-animated-bg {
   animation: drinkit-glow 4.5s ease-in-out infinite;
 }
 
+.drinkit-aurora {
+  animation: drinkit-aurora 18s ease-in-out infinite;
+}
+
+.drinkit-aurora-delay {
+  animation: drinkit-aurora-delay 22s ease-in-out infinite;
+}
+
+.drinkit-aurora-slow {
+  animation: drinkit-aurora-slow 26s ease-in-out infinite;
+}
+
+.drinkit-beam {
+  animation: drinkit-beam 14s ease-in-out infinite;
+}
+
+.drinkit-beam-reverse {
+  animation: drinkit-beam-reverse 18s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-bg-blob-1,
   .animate-bg-blob-2,
@@ -506,7 +586,12 @@ body:has(.drinkit-skin) .site-animated-bg {
   .drinkit-cart-in,
   .drinkit-soft-float,
   .drinkit-ken,
-  .drinkit-glow {
+  .drinkit-glow,
+  .drinkit-aurora,
+  .drinkit-aurora-delay,
+  .drinkit-aurora-slow,
+  .drinkit-beam,
+  .drinkit-beam-reverse {
     animation: none;
   }
 }

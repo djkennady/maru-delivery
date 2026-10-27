@@ -12,7 +12,7 @@ export function CartBar() {
 
   return (
     <div className="drinkit-cart-in fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-t from-black via-black/95 to-transparent px-4 pb-5 pt-8">
-      <div className="mx-auto max-w-lg">
+      <div className="mx-auto max-w-6xl">
         {FULFILLMENT_MODE === "pickup" && pickupDiscount > 0 ? (
           <p className="mb-2 text-center text-[11px] font-medium text-[#93c5fd]">
             Самовывоз −10%: −{formatPrice(pickupDiscount)}

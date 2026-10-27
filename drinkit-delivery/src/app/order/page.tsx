@@ -6,7 +6,7 @@ export default async function OrderPage() {
   await connection();
 
   return (
-    <div className="drinkit-skin">
+    <div className="drinkit-skin relative isolate min-h-full">
       <SiteHeader variant="drinkit" />
       <HomeContent />
     </div>
