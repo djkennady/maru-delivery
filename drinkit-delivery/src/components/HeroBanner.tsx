@@ -87,6 +87,7 @@ export function HeroBanner() {
                     fill
                     className="object-cover"
                     sizes="180px"
+                    quality={90}
                   />
                 </div>
               ))}
@@ -106,6 +107,7 @@ export function HeroBanner() {
                   className="object-cover"
                   sizes="120px"
                   priority={i === 0}
+                  quality={90}
                 />
               </div>
             ))}

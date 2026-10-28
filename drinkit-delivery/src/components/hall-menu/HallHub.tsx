@@ -17,6 +17,7 @@ export function HallHub() {
           alt=""
           fill
           priority
+          quality={90}
           className="hall-ken object-cover opacity-40"
           sizes="100vw"
         />
@@ -55,6 +56,8 @@ export function HallHub() {
             src={tiles[0]?.photo ?? "/hall-menu/og.png"}
             alt=""
             fill
+            quality={90}
+            sizes="(max-width: 640px) 100vw, 50vw"
             className="object-cover transition duration-700 group-hover:scale-110"
           />
           <span className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-black/10" />
@@ -80,6 +83,8 @@ export function HallHub() {
             src={tiles[1]?.photo ?? "/hall-menu/dishes/0005.webp"}
             alt=""
             fill
+            quality={90}
+            sizes="(max-width: 640px) 100vw, 50vw"
             className="object-cover transition duration-700 group-hover:scale-110"
           />
           <span className="absolute inset-0 bg-gradient-to-t from-[#12351f] via-black/30 to-black/20" />
@@ -119,6 +124,7 @@ export function HallHub() {
                   src={item.photo!}
                   alt={item.name}
                   fill
+                  quality={90}
                   sizes="33vw"
                   className="object-cover transition duration-700 group-hover:scale-110"
                 />

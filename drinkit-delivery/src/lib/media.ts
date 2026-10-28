@@ -1,4 +1,5 @@
-import { catalogDrinkImageUrl } from "@/lib/drink-photos";
+import { DRINK_PHOTO_BY_PRODUCT_ID } from "@/lib/drink-photos";
+import { FOOD_PHOTO_BY_PRODUCT_ID } from "@/lib/food-photos";
 import type { Category } from "@/types/menu";
 
 const pexels = (id: number, w = 600) =>
@@ -38,8 +39,20 @@ export const galleryImages = [
   { src: pexels(2074130, 500), alt: "Стойка с кофемашиной и зерном" },
 ];
 
+/** Prefer hall studio drink/food photos over persisted Pexels /uploads URLs. */
+export function catalogProductImageUrl(
+  productId: string,
+  imageUrl?: string,
+): string | undefined {
+  return (
+    DRINK_PHOTO_BY_PRODUCT_ID[productId] ??
+    FOOD_PHOTO_BY_PRODUCT_ID[productId] ??
+    imageUrl
+  );
+}
+
 export function getProductImage(productId: string, imageUrl?: string): string {
-  return catalogDrinkImageUrl(productId, imageUrl) || fallbackProductImage;
+  return catalogProductImageUrl(productId, imageUrl) || fallbackProductImage;
 }
 
 export function getCategoryImage(
@@ -65,7 +78,7 @@ export const promos = [
     subtitle: "От 450 ₽",
     gradient: "from-emerald-500 to-teal-500",
     emoji: "🍱",
-    image: pexels(1640777, 500),
+    image: "/hall-menu/dishes/0005.webp",
   },
   {
     id: "pickup",
@@ -73,6 +86,6 @@ export const promos = [
     subtitle: "При самовывозе с каждого заказа",
     gradient: "from-violet-500 to-purple-600",
     emoji: "🛍️",
-    image: pexels(1640777, 500),
+    image: "/hall-menu/dishes/0013.webp",
   },
 ] as const;

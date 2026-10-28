@@ -73,6 +73,7 @@ function OrderCard({ order }: { order: OrderRecord }) {
                     src={getProductImage(item.productId, product?.imageUrl)}
                     alt={product?.name ?? item.productId}
                     fill
+                    quality={90}
                     className="object-cover"
                     sizes="36px"
                   />

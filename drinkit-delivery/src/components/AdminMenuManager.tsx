@@ -590,6 +590,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                           fill
                           className="object-cover"
                           sizes="56px"
+                          quality={90}
                         />
                       </div>
                       <div className="min-w-0 flex-1">

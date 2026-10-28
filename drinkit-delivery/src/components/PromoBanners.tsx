@@ -27,6 +27,7 @@ export function PromoBanners() {
                 src={promo.image}
                 alt=""
                 fill
+                quality={90}
                 className="object-cover opacity-40"
                 sizes="(max-width: 1024px) 50vw, 360px"
               />

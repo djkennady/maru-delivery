@@ -82,6 +82,7 @@ export function HallMenuExperience() {
           alt=""
           fill
           priority
+          quality={90}
           className="hall-ken object-cover opacity-45"
           sizes="100vw"
         />
@@ -148,6 +149,7 @@ export function HallMenuExperience() {
                 src={item.photo!}
                 alt={item.name}
                 fill
+                quality={90}
                 sizes="(max-width: 640px) 50vw, 33vw"
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
@@ -332,6 +334,7 @@ export function HallMenuExperience() {
                 src={lightbox.photos[lightbox.index]}
                 alt={lightbox.name}
                 fill
+                quality={90}
                 sizes="92vw"
                 className="object-contain"
                 priority
