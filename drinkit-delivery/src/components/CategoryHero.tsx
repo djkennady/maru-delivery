@@ -66,17 +66,9 @@ export function CategoryHero({
           {categoryName}
         </p>
 
-        <div
-          className={
-            useBumbleVideo
-              ? "relative aspect-square w-[48%] max-w-[210px] md:max-w-[230px]"
-              : "drinkit-hero-breath relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px]"
-          }
-        >
+        <div className="relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px]">
           <div
-            className={`absolute rounded-full blur-3xl opacity-70 ${
-              useBumbleVideo ? "inset-[24%]" : "inset-[18%]"
-            }`}
+            className="absolute inset-[18%] rounded-full blur-3xl opacity-70"
             style={{ background: theme.glow }}
           />
           <div
@@ -95,7 +87,7 @@ export function CategoryHero({
                 loop
                 playsInline
                 poster={coffeeHallCutPoster}
-                className="h-full w-full object-contain drop-shadow-[0_18px_32px_rgba(0,0,0,0.5)]"
+                className="h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
               >
                 <source src={coffeeHallCutVideo} type="video/webm" />
                 <source src={coffeeHallVideo} type="video/mp4" />
