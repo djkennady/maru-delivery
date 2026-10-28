@@ -67,30 +67,24 @@ export function CategoryHero({
         </p>
 
         <div
-          className={`relative ${
+          className={
             useCoffeeVideo
-              ? "aspect-[3/4] w-[94%] max-w-[560px] md:max-w-[620px]"
-              : "drinkit-hero-breath aspect-square w-[86%] max-w-[440px] md:max-w-[480px]"
-          }`}
+              ? "relative aspect-square w-[78%] max-w-[360px] md:max-w-[400px]"
+              : "drinkit-hero-breath relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px]"
+          }
         >
           <div
-            className={`absolute rounded-full blur-3xl opacity-75 ${
-              useCoffeeVideo ? "inset-[10%]" : "inset-[16%]"
-            }`}
+            className="absolute inset-[18%] rounded-full blur-3xl opacity-70"
             style={{ background: theme.glow }}
           />
           <div
             className="absolute inset-0"
-            style={
-              useCoffeeVideo
-                ? undefined
-                : {
-                    WebkitMaskImage:
-                      "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
-                    maskImage:
-                      "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
-                  }
-            }
+            style={{
+              WebkitMaskImage:
+                "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
+              maskImage:
+                "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
+            }}
           >
             {useCoffeeVideo ? (
               <video
@@ -99,7 +93,7 @@ export function CategoryHero({
                 loop
                 playsInline
                 poster={coffeeHallCutPoster}
-                className="h-full w-full scale-[1.12] object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+                className="h-full w-full object-contain drop-shadow-[0_28px_55px_rgba(0,0,0,0.55)]"
               >
                 <source src={coffeeHallCutVideo} type="video/webm" />
                 <source src={coffeeHallVideo} type="video/mp4" />
@@ -112,7 +106,7 @@ export function CategoryHero({
                 priority
                 unoptimized={Boolean(cutout)}
                 className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
-                sizes="(max-width: 768px) 86vw, 480px"
+                sizes="(max-width: 768px) 78vw, 400px"
               />
             )}
           </div>

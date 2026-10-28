@@ -217,27 +217,42 @@ export function HallMenuExperience() {
       <div className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
         {kind === "drinks" && !query ? (
           <section className="relative mb-10 overflow-hidden rounded-[28px] border border-[#d6cdbf]/15 bg-[#1a1814]">
-            <div className="relative flex min-h-[420px] flex-col items-center justify-end px-5 pb-10 pt-8 text-center sm:min-h-[520px] md:px-10">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={coffeeHallCutPoster}
-                className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center p-4 sm:p-8"
-              >
-                <source src={coffeeHallCutVideo} type="video/webm" />
-                <source src={coffeeHallVideo} type="video/mp4" />
-              </video>
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1814] via-[#1a1814]/25 to-transparent" />
-              <div className="relative z-10 max-w-xl">
+            <div className="grid items-center gap-2 md:grid-cols-[0.95fr_1.05fr]">
+              <div className="relative flex items-center justify-center px-6 py-10 md:py-14">
+                <div
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-3xl"
+                  style={{ background: "rgba(217, 207, 190, 0.18)" }}
+                />
+                <div
+                  className="relative aspect-square w-[68%] max-w-[280px]"
+                  style={{
+                    WebkitMaskImage:
+                      "radial-gradient(ellipse 74% 78% at 50% 48%, #000 60%, transparent 90%)",
+                    maskImage:
+                      "radial-gradient(ellipse 74% 78% at 50% 48%, #000 60%, transparent 90%)",
+                  }}
+                >
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster={coffeeHallCutPoster}
+                    className="h-full w-full object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,0.5)]"
+                  >
+                    <source src={coffeeHallCutVideo} type="video/webm" />
+                    <source src={coffeeHallVideo} type="video/mp4" />
+                  </video>
+                </div>
+              </div>
+              <div className="relative px-6 pb-10 pt-2 text-center md:px-10 md:pb-12 md:pt-8 md:text-left">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9cfbe]">
                   Кофе · зал
                 </p>
-                <h2 className="font-serif mt-3 text-[clamp(2.4rem,6vw,4rem)] leading-none tracking-[-0.04em]">
+                <h2 className="font-serif mt-4 text-[clamp(2.2rem,4.5vw,3.4rem)] leading-none tracking-[-0.04em]">
                   Живой кофе
                 </h2>
-                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#cfc6b6]">
+                <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-[#cfc6b6] md:mx-0">
                   Чёрный, с молоком, фирменный и колд брю — ниже в меню.
                 </p>
               </div>
