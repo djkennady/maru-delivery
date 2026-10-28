@@ -240,6 +240,7 @@ const studio = (id: string) => `/hall-menu/drinks/${id}.webp`;
 /** Single studio shots (owner-provided) without a numbered Yandex pair. */
 export const STUDIO_DRINK_PHOTOS: { productId: string; hallName: string; path: string }[] = [
   { productId: "filter-coffee", hallName: "Фильтр-кофе", path: studio("filter-coffee") },
+  { productId: "bumble", hallName: "Бамбл", path: studio("bumble") },
 ];
 
 /** Internet stock photos for drinks that have no studio / Yandex pair. */

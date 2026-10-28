@@ -259,6 +259,24 @@ const RAW = [
   { id: "iced-spanish-latte", name: "Айс испанский латте", cat: "drinks", emoji: "🧊", sizes: { m: 320, l: 370 }, pool: "drinks", customizable: true },
   { id: "iced-pistachio-latte", name: "Айс фисташковый латте", cat: "drinks", emoji: "🧊", sizes: { s: 350, m: 400, l: 450 }, pool: "drinks", customizable: true },
   { id: "espresso-tonic", name: "Эспрессо-тоник", cat: "drinks", emoji: "🧊", sizes: { s: 260, m: 300, l: 340 }, pool: "drinks" },
+  {
+    id: "bumble",
+    name: "Бамбл",
+    cat: "drinks",
+    emoji: "🍊",
+    sizes: { s: 320, m: 390, l: 440 },
+    pool: "drinks",
+    tags: ["hit", "new"],
+  },
+  {
+    id: "bumble",
+    name: "Бамбл",
+    cat: "drinks",
+    emoji: "🍊",
+    sizes: { s: 320, m: 390, l: 440 },
+    pool: "drinks",
+    tags: ["hit", "new"],
+  },
 
   // ——— Летние ———
   { id: "berry-garden", name: "Ягодный сад", cat: "drinks", emoji: "🫐", price: 420, pool: "drinks", tags: ["new"] },
@@ -512,7 +530,7 @@ function toProduct(item) {
 }
 
 const menu = {
-  menuVersion: 6,
+  menuVersion: 7,
   categories,
   products: RAW.map(toProduct),
   settings: {

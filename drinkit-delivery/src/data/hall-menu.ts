@@ -200,6 +200,7 @@ export const HALL_SECTIONS: HallSection[] = [
       { name: "Айс испанский латте", price: "320 / 370 / 420 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/0134.webp", photoAlt: "/hall-menu/drinks/0135.webp" },
       { name: "Айс фисташковый латте", price: "350 / 400 / 450 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/0134.webp", photoAlt: "/hall-menu/drinks/0135.webp" },
       { name: "Эспрессо тоник", price: "260 / 300 / 340 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/0146.webp", photoAlt: "/hall-menu/drinks/0147.webp" },
+      { name: "Бамбл", price: "320 / 390 / 440 ₽", note: "250 / 350 / 450 мл · эспрессо и апельсин", photo: "/hall-menu/drinks/bumble.webp" },
     ],
   },
   {

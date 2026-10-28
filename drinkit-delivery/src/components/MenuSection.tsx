@@ -35,6 +35,7 @@ function buildGroups(products: Product[]) {
 function pickHeroProduct(products: Product[]): Product | null {
   if (products.length === 0) return null;
   return (
+    products.find((product) => product.id === "bumble") ??
     products.find(
       (product) => product.tags?.includes("hit") && hasProductCutout(product.id),
     ) ??

@@ -1,5 +1,5 @@
 {
-  "menuVersion": 6,
+  "menuVersion": 7,
   "categories": [
     {
       "id": "breakfast",
@@ -497,6 +497,25 @@
         "m": 300,
         "l": 340
       }
+    },
+    {
+      "id": "bumble",
+      "categoryId": "drinks",
+      "name": "Бамбл",
+      "description": "Эспрессо на апельсиновом соке со льдом",
+      "emoji": "🍊",
+      "basePrice": 390,
+      "imageUrl": "/hall-menu/drinks/bumble.webp",
+      "group": "Айс-кофе",
+      "sizes": {
+        "s": 320,
+        "m": 390,
+        "l": 440
+      },
+      "tags": [
+        "hit",
+        "new"
+      ]
     },
     {
       "id": "berry-garden",

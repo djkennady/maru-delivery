@@ -4,11 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { HALL_PHOTO_ITEMS, HALL_SECTIONS, PICKUP_SITE_URL, type HallItem, type HallKind } from "@/data/hall-menu";
-import {
-  coffeeHallCutPoster,
-  coffeeHallCutVideo,
-  coffeeHallVideo,
-} from "@/lib/media";
 
 type Lightbox = {
   name: string;
@@ -215,51 +210,6 @@ export function HallMenuExperience() {
       </div>
 
       <div className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
-        {kind === "drinks" && !query ? (
-          <section className="relative mb-10 overflow-hidden rounded-[28px] border border-[#d6cdbf]/15 bg-[#1a1814]">
-            <div className="grid items-center gap-2 md:grid-cols-[0.95fr_1.05fr]">
-              <div className="relative flex items-center justify-center px-6 py-10 md:py-14">
-                <div
-                  className="pointer-events-none absolute left-1/2 top-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-50 blur-3xl"
-                  style={{ background: "rgba(217, 207, 190, 0.18)" }}
-                />
-                <div
-                  className="relative aspect-square w-[68%] max-w-[280px]"
-                  style={{
-                    WebkitMaskImage:
-                      "radial-gradient(ellipse 74% 78% at 50% 48%, #000 60%, transparent 90%)",
-                    maskImage:
-                      "radial-gradient(ellipse 74% 78% at 50% 48%, #000 60%, transparent 90%)",
-                  }}
-                >
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster={coffeeHallCutPoster}
-                    className="h-full w-full object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,0.5)]"
-                  >
-                    <source src={coffeeHallCutVideo} type="video/webm" />
-                    <source src={coffeeHallVideo} type="video/mp4" />
-                  </video>
-                </div>
-              </div>
-              <div className="relative px-6 pb-10 pt-2 text-center md:px-10 md:pb-12 md:pt-8 md:text-left">
-                <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9cfbe]">
-                  Кофе · зал
-                </p>
-                <h2 className="font-serif mt-4 text-[clamp(2.2rem,4.5vw,3.4rem)] leading-none tracking-[-0.04em]">
-                  Живой кофе
-                </h2>
-                <p className="mx-auto mt-4 max-w-sm text-sm leading-relaxed text-[#cfc6b6] md:mx-0">
-                  Чёрный, с молоком, фирменный и колд брю — ниже в меню.
-                </p>
-              </div>
-            </div>
-          </section>
-        ) : null}
-
         {sections.map((section, sectionIndex) => (
           <section
             key={section.id}
