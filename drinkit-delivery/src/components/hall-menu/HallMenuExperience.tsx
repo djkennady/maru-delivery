@@ -7,7 +7,6 @@ import { HALL_PHOTO_ITEMS, HALL_SECTIONS, PICKUP_SITE_URL, type HallItem, type H
 import {
   coffeeHallCutPoster,
   coffeeHallCutVideo,
-  coffeeHallPoster,
   coffeeHallVideo,
 } from "@/lib/media";
 
@@ -218,43 +217,28 @@ export function HallMenuExperience() {
       <div className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
         {kind === "drinks" && !query ? (
           <section className="relative mb-10 overflow-hidden rounded-[28px] border border-[#d6cdbf]/15 bg-[#1a1814]">
-            <div className="grid items-center gap-6 md:grid-cols-[1.05fr_0.95fr] md:gap-0">
-              <div className="relative min-h-[280px] overflow-hidden md:min-h-[360px]">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster={coffeeHallPoster}
-                  className="absolute inset-0 h-full w-full object-cover opacity-90"
-                >
-                  <source src={coffeeHallVideo} type="video/mp4" />
-                </video>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1a1814] via-[#1a1814]/35 to-transparent md:via-[#1a1814]/15" />
-              </div>
-              <div className="relative flex flex-col items-center px-6 pb-10 pt-2 text-center md:items-start md:px-10 md:pb-12 md:pt-8 md:text-left">
+            <div className="relative flex min-h-[420px] flex-col items-center justify-end px-5 pb-10 pt-8 text-center sm:min-h-[520px] md:px-10">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={coffeeHallCutPoster}
+                className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center p-4 sm:p-8"
+              >
+                <source src={coffeeHallCutVideo} type="video/webm" />
+                <source src={coffeeHallVideo} type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1a1814] via-[#1a1814]/25 to-transparent" />
+              <div className="relative z-10 max-w-xl">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-[#d9cfbe]">
                   Кофе · зал
                 </p>
-                <div className="relative mt-4 aspect-square w-[72%] max-w-[260px]">
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    poster={coffeeHallCutPoster}
-                    className="h-full w-full object-contain drop-shadow-[0_28px_50px_rgba(0,0,0,0.55)]"
-                  >
-                    <source src={coffeeHallCutVideo} type="video/webm" />
-                    <source src={coffeeHallVideo} type="video/mp4" />
-                  </video>
-                </div>
-                <h2 className="font-serif mt-4 text-[clamp(2rem,4vw,3.2rem)] leading-none tracking-[-0.04em]">
+                <h2 className="font-serif mt-3 text-[clamp(2.4rem,6vw,4rem)] leading-none tracking-[-0.04em]">
                   Живой кофе
                 </h2>
-                <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#cfc6b6]">
-                  Тот же стакан, что в меню — в движении. Чёрный, с молоком,
-                  фирменный и колд брю ниже.
+                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-[#cfc6b6]">
+                  Чёрный, с молоком, фирменный и колд брю — ниже в меню.
                 </p>
               </div>
             </div>

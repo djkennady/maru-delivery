@@ -23,7 +23,19 @@ function menuFile(): string {
 }
 const APP_STATE_TABLE = "app_state";
 const MENU_STATE_KEY = "menu";
-export const CURRENT_MENU_VERSION = 5;
+export const CURRENT_MENU_VERSION = 6;
+
+/** Retired SKUs — strip even if an older persisted menu still contains them. */
+const REMOVED_PRODUCT_IDS = new Set([
+  "nitro-black",
+  "nitro-vanilla",
+  "nitro-orange",
+  "shot-pistachio",
+  "shot-orange",
+  "shot-salted-caramel",
+  "shot-coconut",
+  "coffee-tasting-set",
+]);
 
 async function ensureStore() {
   const dir = path.dirname(menuFile());
@@ -111,13 +123,17 @@ function normalizeCategory(category: Partial<Category>): Category {
 }
 
 function normalizeMenu(data: Partial<MenuData>): MenuData {
+  const products = Array.isArray(data.products)
+    ? data.products
+        .map(normalizeProduct)
+        .filter((product) => !REMOVED_PRODUCT_IDS.has(product.id))
+    : DEFAULT_MENU.products;
+
   return {
     categories: Array.isArray(data.categories)
       ? data.categories.map(normalizeCategory)
       : DEFAULT_MENU.categories,
-    products: Array.isArray(data.products)
-      ? data.products.map(normalizeProduct)
-      : DEFAULT_MENU.products,
+    products,
     settings: {
       deliveryFee:
         Number(data.settings?.deliveryFee) || DEFAULT_MENU.settings.deliveryFee,
@@ -135,11 +151,13 @@ function normalizeMenu(data: Partial<MenuData>): MenuData {
 function applyDrinkPhotos(menu: MenuData): MenuData {
   return {
     ...menu,
-    products: menu.products.map((product) => {
-      const imageUrl = catalogDrinkImageUrl(product.id, product.imageUrl);
-      if (!imageUrl || imageUrl === product.imageUrl) return product;
-      return { ...product, imageUrl };
-    }),
+    products: menu.products
+      .filter((product) => !REMOVED_PRODUCT_IDS.has(product.id))
+      .map((product) => {
+        const imageUrl = catalogDrinkImageUrl(product.id, product.imageUrl);
+        if (!imageUrl || imageUrl === product.imageUrl) return product;
+        return { ...product, imageUrl };
+      }),
   };
 }
 
@@ -153,6 +171,9 @@ function withCurrentMenuVersion(menu: MenuData): MenuData {
 function needsMenuReseed(menu: MenuData): boolean {
   if (menu.products.length === 0) return true;
   if ((menu.menuVersion ?? 1) < CURRENT_MENU_VERSION) return true;
+  if (menu.products.some((product) => REMOVED_PRODUCT_IDS.has(product.id))) {
+    return true;
+  }
 
   const hasGroupedProducts = menu.products.some((product) =>
     Boolean(product.group?.trim()),
@@ -201,8 +222,11 @@ export async function getMenu(): Promise<MenuData> {
   await ensureStore();
   const raw = await fs.readFile(menuFile(), "utf-8");
   try {
-    const parsed = JSON.parse(raw) as Partial<MenuData>;
-    return applyDrinkPhotos(normalizeMenu(parsed));
+    const parsed = normalizeMenu(JSON.parse(raw) as Partial<MenuData>);
+    if (needsMenuReseed(parsed)) {
+      return await resetMenuToDefaults();
+    }
+    return applyDrinkPhotos(parsed);
   } catch {
     await writeMenu(DEFAULT_MENU);
     return applyDrinkPhotos(DEFAULT_MENU);

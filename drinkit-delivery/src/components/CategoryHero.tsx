@@ -66,19 +66,31 @@ export function CategoryHero({
           {categoryName}
         </p>
 
-        <div className="drinkit-hero-breath relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px]">
+        <div
+          className={`relative ${
+            useCoffeeVideo
+              ? "aspect-[3/4] w-[94%] max-w-[560px] md:max-w-[620px]"
+              : "drinkit-hero-breath aspect-square w-[86%] max-w-[440px] md:max-w-[480px]"
+          }`}
+        >
           <div
-            className="absolute inset-[16%] rounded-full blur-3xl opacity-75"
+            className={`absolute rounded-full blur-3xl opacity-75 ${
+              useCoffeeVideo ? "inset-[10%]" : "inset-[16%]"
+            }`}
             style={{ background: theme.glow }}
           />
           <div
             className="absolute inset-0"
-            style={{
-              WebkitMaskImage:
-                "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
-              maskImage:
-                "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
-            }}
+            style={
+              useCoffeeVideo
+                ? undefined
+                : {
+                    WebkitMaskImage:
+                      "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
+                    maskImage:
+                      "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
+                  }
+            }
           >
             {useCoffeeVideo ? (
               <video
@@ -87,7 +99,7 @@ export function CategoryHero({
                 loop
                 playsInline
                 poster={coffeeHallCutPoster}
-                className="h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+                className="h-full w-full scale-[1.12] object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
               >
                 <source src={coffeeHallCutVideo} type="video/webm" />
                 <source src={coffeeHallVideo} type="video/mp4" />
