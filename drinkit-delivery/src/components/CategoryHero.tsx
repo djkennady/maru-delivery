@@ -66,7 +66,11 @@ export function CategoryHero({
           {categoryName}
         </p>
 
-        <div className="relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px]">
+        <div
+          className={`relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px] ${
+            useBumbleVideo ? "" : "drinkit-hero-breath"
+          }`}
+        >
           <div
             className="absolute inset-[18%] rounded-full blur-3xl opacity-70"
             style={{ background: theme.glow }}
@@ -98,6 +102,7 @@ export function CategoryHero({
                 alt={product.name}
                 fill
                 priority
+                quality={90}
                 unoptimized={Boolean(cutout)}
                 className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
                 sizes="(max-width: 768px) 86vw, 480px"

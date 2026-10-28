@@ -250,7 +250,8 @@ export function HallMenuExperience() {
                         src={item.photo}
                         alt={item.name}
                         fill
-                        sizes="140px"
+                        quality={90}
+                        sizes="(max-width: 640px) 104px, 140px"
                         className="object-cover transition duration-500 hover:scale-105"
                       />
                     </button>

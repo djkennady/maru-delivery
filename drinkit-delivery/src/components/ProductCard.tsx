@@ -27,8 +27,9 @@ export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) 
           src={getProductImage(product.id, product.imageUrl)}
           alt={product.name}
           fill
+          quality={90}
           className="object-cover transition duration-700 ease-out group-hover:scale-110"
-          sizes="(max-width: 512px) 48vw, 240px"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 320px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
         {product.tags?.length ? (

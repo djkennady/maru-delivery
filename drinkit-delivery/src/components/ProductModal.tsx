@@ -129,8 +129,9 @@ function ProductModalBody({
               src={getProductImage(product.id, product.imageUrl)}
               alt={product.name}
               fill
+              quality={90}
               className="object-cover"
-              sizes="420px"
+              sizes="(max-width: 640px) 92vw, 480px"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />

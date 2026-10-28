@@ -54,8 +54,9 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
                   src={getProductImage(product.id, product.imageUrl)}
                   alt={product.name}
                   fill
+                  quality={90}
                   className="object-cover transition duration-700 hover:scale-105"
-                  sizes="320px"
+                  sizes="(max-width: 768px) 78vw, 320px"
                   priority={index === 0}
                 />
               </div>
