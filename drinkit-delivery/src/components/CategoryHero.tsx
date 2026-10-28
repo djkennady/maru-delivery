@@ -3,7 +3,12 @@
 import Image from "next/image";
 import { getCategoryTheme } from "@/lib/category-theme";
 import { getProductCutout } from "@/lib/cutouts";
-import { getProductImage } from "@/lib/media";
+import {
+  coffeeHallCutPoster,
+  coffeeHallCutVideo,
+  coffeeHallVideo,
+  getProductImage,
+} from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import type { Product } from "@/types/menu";
 
@@ -15,6 +20,9 @@ interface CategoryHeroProps {
   direction?: 1 | -1;
 }
 
+/** Floating cutout loop for the coffee tab (owner Kling clip, bg removed). */
+const COFFEE_HERO_VIDEO_CATEGORIES = new Set(["coffee"]);
+
 export function CategoryHero({
   categoryId,
   categoryName,
@@ -25,6 +33,7 @@ export function CategoryHero({
   const theme = getCategoryTheme(categoryId);
   const cutout = getProductCutout(product.id);
   const imageSrc = cutout ?? getProductImage(product.id, product.imageUrl);
+  const useCoffeeVideo = COFFEE_HERO_VIDEO_CATEGORIES.has(categoryId);
 
   return (
     <section
@@ -71,15 +80,29 @@ export function CategoryHero({
                 "radial-gradient(ellipse 78% 82% at 50% 50%, #000 62%, transparent 86%)",
             }}
           >
-            <Image
-              src={imageSrc}
-              alt={product.name}
-              fill
-              priority
-              unoptimized={Boolean(cutout)}
-              className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
-              sizes="(max-width: 768px) 86vw, 480px"
-            />
+            {useCoffeeVideo ? (
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={coffeeHallCutPoster}
+                className="h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+              >
+                <source src={coffeeHallCutVideo} type="video/webm" />
+                <source src={coffeeHallVideo} type="video/mp4" />
+              </video>
+            ) : (
+              <Image
+                src={imageSrc}
+                alt={product.name}
+                fill
+                priority
+                unoptimized={Boolean(cutout)}
+                className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+                sizes="(max-width: 768px) 86vw, 480px"
+              />
+            )}
           </div>
         </div>
 

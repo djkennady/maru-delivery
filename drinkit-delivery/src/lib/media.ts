@@ -9,6 +9,13 @@ export const heroVideo =
 
 export const heroPoster = pexels(5946077, 1200);
 
+/** Owner Kling coffee loop for hall / coffee category heroes. */
+export const coffeeHallVideo = "/hall-menu/video/coffee-hall.mp4";
+export const coffeeHallPoster = "/hall-menu/video/coffee-hall-poster.jpg";
+/** Transparent WebM cutout (VP9 alpha) for floating Drinkit-style heroes. */
+export const coffeeHallCutVideo = "/hall-menu/video/coffee-hall-cut.webm";
+export const coffeeHallCutPoster = "/hall-menu/video/coffee-hall-cut-poster.png";
+
 export const heroThumbs = [
   pexels(302899, 400),
   pexels(1006297, 400),
