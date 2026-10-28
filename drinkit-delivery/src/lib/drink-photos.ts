@@ -235,11 +235,16 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
 ];
 
 const stock = (id: string) => `/hall-menu/drinks/stock/${id}.webp`;
+const studio = (id: string) => `/hall-menu/drinks/${id}.webp`;
 
-/** Internet stock photos for drinks that have no Yandex studio pair. */
+/** Single studio shots (owner-provided) without a numbered Yandex pair. */
+export const STUDIO_DRINK_PHOTOS: { productId: string; hallName: string; path: string }[] = [
+  { productId: "filter-coffee", hallName: "Фильтр-кофе", path: studio("filter-coffee") },
+];
+
+/** Internet stock photos for drinks that have no studio / Yandex pair. */
 export const STOCK_DRINK_PHOTOS: { productId: string; hallName?: string; path: string }[] = [
   { productId: "americano", hallName: "Американо", path: stock("americano") },
-  { productId: "filter-coffee", hallName: "Фильтр-кофе", path: stock("filter-coffee") },
   { productId: "espresso", hallName: "Эспрессо", path: stock("espresso") },
   { productId: "cappuccino", hallName: "Капучино", path: stock("cappuccino") },
   { productId: "latte", hallName: "Латте", path: stock("latte") },
@@ -259,18 +264,11 @@ export const STOCK_DRINK_PHOTOS: { productId: string; hallName?: string; path: s
   { productId: "water", hallName: "Вода с газом / без газа", path: stock("water") },
   { productId: "cola-zero", hallName: "Cola Zero", path: stock("cola-zero") },
   { productId: "tonic-drink", hallName: "Тоник", path: stock("tonic-drink") },
-  { productId: "nitro-black", path: stock("nitro-black") },
-  { productId: "nitro-vanilla", path: stock("nitro-vanilla") },
-  { productId: "nitro-orange", path: stock("nitro-orange") },
-  { productId: "shot-pistachio", path: stock("shot-pistachio") },
-  { productId: "shot-orange", path: stock("shot-orange") },
-  { productId: "shot-salted-caramel", path: stock("shot-salted-caramel") },
-  { productId: "shot-coconut", path: stock("shot-coconut") },
-  { productId: "coffee-tasting-set", path: stock("coffee-tasting-set") },
 ];
 
 export const DRINK_PHOTO_BY_PRODUCT_ID: Record<string, string> = {
   ...Object.fromEntries(STOCK_DRINK_PHOTOS.map((item) => [item.productId, item.path])),
+  ...Object.fromEntries(STUDIO_DRINK_PHOTOS.map((item) => [item.productId, item.path])),
   ...Object.fromEntries(DRINK_PHOTO_PAIRS.map((pair) => [pair.productId, pair.primary])),
 };
 

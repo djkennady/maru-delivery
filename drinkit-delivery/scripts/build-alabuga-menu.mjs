@@ -244,18 +244,6 @@ const RAW = [
     tags: ["new"],
   },
 
-  // ——— Nitro ———
-  { id: "nitro-black", name: "Nitro Black", cat: "coffee", emoji: "🧊", sizes: { m: 340, l: 390 }, pool: "coffee", tags: ["new"] },
-  { id: "nitro-vanilla", name: "Nitro Vanilla", cat: "coffee", emoji: "🧊", sizes: { m: 390, l: 450 }, pool: "coffee", tags: ["new"] },
-  { id: "nitro-orange", name: "Nitro Orange", cat: "coffee", emoji: "🧊", sizes: { m: 410, l: 470 }, pool: "coffee", tags: ["new"] },
-
-  // ——— Шоты ———
-  { id: "shot-pistachio", name: "Фисташковый шот", cat: "coffee", emoji: "☕", price: 290, pool: "coffee" },
-  { id: "shot-orange", name: "Апельсиновый шот", cat: "coffee", emoji: "☕", price: 290, pool: "coffee" },
-  { id: "shot-salted-caramel", name: "Шот солёная карамель", cat: "coffee", emoji: "☕", price: 290, pool: "coffee" },
-  { id: "shot-coconut", name: "Кокосовый шот", cat: "coffee", emoji: "☕", price: 290, pool: "coffee" },
-  { id: "coffee-tasting-set", name: "Дегустационный сет (4 шота)", cat: "coffee", emoji: "☕", price: 890, pool: "coffee", tags: ["hit"] },
-
   // ——— Матча ———
   { id: "matcha-latte", name: "Матча латте", cat: "drinks", emoji: "🍵", sizes: { m: 420, l: 480 }, pool: "drinks", customizable: true, tags: ["hit"] },
   { id: "strawberry-matcha", name: "Клубничная матча", cat: "drinks", emoji: "🍓", sizes: { m: 470, l: 530 }, pool: "drinks", customizable: true, tags: ["new"] },
@@ -434,8 +422,6 @@ const SECTION_GROUP_NAMES = {
   "Кофе чёрный": "Чёрный кофе",
   "Кофе с молоком": "Кофе с молоком",
   "Фирменный кофе": "Фирменный кофе",
-  Nitro: "Nitro Coffee",
-  Шоты: "Кофейные шоты",
   Матча: "Матча",
   "Колд брю": "Колд брю",
   "Айс-кофе": "Айс-кофе",

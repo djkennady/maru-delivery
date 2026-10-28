@@ -8,6 +8,7 @@ const CUTOUT_IDS = new Set([
   "cappuccino",
   "english-breakfast",
   "espresso-tonic",
+  "filter-coffee",
   "honey-cake",
   "iced-latte",
   "matcha-latte",

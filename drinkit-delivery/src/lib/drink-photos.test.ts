@@ -3,7 +3,11 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import { DEFAULT_MENU } from "@/data/menu-defaults";
 import { HALL_SECTIONS } from "@/data/hall-menu";
-import { DRINK_PHOTO_PAIRS, STOCK_DRINK_PHOTOS } from "@/lib/drink-photos";
+import {
+  DRINK_PHOTO_PAIRS,
+  STOCK_DRINK_PHOTOS,
+  STUDIO_DRINK_PHOTOS,
+} from "@/lib/drink-photos";
 import { getProductImage } from "@/lib/media";
 
 describe("drink photo assignments", () => {
@@ -36,9 +40,27 @@ describe("drink photo assignments", () => {
     expect(getProductImage("smoothie-tropical", "https://images.pexels.com/x.jpg")).toBe(
       "/hall-menu/drinks/0160.webp",
     );
+    expect(getProductImage("filter-coffee", "https://images.pexels.com/x.jpg")).toBe(
+      "/hall-menu/drinks/filter-coffee.webp",
+    );
     expect(getProductImage("americano", "https://images.pexels.com/x.jpg")).toBe(
       "/hall-menu/drinks/stock/americano.webp",
     );
+  });
+
+  it("maps studio singles to pickup products and local webp files", () => {
+    const products = new Map(DEFAULT_MENU.products.map((item) => [item.id, item]));
+    const hallNames = new Set(
+      HALL_SECTIONS.flatMap((section) => section.items.map((item) => item.name)),
+    );
+    const publicRoot = resolve(process.cwd(), "public");
+
+    for (const item of STUDIO_DRINK_PHOTOS) {
+      expect(products.get(item.productId), item.productId).toBeTruthy();
+      expect(hallNames.has(item.hallName), item.hallName).toBe(true);
+      expect(item.path).toMatch(/^\/hall-menu\/drinks\/[\w-]+\.webp$/);
+      expect(existsSync(resolve(publicRoot, item.path.slice(1))), item.path).toBe(true);
+    }
   });
 
   it("maps stock photos to pickup products and local webp files", () => {

@@ -166,7 +166,7 @@ export const HALL_SECTIONS: HallSection[] = [
     kind: "drinks",
     items: [
       { name: "Американо", price: "180 / 230 / 280 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/stock/americano.webp" },
-      { name: "Фильтр-кофе", price: "180 / 230 / 280 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/stock/filter-coffee.webp" },
+      { name: "Фильтр-кофе", price: "180 / 230 / 280 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/filter-coffee.webp" },
       { name: "Эспрессо", price: "180 ₽", note: "40 мл", photo: "/hall-menu/drinks/stock/espresso.webp" },
       { name: "Капучино", price: "220 / 270 / 310 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/stock/cappuccino.webp" },
       { name: "Латте", price: "220 / 270 / 310 ₽", note: "250 / 350 / 450 мл", photo: "/hall-menu/drinks/stock/latte.webp" },

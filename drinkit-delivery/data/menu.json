@@ -183,7 +183,7 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 230,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "imageUrl": "/hall-menu/drinks/filter-coffee.webp",
       "group": "Чёрный кофе",
       "sizes": {
         "s": 180,
@@ -339,110 +339,6 @@
       "customizable": true,
       "tags": [
         "new"
-      ]
-    },
-    {
-      "id": "nitro-black",
-      "categoryId": "coffee",
-      "name": "Nitro Black",
-      "description": "",
-      "emoji": "🧊",
-      "basePrice": 340,
-      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Nitro Coffee",
-      "sizes": {
-        "m": 340,
-        "l": 390
-      },
-      "tags": [
-        "new"
-      ]
-    },
-    {
-      "id": "nitro-vanilla",
-      "categoryId": "coffee",
-      "name": "Nitro Vanilla",
-      "description": "",
-      "emoji": "🧊",
-      "basePrice": 390,
-      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Nitro Coffee",
-      "sizes": {
-        "m": 390,
-        "l": 450
-      },
-      "tags": [
-        "new"
-      ]
-    },
-    {
-      "id": "nitro-orange",
-      "categoryId": "coffee",
-      "name": "Nitro Orange",
-      "description": "",
-      "emoji": "🧊",
-      "basePrice": 410,
-      "imageUrl": "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Nitro Coffee",
-      "sizes": {
-        "m": 410,
-        "l": 470
-      },
-      "tags": [
-        "new"
-      ]
-    },
-    {
-      "id": "shot-pistachio",
-      "categoryId": "coffee",
-      "name": "Фисташковый шот",
-      "description": "",
-      "emoji": "☕",
-      "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Кофейные шоты"
-    },
-    {
-      "id": "shot-orange",
-      "categoryId": "coffee",
-      "name": "Апельсиновый шот",
-      "description": "",
-      "emoji": "☕",
-      "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Кофейные шоты"
-    },
-    {
-      "id": "shot-salted-caramel",
-      "categoryId": "coffee",
-      "name": "Шот солёная карамель",
-      "description": "",
-      "emoji": "☕",
-      "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/1126728/pexels-photo-1126728.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Кофейные шоты"
-    },
-    {
-      "id": "shot-coconut",
-      "categoryId": "coffee",
-      "name": "Кокосовый шот",
-      "description": "",
-      "emoji": "☕",
-      "basePrice": 290,
-      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Кофейные шоты"
-    },
-    {
-      "id": "coffee-tasting-set",
-      "categoryId": "coffee",
-      "name": "Дегустационный сет (4 шота)",
-      "description": "",
-      "emoji": "☕",
-      "basePrice": 890,
-      "imageUrl": "https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600",
-      "group": "Кофейные шоты",
-      "tags": [
-        "hit"
       ]
     },
     {
