@@ -30,6 +30,12 @@ describe("drink photo assignments", () => {
     expect(getProductImage("iced-latte", "https://images.pexels.com/x.jpg")).toBe(
       "/hall-menu/drinks/0127.webp",
     );
+    expect(getProductImage("raf-vanilla", "https://images.pexels.com/x.jpg")).toBe(
+      "/hall-menu/drinks/0128.webp",
+    );
+    expect(getProductImage("smoothie-tropical", "https://images.pexels.com/x.jpg")).toBe(
+      "/hall-menu/drinks/0160.webp",
+    );
     expect(getProductImage("americano", "https://images.pexels.com/x.jpg")).toBe(
       "/hall-menu/drinks/stock/americano.webp",
     );
