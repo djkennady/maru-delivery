@@ -80,7 +80,7 @@ function CartLineItem({
           src={getProductImage(item.productId, product?.imageUrl)}
           alt={product?.name ?? item.productId}
           fill
-          quality={90}
+          quality={95}
           className="object-cover"
           sizes="112px"
         />

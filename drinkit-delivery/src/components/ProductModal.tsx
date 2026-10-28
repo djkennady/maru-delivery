@@ -8,7 +8,7 @@ import {
   BREAKFAST_UNAVAILABLE_MESSAGE,
   isBreakfastProduct,
 } from "@/lib/breakfast-hours";
-import { getProductImage } from "@/lib/media";
+import { getProductImage, isHallCatalogImage } from "@/lib/media";
 import { getProductTheme } from "@/lib/product-theme";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import {
@@ -55,6 +55,7 @@ function ProductModalBody({
   const breakfastOpen = useBreakfastMenuOpen();
   const canOrder = !isBreakfastProduct(product) || breakfastOpen;
   const theme = useMemo(() => getProductTheme(product.id), [product.id]);
+  const imageSrc = getProductImage(product.id, product.imageUrl);
   const [options, setOptions] = useState<CartItemOptions>(
     getDefaultOptions(product),
   );
@@ -126,12 +127,13 @@ function ProductModalBody({
             style={{ boxShadow: `0 24px 70px ${theme.ctaShadow}` }}
           >
             <Image
-              src={getProductImage(product.id, product.imageUrl)}
+              src={imageSrc}
               alt={product.name}
               fill
-              quality={90}
+              quality={95}
+              unoptimized={isHallCatalogImage(imageSrc)}
               className="object-cover"
-              sizes="(max-width: 640px) 92vw, 480px"
+              sizes="(max-width: 640px) 100vw, 828px"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />

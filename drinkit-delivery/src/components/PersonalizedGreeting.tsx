@@ -52,7 +52,7 @@ export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
               src={getProductImage(favorite.product.id, favorite.product.imageUrl)}
               alt={favorite.product.name}
               fill
-              quality={90}
+              quality={95}
               className="object-cover"
               sizes="96px"
             />

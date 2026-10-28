@@ -102,10 +102,10 @@ export function CategoryHero({
                 alt={product.name}
                 fill
                 priority
-                quality={90}
-                unoptimized={Boolean(cutout)}
+                quality={95}
+                unoptimized={Boolean(cutout) || imageSrc.startsWith("/hall-menu/")}
                 className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
-                sizes="(max-width: 768px) 86vw, 480px"
+                sizes="(max-width: 768px) 100vw, 828px"
               />
             )}
           </div>

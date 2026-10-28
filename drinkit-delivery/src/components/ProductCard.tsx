@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
-import { getProductImage } from "@/lib/media";
+import { getProductImage, isHallCatalogImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import type { Product } from "@/types/menu";
 
@@ -15,6 +15,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) {
+  const src = getProductImage(product.id, product.imageUrl);
   return (
     <button
       type="button"
@@ -24,12 +25,14 @@ export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) 
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#111]">
         <Image
-          src={getProductImage(product.id, product.imageUrl)}
+          src={src}
           alt={product.name}
           fill
-          quality={90}
+          quality={95}
+          // Skip Next/Netlify re-encode for studio assets — was serving ~384px/30KB mush.
+          unoptimized={isHallCatalogImage(src)}
           className="object-cover transition duration-700 ease-out group-hover:scale-110"
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 320px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
         {product.tags?.length ? (

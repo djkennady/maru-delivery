@@ -82,7 +82,8 @@ export function HallMenuExperience() {
           alt=""
           fill
           priority
-          quality={90}
+          quality={95}
+          unoptimized
           className="hall-ken object-cover opacity-45"
           sizes="100vw"
         />
@@ -149,8 +150,9 @@ export function HallMenuExperience() {
                 src={item.photo!}
                 alt={item.name}
                 fill
-                quality={90}
-                sizes="(max-width: 640px) 50vw, 33vw"
+                quality={95}
+                unoptimized
+                sizes="(max-width: 640px) 100vw, 50vw"
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
               <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -252,7 +254,8 @@ export function HallMenuExperience() {
                         src={item.photo}
                         alt={item.name}
                         fill
-                        quality={90}
+                        quality={95}
+                        unoptimized
                         sizes="(max-width: 640px) 104px, 140px"
                         className="object-cover transition duration-500 hover:scale-105"
                       />
@@ -334,7 +337,8 @@ export function HallMenuExperience() {
                 src={lightbox.photos[lightbox.index]}
                 alt={lightbox.name}
                 fill
-                quality={90}
+                quality={95}
+                unoptimized
                 sizes="92vw"
                 className="object-contain"
                 priority

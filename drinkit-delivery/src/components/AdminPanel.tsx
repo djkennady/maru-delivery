@@ -143,7 +143,7 @@ function AdminOrderCard({
                     fill
                     className="object-cover"
                     sizes="36px"
-                    quality={90}
+                    quality={95}
                   />
                 </span>
                 <span className="truncate text-[var(--text)]">

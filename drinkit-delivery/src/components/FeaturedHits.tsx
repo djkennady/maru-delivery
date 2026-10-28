@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useMenu } from "@/context/MenuContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
-import { getProductImage } from "@/lib/media";
+import { getProductImage, isHallCatalogImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import type { Product } from "@/types/menu";
@@ -41,7 +41,9 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
         </div>
 
         <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide md:grid md:grid-cols-3 md:overflow-visible lg:grid-cols-4">
-          {hits.map((product, index) => (
+          {hits.map((product, index) => {
+            const src = getProductImage(product.id, product.imageUrl);
+            return (
             <button
               key={product.id}
               type="button"
@@ -51,12 +53,13 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
             >
               <div className="absolute inset-0 overflow-hidden">
                 <Image
-                  src={getProductImage(product.id, product.imageUrl)}
+                  src={src}
                   alt={product.name}
                   fill
-                  quality={90}
+                  quality={95}
+                  unoptimized={isHallCatalogImage(src)}
                   className="object-cover transition duration-700 hover:scale-105"
-                  sizes="(max-width: 768px) 78vw, 320px"
+                  sizes="(max-width: 768px) 100vw, 640px"
                   priority={index === 0}
                 />
               </div>
@@ -73,7 +76,8 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
                 </p>
               </div>
             </button>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

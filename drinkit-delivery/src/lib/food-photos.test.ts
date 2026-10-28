@@ -30,5 +30,11 @@ describe("food photo assignments", () => {
     expect(getProductImage("burger-beef", "https://images.pexels.com/x.jpg")).toBe(
       "/hall-menu/dishes/0067.webp",
     );
+    expect(getProductImage("shashlik-chicken-fillet", "https://images.pexels.com/x.jpg")).toBe(
+      "/hall-menu/dishes/0106.webp",
+    );
+    expect(getProductImage("sandwich-roastbeef", "https://images.pexels.com/x.jpg")).toBe(
+      "/hall-menu/dishes/0015.webp",
+    );
   });
 });

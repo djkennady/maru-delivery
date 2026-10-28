@@ -27,9 +27,10 @@ export function PromoBanners() {
                 src={promo.image}
                 alt=""
                 fill
-                quality={90}
+                quality={95}
+                unoptimized={promo.image.startsWith("/hall-menu/")}
                 className="object-cover opacity-40"
-                sizes="(max-width: 1024px) 50vw, 360px"
+                sizes="(max-width: 1024px) 100vw, 640px"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
               <div className="pointer-events-none absolute -right-3 -top-3 text-5xl opacity-40">

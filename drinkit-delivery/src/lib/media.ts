@@ -55,6 +55,11 @@ export function getProductImage(productId: string, imageUrl?: string): string {
   return catalogProductImageUrl(productId, imageUrl) || fallbackProductImage;
 }
 
+/** Local studio assets — skip next/image re-encode (keeps sharpness). */
+export function isHallCatalogImage(src: string): boolean {
+  return src.startsWith("/hall-menu/");
+}
+
 export function getCategoryImage(
   categoryId: string,
   category?: Pick<Category, "imageUrl">,
