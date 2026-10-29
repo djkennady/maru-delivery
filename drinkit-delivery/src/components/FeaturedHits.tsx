@@ -29,14 +29,9 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
     <section className="px-3 pb-2 pt-4 md:px-6">
       <div className="mx-auto max-w-7xl">
         <div className="mb-3 flex items-end justify-between px-1">
-          <div>
-            <p className="text-[11px] font-medium lowercase tracking-[0.18em] text-white/35">
-              для тебя
-            </p>
-            <h2 className="font-display text-lg font-semibold lowercase text-white md:text-2xl">
-              хиты мару
-            </h2>
-          </div>
+          <h2 className="font-display text-lg font-semibold lowercase text-white md:text-2xl">
+            хиты мару
+          </h2>
           <p className="text-[11px] font-medium text-[#60a5fa]">самовывоз −10%</p>
         </div>
 

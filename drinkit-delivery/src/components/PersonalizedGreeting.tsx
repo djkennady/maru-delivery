@@ -8,84 +8,130 @@ import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
 import { getFirstName, getPaidOrders } from "@/lib/loyalty";
-import { getProductImage } from "@/lib/media";
+import { getProductImage, isHallCatalogImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
-import type { Product } from "@/types/menu";
+import type { CartItemOptions, Product } from "@/types/menu";
 
 interface PersonalizedGreetingProps {
   onSelect: (product: Product) => void;
 }
 
-export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
+/** Most-ordered product across paid history (qty sum), with last options. */
+function useUsualOrder() {
   const { profile, orders, hasProfile } = useUser();
   const { getProduct } = useMenu();
   const breakfastOpen = useBreakfastMenuOpen();
+
+  return useMemo(() => {
+    if (!hasProfile) return null;
+
+    const paid = getPaidOrders(orders)
+      .slice()
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+      );
+    if (paid.length === 0) return null;
+
+    const qtyById = new Map<string, number>();
+    const lastOptionsById = new Map<
+      string,
+      { options: CartItemOptions; unitPrice: number }
+    >();
+
+    // Newest orders first → first seen options = last ordered way.
+    for (const order of paid) {
+      for (const item of order.items) {
+        qtyById.set(
+          item.productId,
+          (qtyById.get(item.productId) ?? 0) + item.quantity,
+        );
+        if (!lastOptionsById.has(item.productId)) {
+          lastOptionsById.set(item.productId, {
+            options: item.options,
+            unitPrice: item.unitPrice,
+          });
+        }
+      }
+    }
+
+    const ranked = [...qtyById.entries()].sort((a, b) => b[1] - a[1]);
+    for (const [productId] of ranked) {
+      const product = getProduct(productId);
+      if (!product) continue;
+      if (!breakfastOpen && product.categoryId === BREAKFAST_CATEGORY_ID) {
+        continue;
+      }
+      const last = lastOptionsById.get(productId);
+      if (!last) continue;
+      return {
+        product,
+        options: last.options,
+        unitPrice: last.unitPrice,
+        firstName: getFirstName(profile.name),
+      };
+    }
+    return null;
+  }, [hasProfile, orders, getProduct, breakfastOpen, profile.name]);
+}
+
+export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
   const { addItem } = useCart();
+  const usual = useUsualOrder();
 
-  const favorite = useMemo(() => {
-    const lastOrder = getPaidOrders(orders)[0];
-    const lastItem = lastOrder?.items[0];
-    if (!lastItem) return null;
+  if (!usual) return null;
 
-    const product = getProduct(lastItem.productId);
-    if (!product) return null;
-    if (!breakfastOpen && product.categoryId === BREAKFAST_CATEGORY_ID) return null;
-
-    return { product, options: lastItem.options, unitPrice: lastItem.unitPrice };
-  }, [orders, getProduct, breakfastOpen]);
-
-  if (!hasProfile || !favorite) return null;
-
-  const firstName = getFirstName(profile.name);
+  const src = getProductImage(usual.product.id, usual.product.imageUrl);
 
   return (
-    <section className="px-4 py-2">
-      <div className="mx-auto max-w-lg">
-        <h2 className="mb-3 text-xl font-bold lowercase text-[var(--text)]">
-          {firstName}, тебе как всегда?
+    <section className="px-3 pb-1 pt-4 md:px-6">
+      <div className="mx-auto max-w-7xl">
+        <h2 className="font-display mb-3 px-1 text-xl font-semibold lowercase tracking-tight text-white md:text-2xl">
+          {usual.firstName}, тебе как обычно?
         </h2>
 
-        <article className="flex items-center gap-3 overflow-hidden rounded-[1.75rem] bg-[var(--card)]/80 p-3 shadow-md ring-1 ring-orange-100/80 backdrop-blur-sm">
-          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl">
-            {getProductImage(favorite.product.id, favorite.product.imageUrl) ? (
+        <article className="drinkit-rise flex items-center gap-3 overflow-hidden rounded-[1.75rem] bg-white/[0.06] p-3 ring-1 ring-white/10 backdrop-blur-sm">
+          <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl bg-[#161616]">
+            {src ? (
               <Image
-                src={getProductImage(favorite.product.id, favorite.product.imageUrl)}
-                alt={favorite.product.name}
+                src={src}
+                alt={usual.product.name}
                 fill
                 quality={95}
+                unoptimized={isHallCatalogImage(src)}
                 className="object-cover"
                 sizes="96px"
               />
-            ) : (
-              <div className="absolute inset-0 bg-[#161616]" />
-            )}
+            ) : null}
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="font-bold text-[var(--text)]">{favorite.product.name}</p>
-            <p className="mt-1 text-sm text-[var(--muted)]">
-              {favorite.options.size.toUpperCase()}
-              {favorite.product.customizable ? " · как в прошлый раз" : ""}
+            <p className="font-display font-semibold text-white">
+              {usual.product.name}
             </p>
-            <p className="mt-2 text-lg font-black text-[var(--accent-warm)]">
-              {formatPrice(favorite.unitPrice)}
+            <p className="mt-1 text-sm text-white/45">
+              {usual.options.size.toUpperCase()}
+              {usual.product.customizable ? " · как в прошлый раз" : ""}
+            </p>
+            <p className="mt-2 text-lg font-semibold text-white">
+              {formatPrice(usual.unitPrice)}
             </p>
           </div>
 
           <div className="flex shrink-0 flex-col gap-2">
             <button
               type="button"
-              onClick={() => addItem(favorite.product, favorite.options)}
-              className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-[var(--accent)] to-emerald-600 text-white shadow-lg shadow-emerald-500/25 transition hover:scale-105"
+              onClick={() => addItem(usual.product, usual.options)}
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-[#3b82f6] text-white shadow-lg shadow-blue-500/25 transition hover:scale-105"
               aria-label="Добавить в корзину"
             >
               <Plus className="h-5 w-5" />
             </button>
             <button
               type="button"
-              onClick={() => onSelect(favorite.product)}
-              className="flex h-9 w-11 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-[var(--text)]"
+              onClick={() => onSelect(usual.product)}
+              className="flex h-9 w-11 items-center justify-center rounded-full bg-white/8 text-white/55 transition hover:text-white"
               aria-label="Подробнее"
             >
               <ChevronRight className="h-5 w-5" />

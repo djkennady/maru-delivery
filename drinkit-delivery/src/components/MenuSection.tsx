@@ -8,6 +8,7 @@ import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import { CategoryHero } from "./CategoryHero";
 import { ProductCard } from "./ProductCard";
 import { FeaturedHits } from "./FeaturedHits";
+import { PersonalizedGreeting } from "./PersonalizedGreeting";
 import type { Product } from "@/types/menu";
 
 interface MenuSectionProps {
@@ -95,17 +96,37 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
     ? null
     : (shopCategories.find((category) => category.id === resolvedTab) ?? null);
 
+  const hitProducts = useMemo(
+    () =>
+      shopProducts
+        .filter((product) => product.tags?.includes("hit"))
+        .slice(0, 8),
+    [shopProducts],
+  );
+
+  /** Single curated grid for for-you — not every hit subgroup as «подборка». */
+  const forYouPicks = useMemo(() => {
+    const hitIds = new Set(hitProducts.map((product) => product.id));
+    const news = shopProducts.filter(
+      (product) => product.tags?.includes("new") && !hitIds.has(product.id),
+    );
+    const rest = shopProducts.filter(
+      (product) =>
+        !hitIds.has(product.id) &&
+        !product.tags?.includes("new") &&
+        Boolean(product.imageUrl),
+    );
+    return [...news, ...rest].slice(0, 12);
+  }, [shopProducts, hitProducts]);
+
   const filteredProducts = useMemo(() => {
-    if (isForYou) {
-      const hits = shopProducts.filter((product) => product.tags?.includes("hit"));
-      return hits.length > 0 ? hits : shopProducts.slice(0, 12);
-    }
+    if (isForYou) return forYouPicks;
     return shopProducts.filter((product) => product.categoryId === resolvedTab);
-  }, [shopProducts, resolvedTab, isForYou]);
+  }, [shopProducts, resolvedTab, isForYou, forYouPicks]);
 
   const groupedProducts = useMemo(
-    () => buildGroups(filteredProducts),
-    [filteredProducts],
+    () => (isForYou ? [{ name: "подборка", items: forYouPicks }] : buildGroups(filteredProducts)),
+    [filteredProducts, isForYou, forYouPicks],
   );
 
   const resolvedGroup =
@@ -201,7 +222,12 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
       </section>
 
       <div ref={contentRef}>
-        {isForYou ? <FeaturedHits onSelect={onSelect} /> : null}
+        {isForYou ? (
+          <>
+            <PersonalizedGreeting onSelect={onSelect} />
+            <FeaturedHits onSelect={onSelect} />
+          </>
+        ) : null}
 
         {!isForYou && heroProduct && activeCategory ? (
           <CategoryHero
@@ -228,7 +254,7 @@ export function MenuSection({ onSelect }: MenuSectionProps) {
                   }}
                 >
                   <h3 className="font-display mb-3 px-1 text-[15px] font-semibold lowercase tracking-wide text-white md:text-base">
-                    {isForYou ? "подборка" : group.name}
+                    {group.name}
                   </h3>
                   <div className="grid grid-cols-2 gap-2.5 sm:gap-3 md:grid-cols-3 lg:grid-cols-4">
                     {group.items.map((product, index) => (
