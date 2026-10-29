@@ -32,9 +32,9 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "МАРУ — самовывоз −10%",
+  title: "МАРУ — кухня и кофе",
   description:
-    "МАРУ в Алабуге: кофе, кухня и десерты на самовывоз со скидкой 10%. Меню зала — отдельно.",
+    "МАРУ в Алабуге: меню в зале и самовывоз со скидкой 10%. Завтраки, кухня, кофе и десерты.",
   icons: {
     icon: "/icon.svg",
     apple: "/icon.svg",

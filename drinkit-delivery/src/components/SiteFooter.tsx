@@ -4,9 +4,8 @@ import { usePathname } from "next/navigation";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const hall = pathname === "/hall" || pathname === "/menu";
+  const hall = pathname === "/" || pathname === "/hall" || pathname === "/menu";
   const shop =
-    pathname === "/" ||
     pathname === "/order" ||
     pathname === "/checkout" ||
     pathname === "/account" ||

@@ -43,11 +43,15 @@ export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) 
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
         {product.tags?.length ? (
-          <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1">
+          <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1.5">
             {product.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-[#3b82f6] px-2 py-0.5 text-[10px] font-semibold lowercase text-white"
+                className={
+                  tag === "hit"
+                    ? "rounded-full bg-[#f5c542] px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.08em] text-black shadow-[0_2px_10px_rgba(0,0,0,0.45)] ring-2 ring-black/25"
+                    : "rounded-full bg-[#3b82f6] px-2.5 py-1 text-[11px] font-bold lowercase text-white shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
+                }
               >
                 {TAG_LABELS[tag]}
               </span>

@@ -9,7 +9,7 @@ export default function AccountPage() {
       <SiteHeader
         variant="drinkit"
         showBack
-        backHref="/"
+        backHref="/order"
         backLabel="Личный кабинет"
       />
       <AccountContent />

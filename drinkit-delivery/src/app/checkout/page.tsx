@@ -10,7 +10,7 @@ export default function CheckoutPage() {
         <SiteHeader
           variant="drinkit"
           showBack
-          backHref="/"
+          backHref="/order"
           backLabel="К меню"
         />
         <CheckoutForm />

@@ -66,7 +66,7 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5">
-                <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <p className="inline-flex rounded-full bg-[#f5c542] px-2.5 py-1 text-[11px] font-black uppercase tracking-[0.08em] text-black shadow-[0_2px_10px_rgba(0,0,0,0.45)]">
                   хит
                 </p>
                 <h3 className="font-display mt-1 text-xl font-semibold leading-tight text-white">
