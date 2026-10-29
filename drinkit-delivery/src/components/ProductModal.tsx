@@ -126,16 +126,22 @@ function ProductModalBody({
             className="relative mx-auto mt-2 aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[2rem]"
             style={{ boxShadow: `0 24px 70px ${theme.ctaShadow}` }}
           >
-            <Image
-              src={imageSrc}
-              alt={product.name}
-              fill
-              quality={95}
-              unoptimized={isHallCatalogImage(imageSrc)}
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, 828px"
-              priority
-            />
+            {imageSrc ? (
+              <Image
+                src={imageSrc}
+                alt={product.name}
+                fill
+                quality={95}
+                unoptimized={isHallCatalogImage(imageSrc)}
+                className="object-cover"
+                sizes="(max-width: 640px) 100vw, 828px"
+                priority
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-[#161616] text-sm uppercase tracking-[0.16em] text-white/30">
+                нет фото
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
           </div>
 

@@ -76,14 +76,18 @@ function CartLineItem({
       }`}
     >
       <div className="relative aspect-square w-24 shrink-0 sm:w-28">
-        <Image
-          src={getProductImage(item.productId, product?.imageUrl)}
-          alt={product?.name ?? item.productId}
-          fill
-          quality={95}
-          className="object-cover"
-          sizes="112px"
-        />
+        {getProductImage(item.productId, product?.imageUrl) ? (
+          <Image
+            src={getProductImage(item.productId, product?.imageUrl)}
+            alt={product?.name ?? item.productId}
+            fill
+            quality={95}
+            className="object-cover"
+            sizes="112px"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-[#161616]" />
+        )}
       </div>
       <div className="min-w-0 flex-1 py-3 pr-3">
         <div className="flex items-start justify-between gap-2">

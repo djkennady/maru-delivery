@@ -1,5 +1,8 @@
 import { DRINK_PHOTO_BY_PRODUCT_ID } from "@/lib/drink-photos";
-import { FOOD_PHOTO_BY_PRODUCT_ID } from "@/lib/food-photos";
+import {
+  FOOD_PHOTO_BY_PRODUCT_ID,
+  isFoodCategoryId,
+} from "@/lib/food-photos";
 import type { Category } from "@/types/menu";
 
 const pexels = (id: number, w = 600) =>
@@ -39,20 +42,37 @@ export const galleryImages = [
   { src: pexels(2074130, 500), alt: "Стойка с кофемашиной и зерном" },
 ];
 
-/** Prefer hall studio drink/food photos over persisted Pexels /uploads URLs. */
+/**
+ * Prefer dedicated catalog photos. Food without a catalog frame stays empty
+ * (no Pexels /uploads / sibling fill-ins) so missing shots are obvious.
+ */
 export function catalogProductImageUrl(
   productId: string,
   imageUrl?: string,
+  categoryId?: string,
 ): string | undefined {
-  return (
-    DRINK_PHOTO_BY_PRODUCT_ID[productId] ??
-    FOOD_PHOTO_BY_PRODUCT_ID[productId] ??
-    imageUrl
-  );
+  const drink = DRINK_PHOTO_BY_PRODUCT_ID[productId];
+  if (drink) return drink;
+  const food = FOOD_PHOTO_BY_PRODUCT_ID[productId];
+  if (food) return food;
+  if (categoryId && isFoodCategoryId(categoryId)) return "";
+  return imageUrl;
 }
 
+/** Empty string = no photo yet (render blank tile). No Pexels/sibling fill-ins. */
 export function getProductImage(productId: string, imageUrl?: string): string {
-  return catalogProductImageUrl(productId, imageUrl) || fallbackProductImage;
+  const drink = DRINK_PHOTO_BY_PRODUCT_ID[productId];
+  if (drink) return drink;
+  const food = FOOD_PHOTO_BY_PRODUCT_ID[productId];
+  if (food) return food;
+  if (!imageUrl) return "";
+  // Drop stock placeholders so unfinished food SKUs stay visibly empty.
+  if (/pexels\.com|unsplash\.com/i.test(imageUrl)) return "";
+  return imageUrl;
+}
+
+export function hasProductImage(productId: string, imageUrl?: string): boolean {
+  return Boolean(getProductImage(productId, imageUrl));
 }
 
 /** Local studio assets — skip next/image re-encode (keeps sharpness). */

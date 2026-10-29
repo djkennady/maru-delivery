@@ -24,16 +24,23 @@ export function ProductCard({ product, onSelect, index = 0 }: ProductCardProps) 
       style={{ animationDelay: `${Math.min(index, 8) * 45}ms` }}
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#111]">
-        <Image
-          src={src}
-          alt={product.name}
-          fill
-          quality={95}
-          // Skip Next/Netlify re-encode for studio assets — was serving ~384px/30KB mush.
-          unoptimized={isHallCatalogImage(src)}
-          className="object-cover transition duration-700 ease-out group-hover:scale-110"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
-        />
+        {src ? (
+          <Image
+            src={src}
+            alt={product.name}
+            fill
+            quality={95}
+            unoptimized={isHallCatalogImage(src)}
+            className="object-cover transition duration-700 ease-out group-hover:scale-110"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 640px"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#161616]">
+            <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/25">
+              нет фото
+            </span>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
         {product.tags?.length ? (
           <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1">

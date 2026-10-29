@@ -69,14 +69,16 @@ function OrderCard({ order }: { order: OrderRecord }) {
             >
               <span className="flex min-w-0 items-center gap-2 text-white/90">
                 <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg">
-                  <Image
-                    src={getProductImage(item.productId, product?.imageUrl)}
-                    alt={product?.name ?? item.productId}
-                    fill
-                    quality={95}
-                    className="object-cover"
-                    sizes="36px"
-                  />
+                  {getProductImage(item.productId, product?.imageUrl) ? (
+                    <Image
+                      src={getProductImage(item.productId, product?.imageUrl)}
+                      alt={product?.name ?? item.productId}
+                      fill
+                      quality={95}
+                      className="object-cover"
+                      sizes="36px"
+                    />
+                  ) : null}
                 </span>
                 <span className="truncate">
                   {product?.name ?? item.productId} × {item.quantity}

@@ -584,14 +584,20 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                       className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-3"
                     >
                       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
-                        <Image
-                          src={getProductImage(product.id, product.imageUrl)}
-                          alt={product.name}
-                          fill
-                          className="object-cover"
-                          sizes="56px"
-                          quality={95}
-                        />
+                        {getProductImage(product.id, product.imageUrl) ? (
+                          <Image
+                            src={getProductImage(product.id, product.imageUrl)}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                            sizes="56px"
+                            quality={95}
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center bg-[#161616] text-[9px] uppercase text-white/30">
+                            нет
+                          </div>
+                        )}
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="font-semibold text-[var(--text)]">

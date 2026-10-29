@@ -96,7 +96,7 @@ export function CategoryHero({
                 <source src={coffeeHallCutVideo} type="video/webm" />
                 <source src={coffeeHallVideo} type="video/mp4" />
               </video>
-            ) : (
+            ) : imageSrc ? (
               <Image
                 src={imageSrc}
                 alt={product.name}
@@ -107,6 +107,10 @@ export function CategoryHero({
                 className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
                 sizes="(max-width: 768px) 100vw, 828px"
               />
+            ) : (
+              <div className="flex h-full items-center justify-center text-sm uppercase tracking-[0.18em] text-white/30">
+                нет фото
+              </div>
             )}
           </div>
         </div>

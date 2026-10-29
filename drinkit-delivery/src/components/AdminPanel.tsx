@@ -137,14 +137,16 @@ function AdminOrderCard({
             >
               <span className="flex min-w-0 items-center gap-2">
                 <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-lg">
-                  <Image
-                    src={getProductImage(item.productId, imageUrl)}
-                    alt={productName}
-                    fill
-                    className="object-cover"
-                    sizes="36px"
-                    quality={95}
-                  />
+                  {getProductImage(item.productId, imageUrl) ? (
+                    <Image
+                      src={getProductImage(item.productId, imageUrl)}
+                      alt={productName}
+                      fill
+                      className="object-cover"
+                      sizes="36px"
+                      quality={95}
+                    />
+                  ) : null}
                 </span>
                 <span className="truncate text-[var(--text)]">
                   {productName} × {item.quantity}

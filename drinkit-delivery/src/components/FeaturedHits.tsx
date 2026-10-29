@@ -51,17 +51,23 @@ export function FeaturedHits({ onSelect }: FeaturedHitsProps) {
               className="drinkit-rise relative h-[280px] w-[78%] min-w-[78%] max-w-[320px] flex-none overflow-hidden rounded-[1.75rem] text-left transition duration-300 active:scale-[0.98] md:h-[300px] md:w-auto md:min-w-0 md:max-w-none"
               style={{ animationDelay: `${index * 70}ms` }}
             >
-              <div className="absolute inset-0 overflow-hidden">
-                <Image
-                  src={src}
-                  alt={product.name}
-                  fill
-                  quality={95}
-                  unoptimized={isHallCatalogImage(src)}
-                  className="object-cover transition duration-700 hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 640px"
-                  priority={index === 0}
-                />
+              <div className="absolute inset-0 overflow-hidden bg-[#161616]">
+                {src ? (
+                  <Image
+                    src={src}
+                    alt={product.name}
+                    fill
+                    quality={95}
+                    unoptimized={isHallCatalogImage(src)}
+                    className="object-cover transition duration-700 hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 640px"
+                    priority={index === 0}
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-[11px] uppercase tracking-[0.14em] text-white/25">
+                    нет фото
+                  </div>
+                )}
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5">

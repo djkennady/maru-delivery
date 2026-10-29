@@ -20,7 +20,7 @@ describe("food photo assignments", () => {
     }
   });
 
-  it("keeps dedicated studio frames on disk for owner pack", () => {
+  it("keeps dedicated studio frames on disk", () => {
     const products = new Map(DEFAULT_MENU.products.map((item) => [item.id, item]));
     const publicRoot = resolve(process.cwd(), "public");
 
@@ -33,24 +33,23 @@ describe("food photo assignments", () => {
     }
   });
 
-  it("overrides pexels/uploads with studio or hall catalog photos", () => {
-    expect(getProductImage("english-breakfast", "https://images.pexels.com/x.jpg")).toBe(
-      "/hall-menu/dishes/0005.webp",
+  it("does not invent sibling photos for unfinished SKUs", () => {
+    expect(getProductImage("shashlik-chicken-fillet", "https://images.pexels.com/x.jpg")).toBe(
+      "",
     );
+    expect(getProductImage("pasta-seafood", "https://images.pexels.com/x.jpg")).toBe("");
+    expect(getProductImage("steak-butcher")).toBe("");
+    expect(getProductImage("steak-butcher", "https://images.pexels.com/x.jpg")).toBe("");
+    expect(getProductImage("croissant-chocolate")).toBe("");
+    expect(getProductImage("build-your-breakfast")).toBe("");
+  });
+
+  it("keeps dedicated studio/hall frames", () => {
     expect(getProductImage("pizza-pepperoni", "https://images.pexels.com/x.jpg")).toBe(
       "/hall-menu/dishes/studio/pizza-pepperoni.webp",
     );
-    expect(getProductImage("fries", "https://images.pexels.com/x.jpg")).toBe(
-      "/hall-menu/dishes/studio/fries.webp",
-    );
-    expect(getProductImage("shashlik-chicken-fillet", "https://images.pexels.com/x.jpg")).toBe(
-      "/hall-menu/dishes/studio/shashlik-chicken-thigh.webp",
-    );
-    expect(getProductImage("roll-philadelphia", "/uploads/menu/x.jpg")).toBe(
-      "/hall-menu/dishes/studio/roll-philadelphia.webp",
-    );
-    expect(getProductImage("lula-chicken", "https://images.pexels.com/x.jpg")).toBe(
-      "/hall-menu/dishes/studio/lula-chicken.webp",
-    );
+    expect(getProductImage("fries")).toBe("/hall-menu/dishes/studio/fries.webp");
+    expect(getProductImage("english-breakfast")).toBe("/hall-menu/dishes/0005.webp");
+    expect(getProductImage("shashlik-beef")).toBe("/hall-menu/dishes/0110.webp");
   });
 });

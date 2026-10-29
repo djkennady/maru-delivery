@@ -48,14 +48,18 @@ export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
 
         <article className="flex items-center gap-3 overflow-hidden rounded-[1.75rem] bg-[var(--card)]/80 p-3 shadow-md ring-1 ring-orange-100/80 backdrop-blur-sm">
           <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl">
-            <Image
-              src={getProductImage(favorite.product.id, favorite.product.imageUrl)}
-              alt={favorite.product.name}
-              fill
-              quality={95}
-              className="object-cover"
-              sizes="96px"
-            />
+            {getProductImage(favorite.product.id, favorite.product.imageUrl) ? (
+              <Image
+                src={getProductImage(favorite.product.id, favorite.product.imageUrl)}
+                alt={favorite.product.name}
+                fill
+                quality={95}
+                className="object-cover"
+                sizes="96px"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-[#161616]" />
+            )}
           </div>
 
           <div className="min-w-0 flex-1">

@@ -23,7 +23,7 @@ function menuFile(): string {
 }
 const APP_STATE_TABLE = "app_state";
 const MENU_STATE_KEY = "menu";
-export const CURRENT_MENU_VERSION = 8;
+export const CURRENT_MENU_VERSION = 9;
 
 /** Retired SKUs — strip even if an older persisted menu still contains them. */
 const REMOVED_PRODUCT_IDS = new Set([
@@ -154,9 +154,13 @@ function applyCatalogPhotos(menu: MenuData): MenuData {
     products: menu.products
       .filter((product) => !REMOVED_PRODUCT_IDS.has(product.id))
       .map((product) => {
-        const imageUrl = catalogProductImageUrl(product.id, product.imageUrl);
-        if (!imageUrl || imageUrl === product.imageUrl) return product;
-        return { ...product, imageUrl };
+        const imageUrl = catalogProductImageUrl(
+          product.id,
+          product.imageUrl,
+          product.categoryId,
+        );
+        if (imageUrl === product.imageUrl) return product;
+        return { ...product, imageUrl: imageUrl || undefined };
       }),
   };
 }

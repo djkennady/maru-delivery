@@ -62,14 +62,16 @@ export function CartBar() {
                       zIndex: preview.length - index,
                     }}
                   >
-                    <Image
-                      src={getProductImage(item.productId, product?.imageUrl)}
-                      alt={product?.name ?? item.productId}
-                      fill
-                      quality={95}
-                      className="object-cover"
-                      sizes="48px"
-                    />
+                    {getProductImage(item.productId, product?.imageUrl) ? (
+                      <Image
+                        src={getProductImage(item.productId, product?.imageUrl)}
+                        alt={product?.name ?? item.productId}
+                        fill
+                        quality={95}
+                        className="object-cover"
+                        sizes="48px"
+                      />
+                    ) : null}
                   </div>
                 );
               })}

@@ -34,12 +34,16 @@ function buildGroups(products: Product[]) {
 
 function pickHeroProduct(products: Product[]): Product | null {
   if (products.length === 0) return null;
+  const withPhoto = (product: Product) =>
+    hasProductCutout(product.id) || Boolean(product.imageUrl);
   return (
     products.find((product) => product.id === "bumble") ??
     products.find(
       (product) => product.tags?.includes("hit") && hasProductCutout(product.id),
     ) ??
     products.find((product) => hasProductCutout(product.id)) ??
+    products.find((product) => product.tags?.includes("hit") && withPhoto(product)) ??
+    products.find((product) => withPhoto(product)) ??
     products.find((product) => product.tags?.includes("hit")) ??
     products.find((product) => product.tags?.includes("new")) ??
     products[0]
