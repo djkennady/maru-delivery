@@ -195,6 +195,9 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
 export const STUDIO_DRINK_PHOTOS: { productId: string; hallName: string; path: string }[] = [
   { productId: "americano", hallName: "Американо", path: studio("americano") },
   { productId: "espresso", hallName: "Эспрессо", path: studio("espresso") },
+  { productId: "cappuccino", hallName: "Капучино", path: studio("cappuccino") },
+  { productId: "latte", hallName: "Латте", path: studio("latte") },
+  { productId: "flat-white", hallName: "Флэт уайт", path: studio("flat-white") },
   { productId: "filter-coffee", hallName: "Фильтр-кофе", path: studio("filter-coffee") },
   { productId: "bumble", hallName: "Бамбл", path: studio("bumble") },
 ];

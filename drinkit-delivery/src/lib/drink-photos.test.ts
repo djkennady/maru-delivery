@@ -51,10 +51,9 @@ describe("drink photo assignments", () => {
   it("does not invent stock or sibling photos for unfinished SKUs", () => {
     expect(getProductImage("americano")).toBe("/hall-menu/drinks/americano.webp");
     expect(getProductImage("espresso")).toBe("/hall-menu/drinks/espresso.webp");
-    expect(
-      getProductImage("cappuccino", "/hall-menu/drinks/stock/cappuccino.webp"),
-    ).toBe("");
-    expect(getProductImage("cappuccino")).toBe("");
+    expect(getProductImage("cappuccino")).toBe("/hall-menu/drinks/cappuccino.webp");
+    expect(getProductImage("latte")).toBe("/hall-menu/drinks/latte.webp");
+    expect(getProductImage("flat-white")).toBe("/hall-menu/drinks/flat-white.webp");
     expect(getProductImage("salted-caramel-latte")).toBe("");
     expect(getProductImage("iced-pistachio-latte")).toBe("");
     expect(getProductImage("hot-chocolate")).toBe("");
@@ -93,9 +92,6 @@ describe("drink photo assignments", () => {
 
   it("leaves unfinished hall drinks without photos", () => {
     const emptyExpected = new Set([
-      "Капучино",
-      "Латте",
-      "Флэт уайт",
       "Латте солёная карамель",
       "Клубничная матча",
       "Колд брю классический",

@@ -1,5 +1,5 @@
 {
-  "menuVersion": 11,
+  "menuVersion": 12,
   "categories": [
     {
       "id": "breakfast",
@@ -218,7 +218,8 @@
       "customizable": true,
       "tags": [
         "hit"
-      ]
+      ],
+      "imageUrl": "/hall-menu/drinks/cappuccino.webp"
     },
     {
       "id": "latte",
@@ -233,7 +234,8 @@
         "m": 270,
         "l": 310
       },
-      "customizable": true
+      "customizable": true,
+      "imageUrl": "/hall-menu/drinks/latte.webp"
     },
     {
       "id": "flat-white",
@@ -243,7 +245,8 @@
       "emoji": "☕",
       "basePrice": 250,
       "group": "Кофе с молоком",
-      "customizable": true
+      "customizable": true,
+      "imageUrl": "/hall-menu/drinks/flat-white.webp"
     },
     {
       "id": "spanish-latte",
