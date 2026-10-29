@@ -19,9 +19,11 @@ export const heroPoster = pexels(5946077, 1200);
 /** Owner Kling coffee loop for hall / coffee category heroes. */
 export const coffeeHallVideo = "/hall-menu/video/coffee-hall.mp4";
 export const coffeeHallPoster = "/hall-menu/video/coffee-hall-poster.jpg";
-/** Transparent WebM cutout (VP9 alpha) for floating Drinkit-style heroes. */
+/** Transparent VP9 alpha WebM for browsers that support it. */
 export const coffeeHallCutVideo = "/hall-menu/video/coffee-hall-cut.webm";
 export const coffeeHallCutPoster = "/hall-menu/video/coffee-hall-cut-poster.png";
+/** Animated WebP with alpha — loops on iOS Safari + Chrome (preferred hero). */
+export const coffeeHallCutAnim = "/hall-menu/video/coffee-hall-cut.webp";
 
 export const heroThumbs = [
   pexels(302899, 400),
