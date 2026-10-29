@@ -67,8 +67,10 @@ export function CategoryHero({
         </p>
 
         <div
-          className={`relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px] ${
-            useBumbleVideo ? "" : "drinkit-hero-breath"
+          className={`relative aspect-square overflow-hidden ${
+            useBumbleVideo
+              ? "w-[86%] max-w-[420px] md:w-[88%] md:max-w-[500px]"
+              : "w-[78%] max-w-[400px] md:w-[86%] md:max-w-[480px] drinkit-hero-breath"
           }`}
         >
           <div
@@ -76,12 +78,14 @@ export function CategoryHero({
             style={{ background: theme.glow }}
           />
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 overflow-hidden"
             style={{
-              WebkitMaskImage:
-                "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
-              maskImage:
-                "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
+              WebkitMaskImage: useBumbleVideo
+                ? "radial-gradient(ellipse 82% 90% at 50% 52%, #000 64%, transparent 94%)"
+                : "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
+              maskImage: useBumbleVideo
+                ? "radial-gradient(ellipse 82% 90% at 50% 52%, #000 64%, transparent 94%)"
+                : "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
             }}
           >
             {useBumbleVideo ? (
@@ -91,7 +95,7 @@ export function CategoryHero({
                 loop
                 playsInline
                 poster={coffeeHallCutPoster}
-                className="h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+                className="h-full w-full origin-center scale-[1.36] object-contain object-center drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)] md:scale-[1.24]"
               >
                 <source src={coffeeHallCutVideo} type="video/webm" />
                 <source src={coffeeHallVideo} type="video/mp4" />
