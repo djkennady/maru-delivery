@@ -635,7 +635,7 @@ export function CheckoutForm() {
           Добавьте напитки или еду из меню самовывоза
         </p>
         <Link
-          href="/"
+          href="/order"
           className="mt-6 inline-block rounded-full bg-[#3b82f6] px-6 py-3 font-semibold text-white shadow-[0_12px_30px_rgba(59,130,246,0.28)] transition hover:brightness-110"
         >
           К меню
@@ -662,7 +662,7 @@ export function CheckoutForm() {
             Личный кабинет
           </Link>
           <Link
-            href="/"
+            href="/order"
             className="inline-block rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 font-semibold text-white transition hover:bg-white/[0.08]"
           >
             Заказать ещё
