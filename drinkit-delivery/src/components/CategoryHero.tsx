@@ -4,7 +4,9 @@ import Image from "next/image";
 import { getCategoryTheme } from "@/lib/category-theme";
 import { getProductCutout } from "@/lib/cutouts";
 import {
-  coffeeHallCutAnim,
+  coffeeHallCutPoster,
+  coffeeHallCutVideo,
+  coffeeHallVideo,
   getProductImage,
 } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
@@ -18,17 +20,8 @@ interface CategoryHeroProps {
   direction?: 1 | -1;
 }
 
-/** Owner Kling loop is a bumble (orange + espresso). */
+/** Owner Kling loop is a bumble (orange + espresso), not americano. */
 const BUMBLE_VIDEO_PRODUCT_IDS = new Set(["bumble"]);
-
-/** Tall fluted glasses need a bit more scale to match cup cutouts. */
-const TALL_GLASS_IDS = new Set([
-  "bumble",
-  "espresso-tonic",
-  "iced-latte",
-  "americano",
-  "filter-coffee",
-]);
 
 export function CategoryHero({
   categoryId,
@@ -41,7 +34,6 @@ export function CategoryHero({
   const cutout = getProductCutout(product.id);
   const imageSrc = cutout ?? getProductImage(product.id, product.imageUrl);
   const useBumbleVideo = BUMBLE_VIDEO_PRODUCT_IDS.has(product.id);
-  const tallGlass = TALL_GLASS_IDS.has(product.id);
 
   return (
     <section
@@ -70,41 +62,40 @@ export function CategoryHero({
         }`}
         aria-label={`${product.name}, ${formatPrice(product.basePrice)}`}
       >
-        <p className="relative z-20 mb-3 text-[11px] font-medium lowercase tracking-[0.2em] text-white/40">
+        <p className="mb-3 text-[11px] font-medium lowercase tracking-[0.2em] text-white/40">
           {categoryName}
         </p>
 
         <div
-          className={`relative z-10 aspect-square overflow-hidden ${
-            useBumbleVideo || tallGlass
-              ? "w-[86%] max-w-[420px] md:w-[88%] md:max-w-[500px]"
-              : "w-[78%] max-w-[400px] md:w-[86%] md:max-w-[480px]"
-          } ${useBumbleVideo ? "" : "drinkit-hero-breath"}`}
+          className={`relative aspect-square w-[86%] max-w-[440px] md:max-w-[480px] ${
+            useBumbleVideo ? "" : "drinkit-hero-breath"
+          }`}
         >
           <div
             className="absolute inset-[18%] rounded-full blur-3xl opacity-70"
             style={{ background: theme.glow }}
           />
           <div
-            className="absolute inset-0 overflow-hidden"
+            className="absolute inset-0"
             style={{
-              WebkitMaskImage: useBumbleVideo
-                ? "radial-gradient(ellipse 78% 86% at 50% 52%, #000 62%, transparent 94%)"
-                : "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
-              maskImage: useBumbleVideo
-                ? "radial-gradient(ellipse 78% 86% at 50% 52%, #000 62%, transparent 94%)"
-                : "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
+              WebkitMaskImage:
+                "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
+              maskImage:
+                "radial-gradient(ellipse 72% 78% at 50% 48%, #000 58%, transparent 88%)",
             }}
           >
             {useBumbleVideo ? (
-              // Animated WebP with alpha — loops on iOS Safari and Chromium.
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={coffeeHallCutAnim}
-                alt=""
-                draggable={false}
-                className="h-full w-full origin-bottom scale-[1.18] object-contain object-center drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)] md:scale-[1.12]"
-              />
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={coffeeHallCutPoster}
+                className="h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
+              >
+                <source src={coffeeHallCutVideo} type="video/webm" />
+                <source src={coffeeHallVideo} type="video/mp4" />
+              </video>
             ) : imageSrc ? (
               <Image
                 src={imageSrc}
@@ -113,9 +104,7 @@ export function CategoryHero({
                 priority
                 quality={95}
                 unoptimized={Boolean(cutout) || imageSrc.startsWith("/hall-menu/")}
-                className={`object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)] ${
-                  tallGlass ? "origin-center scale-[1.12] md:scale-[1.08]" : ""
-                }`}
+                className="object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
                 sizes="(max-width: 768px) 100vw, 828px"
               />
             ) : (
