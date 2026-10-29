@@ -110,11 +110,11 @@ export const promos = [
     image: "/hall-menu/dishes/0075.webp",
   },
   {
-    id: "combo-lunch",
-    title: "Комбо-обеды",
-    subtitle: "От 450 ₽",
+    id: "happy-hours",
+    title: "Счастливые часы",
+    subtitle: "С 11:00 до 14:00",
     gradient: "from-emerald-500 to-teal-500",
-    emoji: "🍱",
+    emoji: "⏰",
     image: "/hall-menu/dishes/0005.webp",
   },
   {
