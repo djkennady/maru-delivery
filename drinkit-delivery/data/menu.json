@@ -1,5 +1,5 @@
 {
-  "menuVersion": 10,
+  "menuVersion": 11,
   "categories": [
     {
       "id": "breakfast",
@@ -173,7 +173,8 @@
       "customizable": true,
       "tags": [
         "hit"
-      ]
+      ],
+      "imageUrl": "/hall-menu/drinks/americano.webp"
     },
     {
       "id": "filter-coffee",
@@ -198,7 +199,8 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 180,
-      "group": "Чёрный кофе"
+      "group": "Чёрный кофе",
+      "imageUrl": "/hall-menu/drinks/espresso.webp"
     },
     {
       "id": "cappuccino",

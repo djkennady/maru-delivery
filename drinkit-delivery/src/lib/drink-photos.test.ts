@@ -49,9 +49,10 @@ describe("drink photo assignments", () => {
   });
 
   it("does not invent stock or sibling photos for unfinished SKUs", () => {
-    expect(getProductImage("americano", "https://images.pexels.com/x.jpg")).toBe("");
+    expect(getProductImage("americano")).toBe("/hall-menu/drinks/americano.webp");
+    expect(getProductImage("espresso")).toBe("/hall-menu/drinks/espresso.webp");
     expect(
-      getProductImage("americano", "/hall-menu/drinks/stock/americano.webp"),
+      getProductImage("cappuccino", "/hall-menu/drinks/stock/cappuccino.webp"),
     ).toBe("");
     expect(getProductImage("cappuccino")).toBe("");
     expect(getProductImage("salted-caramel-latte")).toBe("");
@@ -92,8 +93,6 @@ describe("drink photo assignments", () => {
 
   it("leaves unfinished hall drinks without photos", () => {
     const emptyExpected = new Set([
-      "Американо",
-      "Эспрессо",
       "Капучино",
       "Латте",
       "Флэт уайт",

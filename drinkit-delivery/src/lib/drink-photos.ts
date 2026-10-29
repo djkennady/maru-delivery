@@ -193,6 +193,8 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
 
 /** Single studio shots (owner-provided) without a numbered Yandex pair. */
 export const STUDIO_DRINK_PHOTOS: { productId: string; hallName: string; path: string }[] = [
+  { productId: "americano", hallName: "Американо", path: studio("americano") },
+  { productId: "espresso", hallName: "Эспрессо", path: studio("espresso") },
   { productId: "filter-coffee", hallName: "Фильтр-кофе", path: studio("filter-coffee") },
   { productId: "bumble", hallName: "Бамбл", path: studio("bumble") },
 ];
