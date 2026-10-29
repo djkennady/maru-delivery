@@ -1,5 +1,5 @@
 {
-  "menuVersion": 7,
+  "menuVersion": 10,
   "categories": [
     {
       "id": "breakfast",
@@ -164,7 +164,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 230,
-      "imageUrl": "/hall-menu/drinks/stock/americano.webp",
       "group": "Чёрный кофе",
       "sizes": {
         "s": 180,
@@ -199,7 +198,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 180,
-      "imageUrl": "/hall-menu/drinks/stock/espresso.webp",
       "group": "Чёрный кофе"
     },
     {
@@ -209,7 +207,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 270,
-      "imageUrl": "/hall-menu/drinks/stock/cappuccino.webp",
       "group": "Кофе с молоком",
       "sizes": {
         "s": 220,
@@ -228,7 +225,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 270,
-      "imageUrl": "https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Кофе с молоком",
       "sizes": {
         "s": 220,
@@ -244,7 +240,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 250,
-      "imageUrl": "https://images.pexels.com/photos/4253308/pexels-photo-4253308.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Кофе с молоком",
       "customizable": true
     },
@@ -294,7 +289,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 370,
-      "imageUrl": "/hall-menu/drinks/0132.webp",
       "group": "Фирменный кофе",
       "sizes": {
         "s": 320,
@@ -366,7 +360,6 @@
       "description": "",
       "emoji": "🍓",
       "basePrice": 470,
-      "imageUrl": "https://images.pexels.com/photos/1707394/pexels-photo-1707394.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Матча",
       "sizes": {
         "m": 470,
@@ -384,7 +377,6 @@
       "description": "",
       "emoji": "🧊",
       "basePrice": 320,
-      "imageUrl": "/hall-menu/drinks/0148.webp",
       "group": "Колд брю",
       "sizes": {
         "m": 320,
@@ -426,7 +418,6 @@
       "description": "",
       "emoji": "🧊",
       "basePrice": 390,
-      "imageUrl": "/hall-menu/drinks/0146.webp",
       "group": "Колд брю",
       "sizes": {
         "m": 390,
@@ -474,7 +465,6 @@
       "description": "",
       "emoji": "🧊",
       "basePrice": 400,
-      "imageUrl": "/hall-menu/drinks/0134.webp",
       "group": "Айс-кофе",
       "sizes": {
         "s": 350,
@@ -590,7 +580,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "/hall-menu/drinks/0166.webp",
       "group": "Авторские чаи"
     },
     {
@@ -630,7 +619,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 620,
-      "imageUrl": "/hall-menu/drinks/0156.webp",
       "group": "Авторские чаи"
     },
     {
@@ -640,7 +628,6 @@
       "description": "",
       "emoji": "🍊",
       "basePrice": 490,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Фреши"
     },
     {
@@ -650,7 +637,6 @@
       "description": "",
       "emoji": "🍊",
       "basePrice": 520,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Фреши"
     },
     {
@@ -660,7 +646,6 @@
       "description": "",
       "emoji": "🥕",
       "basePrice": 450,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Фреши"
     },
     {
@@ -700,7 +685,6 @@
       "description": "",
       "emoji": "☕",
       "basePrice": 390,
-      "imageUrl": "/hall-menu/drinks/0136.webp",
       "group": "Какао"
     },
     {
@@ -710,7 +694,6 @@
       "description": "",
       "emoji": "🍫",
       "basePrice": 430,
-      "imageUrl": "/hall-menu/drinks/0136.webp",
       "group": "Какао"
     },
     {
@@ -730,7 +713,6 @@
       "description": "",
       "emoji": "💧",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Прохладительные напитки"
     },
     {
@@ -740,7 +722,6 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Прохладительные напитки"
     },
     {
@@ -750,7 +731,6 @@
       "description": "",
       "emoji": "🥤",
       "basePrice": 220,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Прохладительные напитки"
     },
     {
@@ -760,7 +740,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -770,7 +749,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/1417945/pexels-photo-1417945.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -780,7 +758,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -790,7 +767,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -800,7 +776,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -810,7 +785,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -820,7 +794,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/988906/pexels-photo-988906.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {
@@ -830,7 +803,6 @@
       "description": "",
       "emoji": "🫖",
       "basePrice": 420,
-      "imageUrl": "https://images.pexels.com/photos/3735470/pexels-photo-3735470.jpeg?auto=compress&cs=tinysrgb&w=600",
       "group": "Чай"
     },
     {

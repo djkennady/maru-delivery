@@ -1,4 +1,7 @@
-import { DRINK_PHOTO_BY_PRODUCT_ID } from "@/lib/drink-photos";
+import {
+  DRINK_PHOTO_BY_PRODUCT_ID,
+  isDrinkCategoryId,
+} from "@/lib/drink-photos";
 import {
   FOOD_PHOTO_BY_PRODUCT_ID,
   isFoodCategoryId,
@@ -43,8 +46,8 @@ export const galleryImages = [
 ];
 
 /**
- * Prefer dedicated catalog photos. Food without a catalog frame stays empty
- * (no Pexels /uploads / sibling fill-ins) so missing shots are obvious.
+ * Prefer dedicated catalog photos. Food/drinks without a catalog frame stay
+ * empty (no Pexels / stock / sibling fill-ins) so missing shots are obvious.
  */
 export function catalogProductImageUrl(
   productId: string,
@@ -55,7 +58,12 @@ export function catalogProductImageUrl(
   if (drink) return drink;
   const food = FOOD_PHOTO_BY_PRODUCT_ID[productId];
   if (food) return food;
-  if (categoryId && isFoodCategoryId(categoryId)) return "";
+  if (
+    categoryId &&
+    (isFoodCategoryId(categoryId) || isDrinkCategoryId(categoryId))
+  ) {
+    return "";
+  }
   return imageUrl;
 }
 
@@ -66,8 +74,12 @@ export function getProductImage(productId: string, imageUrl?: string): string {
   const food = FOOD_PHOTO_BY_PRODUCT_ID[productId];
   if (food) return food;
   if (!imageUrl) return "";
-  // Drop stock placeholders so unfinished food SKUs stay visibly empty.
-  if (/pexels\.com|unsplash\.com/i.test(imageUrl)) return "";
+  // Drop stock / stock-photo placeholders so unfinished SKUs stay empty.
+  if (
+    /pexels\.com|unsplash\.com|\/hall-menu\/drinks\/stock\//i.test(imageUrl)
+  ) {
+    return "";
+  }
   return imageUrl;
 }
 

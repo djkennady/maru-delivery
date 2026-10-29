@@ -1,4 +1,10 @@
-/** Stable public paths for Yandex Disk originals 0126–0173, optimized to WebP. */
+/**
+ * Drink photos for pickup products — only dedicated frames.
+ * No stock / sibling sharing: missing SKUs stay empty so gaps are visible.
+ *
+ * - Numbered `/hall-menu/drinks/NNNN.webp` — Yandex hall catalog pairs
+ * - Named `/hall-menu/drinks/*.webp` — owner studio singles
+ */
 
 export type DrinkPhotoPair = {
   productId: string;
@@ -9,10 +15,17 @@ export type DrinkPhotoPair = {
 };
 
 const drinks = (id: string) => `/hall-menu/drinks/${id}.webp`;
+const studio = (id: string) => `/hall-menu/drinks/${id}.webp`;
+
+const DRINK_CATEGORIES = new Set(["coffee", "drinks"]);
+
+export function isDrinkCategoryId(categoryId: string): boolean {
+  return DRINK_CATEGORIES.has(categoryId);
+}
 
 /**
- * Matches against the current pickup/hall catalog.
- * Beige studio table is the shared card background; white sweep is the alt angle.
+ * One primary product per Yandex pair. Beige studio table is the card frame;
+ * white sweep is the alt angle. Do not map siblings onto the same files.
  */
 export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
   {
@@ -44,13 +57,6 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
     diskFiles: ["0132.jpg", "0133.jpg"],
   },
   {
-    productId: "salted-caramel-latte",
-    hallName: "Латте солёная карамель",
-    primary: drinks("0132"),
-    alt: drinks("0133"),
-    diskFiles: ["0132.jpg", "0133.jpg"],
-  },
-  {
     productId: "iced-spanish-latte",
     hallName: "Айс испанский латте",
     primary: drinks("0134"),
@@ -58,29 +64,8 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
     diskFiles: ["0134.jpg", "0135.jpg"],
   },
   {
-    productId: "iced-pistachio-latte",
-    hallName: "Айс фисташковый латте",
-    primary: drinks("0134"),
-    alt: drinks("0135"),
-    diskFiles: ["0134.jpg", "0135.jpg"],
-  },
-  {
     productId: "cocoa-classic",
     hallName: "Классическое какао",
-    primary: drinks("0136"),
-    alt: drinks("0137"),
-    diskFiles: ["0136.jpg", "0137.jpg"],
-  },
-  {
-    productId: "hot-chocolate",
-    hallName: "Горячий шоколад",
-    primary: drinks("0136"),
-    alt: drinks("0137"),
-    diskFiles: ["0136.jpg", "0137.jpg"],
-  },
-  {
-    productId: "cocoa-salted-caramel",
-    hallName: "Какао солёная карамель",
     primary: drinks("0136"),
     alt: drinks("0137"),
     diskFiles: ["0136.jpg", "0137.jpg"],
@@ -121,22 +106,8 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
     diskFiles: ["0146.jpg", "0147.jpg"],
   },
   {
-    productId: "cold-brew-tonic",
-    hallName: "Колд брю тоник",
-    primary: drinks("0146"),
-    alt: drinks("0147"),
-    diskFiles: ["0146.jpg", "0147.jpg"],
-  },
-  {
     productId: "cold-brew-orange",
     hallName: "Колд брю апельсин",
-    primary: drinks("0148"),
-    alt: drinks("0149"),
-    diskFiles: ["0148.jpg", "0149.jpg"],
-  },
-  {
-    productId: "cold-brew-classic",
-    hallName: "Колд брю классический",
     primary: drinks("0148"),
     alt: drinks("0149"),
     diskFiles: ["0148.jpg", "0149.jpg"],
@@ -170,13 +141,6 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
     diskFiles: ["0156.jpg", "0157.jpg"],
   },
   {
-    productId: "tea-apple-cinnamon",
-    hallName: "Яблоко · Корица · Ваниль",
-    primary: drinks("0156"),
-    alt: drinks("0157"),
-    diskFiles: ["0156.jpg", "0157.jpg"],
-  },
-  {
     productId: "tea-ginger-lime",
     hallName: "Имбирь · Лайм · Мёд",
     primary: drinks("0158"),
@@ -205,13 +169,6 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
     diskFiles: ["0166.jpg", "0167.jpg"],
   },
   {
-    productId: "tea-peach-jasmine",
-    hallName: "Персик · Жасмин",
-    primary: drinks("0166"),
-    alt: drinks("0167"),
-    diskFiles: ["0166.jpg", "0167.jpg"],
-  },
-  {
     productId: "berry-garden",
     hallName: "Ягодный сад",
     primary: drinks("0168"),
@@ -234,48 +191,21 @@ export const DRINK_PHOTO_PAIRS: DrinkPhotoPair[] = [
   },
 ];
 
-const stock = (id: string) => `/hall-menu/drinks/stock/${id}.webp`;
-const studio = (id: string) => `/hall-menu/drinks/${id}.webp`;
-
 /** Single studio shots (owner-provided) without a numbered Yandex pair. */
 export const STUDIO_DRINK_PHOTOS: { productId: string; hallName: string; path: string }[] = [
   { productId: "filter-coffee", hallName: "Фильтр-кофе", path: studio("filter-coffee") },
   { productId: "bumble", hallName: "Бамбл", path: studio("bumble") },
 ];
 
-/** Internet stock photos for drinks that have no studio / Yandex pair. */
-export const STOCK_DRINK_PHOTOS: { productId: string; hallName?: string; path: string }[] = [
-  { productId: "americano", hallName: "Американо", path: stock("americano") },
-  { productId: "espresso", hallName: "Эспрессо", path: stock("espresso") },
-  { productId: "cappuccino", hallName: "Капучино", path: stock("cappuccino") },
-  { productId: "latte", hallName: "Латте", path: stock("latte") },
-  { productId: "flat-white", hallName: "Флэт уайт", path: stock("flat-white") },
-  { productId: "strawberry-matcha", hallName: "Клубничная матча", path: stock("strawberry-matcha") },
-  { productId: "tea-assam", hallName: "Ассам", path: stock("tea-assam") },
-  { productId: "tea-sencha", hallName: "Сенча", path: stock("tea-sencha") },
-  { productId: "tea-milk", hallName: "Молочный", path: stock("tea-milk") },
-  { productId: "tea-earl-grey", hallName: "Эрл Грей", path: stock("tea-earl-grey") },
-  { productId: "tea-jasmine", hallName: "Жасмин", path: stock("tea-jasmine") },
-  { productId: "tea-tatar", hallName: "Татарский", path: stock("tea-tatar") },
-  { productId: "tea-rooibos", hallName: "Ройбуш", path: stock("tea-rooibos") },
-  { productId: "tea-altai", hallName: "Алтайский", path: stock("tea-altai") },
-  { productId: "fresh-orange", hallName: "Апельсиновый фреш", path: stock("fresh-orange") },
-  { productId: "fresh-grapefruit", hallName: "Грейпфрутовый фреш", path: stock("fresh-grapefruit") },
-  { productId: "fresh-orange-carrot", hallName: "Апельсин · Морковь", path: stock("fresh-orange-carrot") },
-  { productId: "water", hallName: "Вода с газом / без газа", path: stock("water") },
-  { productId: "cola-zero", hallName: "Cola Zero", path: stock("cola-zero") },
-  { productId: "tonic-drink", hallName: "Тоник", path: stock("tonic-drink") },
-];
-
 export const DRINK_PHOTO_BY_PRODUCT_ID: Record<string, string> = {
-  ...Object.fromEntries(STOCK_DRINK_PHOTOS.map((item) => [item.productId, item.path])),
   ...Object.fromEntries(STUDIO_DRINK_PHOTOS.map((item) => [item.productId, item.path])),
   ...Object.fromEntries(DRINK_PHOTO_PAIRS.map((pair) => [pair.productId, pair.primary])),
 };
 
-export function catalogDrinkImageUrl(
-  productId: string,
-  imageUrl?: string,
-): string | undefined {
-  return DRINK_PHOTO_BY_PRODUCT_ID[productId] ?? imageUrl;
+export function catalogDrinkImageUrl(productId: string): string | undefined {
+  return DRINK_PHOTO_BY_PRODUCT_ID[productId];
+}
+
+export function hasCatalogDrinkPhoto(productId: string): boolean {
+  return Boolean(DRINK_PHOTO_BY_PRODUCT_ID[productId]);
 }
