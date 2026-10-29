@@ -22,6 +22,8 @@ export const coffeeHallPoster = "/hall-menu/video/coffee-hall-poster.jpg";
 /** Transparent WebM cutout (VP9 alpha) for floating Drinkit-style heroes. */
 export const coffeeHallCutVideo = "/hall-menu/video/coffee-hall-cut.webm";
 export const coffeeHallCutPoster = "/hall-menu/video/coffee-hall-cut-poster.png";
+/** Same loop as animated WebP — Safari/iOS cannot play VP9 alpha WebM. */
+export const coffeeHallCutAnim = "/hall-menu/video/coffee-hall-cut.webp";
 
 export const heroThumbs = [
   pexels(302899, 400),

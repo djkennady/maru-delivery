@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { getCategoryTheme } from "@/lib/category-theme";
 import { getProductCutout } from "@/lib/cutouts";
 import {
+  coffeeHallCutAnim,
   coffeeHallCutPoster,
   coffeeHallCutVideo,
-  coffeeHallVideo,
   getProductImage,
 } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
@@ -23,6 +24,15 @@ interface CategoryHeroProps {
 /** Owner Kling loop is a bumble (orange + espresso), not americano. */
 const BUMBLE_VIDEO_PRODUCT_IDS = new Set(["bumble"]);
 
+const mediaClassName =
+  "h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]";
+
+function canPlayVp9AlphaWebm() {
+  if (typeof document === "undefined") return false;
+  const video = document.createElement("video");
+  return video.canPlayType('video/webm; codecs="vp9"') !== "";
+}
+
 export function CategoryHero({
   categoryId,
   categoryName,
@@ -34,6 +44,13 @@ export function CategoryHero({
   const cutout = getProductCutout(product.id);
   const imageSrc = cutout ?? getProductImage(product.id, product.imageUrl);
   const useBumbleVideo = BUMBLE_VIDEO_PRODUCT_IDS.has(product.id);
+  /** null = detecting; true = VP9 WebM; false = animated WebP (Safari/iOS). */
+  const [playWebm, setPlayWebm] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (!useBumbleVideo) return;
+    setPlayWebm(canPlayVp9AlphaWebm());
+  }, [useBumbleVideo]);
 
   return (
     <section
@@ -85,17 +102,28 @@ export function CategoryHero({
             }}
           >
             {useBumbleVideo ? (
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster={coffeeHallCutPoster}
-                className="h-full w-full object-contain drop-shadow-[0_36px_70px_rgba(0,0,0,0.6)]"
-              >
-                <source src={coffeeHallCutVideo} type="video/webm" />
-                <source src={coffeeHallVideo} type="video/mp4" />
-              </video>
+              playWebm === true ? (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={coffeeHallCutPoster}
+                  className={mediaClassName}
+                >
+                  {/* No MP4 fallback — opaque MP4 draws a black square on iPhone. */}
+                  <source src={coffeeHallCutVideo} type="video/webm" />
+                </video>
+              ) : (
+                // Safari/iOS (and SSR/first paint): animated WebP with real alpha.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={playWebm === null ? coffeeHallCutPoster : coffeeHallCutAnim}
+                  alt=""
+                  draggable={false}
+                  className={mediaClassName}
+                />
+              )
             ) : imageSrc ? (
               <Image
                 src={imageSrc}
