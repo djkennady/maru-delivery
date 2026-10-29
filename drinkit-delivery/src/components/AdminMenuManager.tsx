@@ -286,7 +286,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
           <button
             type="button"
             onClick={openCreateForm}
-            className="inline-flex items-center gap-2 rounded-2xl bg-neutral-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            className="inline-flex items-center gap-2 rounded-2xl bg-[#3b82f6] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2563eb]"
           >
             <Plus className="h-4 w-4" />
             Добавить
@@ -295,7 +295,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
       </section>
 
       {error && (
-        <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+        <p className="rounded-xl bg-red-500/15 px-4 py-3 text-sm text-red-300 ring-1 ring-red-400/25">
           {error}
         </p>
       )}
@@ -327,7 +327,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
       {showForm && (
         <form
           onSubmit={handleSaveProduct}
-          className="space-y-4 rounded-2xl border border-orange-200 bg-orange-50/40 p-4"
+          className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4"
         >
           <div className="flex items-center justify-between gap-3">
             <p className="font-semibold text-[var(--text)]">
@@ -351,7 +351,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, name: e.target.value }))
                 }
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               />
             </label>
 
@@ -364,7 +364,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, description: e.target.value }))
                 }
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               />
             </label>
 
@@ -375,7 +375,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, categoryId: e.target.value }))
                 }
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               >
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -392,7 +392,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                 onChange={(e) =>
                   setForm((prev) => ({ ...prev, emoji: e.target.value }))
                 }
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               />
             </label>
 
@@ -409,7 +409,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                     basePrice: Number(e.target.value),
                   }))
                 }
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               />
             </label>
 
@@ -423,7 +423,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                   setForm((prev) => ({ ...prev, rkeeperCode: e.target.value }))
                 }
                 placeholder="Например: 10042"
-                className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               />
               <span className="mt-1 block text-xs text-[var(--muted)]">
                 Нужен только если позже подключите кипер. На сайт не влияет.
@@ -461,7 +461,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                         },
                       }))
                     }
-                    className="w-full rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-sm outline-none focus:border-[var(--accent)]"
+                    className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
                   />
                 </label>
               ))}
@@ -530,9 +530,9 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                     setForm((prev) => ({ ...prev, imageUrl: e.target.value }))
                   }
                   placeholder="Ссылка или загрузите файл"
-                  className="w-full rounded-xl border border-[var(--border)] bg-white px-4 py-2.5 text-sm outline-none focus:border-[var(--accent)]"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
                 />
-                <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-[var(--text)] ring-1 ring-[var(--border)] transition hover:bg-[var(--surface)]">
+                <label className="inline-flex cursor-pointer items-center gap-2 rounded-xl bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--text)] ring-1 ring-[var(--border)] transition hover:bg-[var(--surface)]">
                   <ImagePlus className="h-4 w-4" />
                   {uploading ? "Загрузка..." : "Загрузить фото"}
                   <input
@@ -554,7 +554,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
           <button
             type="submit"
             disabled={saving}
-            className="w-full rounded-2xl bg-neutral-900 px-5 py-3 font-semibold text-white transition hover:bg-neutral-800 disabled:opacity-50"
+            className="w-full rounded-2xl bg-[#3b82f6] px-5 py-3 font-semibold text-white transition hover:bg-[#2563eb] disabled:opacity-50"
           >
             {saving ? "Сохранение..." : editingId ? "Сохранить" : "Добавить в меню"}
           </button>
@@ -620,7 +620,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                         <button
                           type="button"
                           onClick={() => void handleDeleteProduct(product.id)}
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-red-500"
+                          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-red-300"
                           aria-label="Удалить"
                         >
                           <Trash2 className="h-4 w-4" />

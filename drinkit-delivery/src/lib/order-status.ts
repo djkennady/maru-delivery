@@ -21,10 +21,10 @@ export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
 };
 
 export const ORDER_STATUS_STYLES: Record<OrderStatus, string> = {
-  preparing: "bg-amber-100 text-amber-700",
-  on_the_way: "bg-blue-100 text-blue-700",
-  delivered: "bg-emerald-100 text-emerald-700",
-  cancelled: "bg-neutral-100 text-neutral-600",
+  preparing: "bg-amber-500/20 text-amber-200 ring-1 ring-amber-400/30",
+  on_the_way: "bg-blue-500/20 text-blue-200 ring-1 ring-blue-400/30",
+  delivered: "bg-emerald-500/20 text-emerald-200 ring-1 ring-emerald-400/30",
+  cancelled: "bg-white/10 text-white/55 ring-1 ring-white/15",
 };
 
 export function isOrderStatus(value: string): value is OrderStatus {

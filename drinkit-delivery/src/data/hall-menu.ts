@@ -17,7 +17,7 @@ export type HallSection = {
   items: HallItem[];
 };
 
-export const PICKUP_SITE_URL = "/order";
+export const PICKUP_SITE_URL = "/";
 
 export const HALL_SECTIONS: HallSection[] = [
   {

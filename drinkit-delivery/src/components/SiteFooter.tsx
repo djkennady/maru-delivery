@@ -4,8 +4,13 @@ import { usePathname } from "next/navigation";
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const hall = pathname === "/" || pathname === "/menu";
-  const shop = pathname === "/order" || pathname === "/checkout";
+  const hall = pathname === "/hall" || pathname === "/menu";
+  const shop =
+    pathname === "/" ||
+    pathname === "/order" ||
+    pathname === "/checkout" ||
+    pathname === "/account" ||
+    pathname === "/admin";
 
   if (hall) {
     return (

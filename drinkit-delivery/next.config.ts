@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/order",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     // Next 16 defaults qualities to [75] only — allow sharper product photos.
     qualities: [75, 90, 95],

@@ -97,7 +97,7 @@ function AdminOrderCard({
           className={`rounded-full px-3 py-1.5 text-xs font-semibold transition disabled:opacity-60 ${
             order.status === "cancelled"
               ? ORDER_STATUS_STYLES.cancelled
-              : "bg-[var(--surface)] text-[var(--muted)] ring-1 ring-[var(--border)] hover:text-red-600"
+              : "bg-[var(--surface)] text-[var(--muted)] ring-1 ring-[var(--border)] hover:text-red-300"
           }`}
         >
           {ORDER_STATUS_LABELS.cancelled}
@@ -336,7 +336,7 @@ export function AdminPanel() {
       <div className="mx-auto max-w-md px-4 py-16">
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-900 text-white">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#3b82f6] text-white">
               <Shield className="h-6 w-6" />
             </div>
             <div>
@@ -367,14 +367,14 @@ export function AdminPanel() {
             </label>
 
             {loginError && (
-              <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+              <p className="rounded-xl bg-red-500/15 px-4 py-3 text-sm text-red-300 ring-1 ring-red-400/25">
                 {loginError}
               </p>
             )}
 
             <button
               type="submit"
-              className="w-full rounded-2xl bg-neutral-900 px-5 py-3 font-semibold text-white transition hover:bg-neutral-800"
+              className="w-full rounded-2xl bg-[#3b82f6] px-5 py-3 font-semibold text-white transition hover:bg-[#2563eb]"
             >
               Войти
             </button>
@@ -432,7 +432,7 @@ export function AdminPanel() {
           <button
             type="button"
             onClick={handleLogout}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-red-500"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-red-300"
             aria-label="Выйти"
           >
             <LogOut className="h-4 w-4" />
@@ -446,7 +446,7 @@ export function AdminPanel() {
           onClick={() => setTab("orders")}
           className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
             tab === "orders"
-              ? "bg-[var(--card)] text-[var(--text)] shadow-sm"
+              ? "bg-white/10 text-white shadow-sm ring-1 ring-white/10"
               : "text-[var(--muted)]"
           }`}
         >
@@ -457,7 +457,7 @@ export function AdminPanel() {
           onClick={() => setTab("menu")}
           className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
             tab === "menu"
-              ? "bg-[var(--card)] text-[var(--text)] shadow-sm"
+              ? "bg-white/10 text-white shadow-sm ring-1 ring-white/10"
               : "text-[var(--muted)]"
           }`}
         >
@@ -470,7 +470,7 @@ export function AdminPanel() {
       ) : (
         <>
           {fetchError && (
-            <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+            <p className="rounded-xl bg-red-500/15 px-4 py-3 text-sm text-red-300 ring-1 ring-red-400/25">
               {fetchError}
             </p>
           )}

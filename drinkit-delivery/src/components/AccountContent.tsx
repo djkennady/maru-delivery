@@ -278,7 +278,7 @@ function AccountContentInner({
               Оформите самовывоз — заказ появится здесь
             </p>
             <Link
-              href="/order"
+              href="/"
               className="mt-4 inline-block rounded-full bg-[#3b82f6] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110"
             >
               Перейти в меню
