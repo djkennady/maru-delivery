@@ -162,6 +162,7 @@ export function CheckoutForm() {
     items,
     subtotal,
     pickupDiscount,
+    pickupDiscountPercent,
     deliveryFee: cartDeliveryFee,
     isFreeDelivery,
     updateQuantity,
@@ -728,7 +729,7 @@ export function CheckoutForm() {
           )}
           {pickupDiscount > 0 && (
             <div className="flex justify-between text-[#93c5fd]">
-              <span>Скидка 10% за самовывоз</span>
+              <span>Скидка {pickupDiscountPercent}% за самовывоз</span>
               <span>−{formatPrice(pickupDiscount)}</span>
             </div>
           )}

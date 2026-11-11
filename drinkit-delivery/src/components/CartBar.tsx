@@ -10,7 +10,8 @@ import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 
 export function CartBar() {
-  const { items, itemCount, subtotal, pickupDiscount, total } = useCart();
+  const { items, itemCount, subtotal, pickupDiscount, pickupDiscountPercent, total } =
+    useCart();
   const { getProduct } = useMenu();
 
   if (itemCount === 0) return null;
@@ -23,7 +24,8 @@ export function CartBar() {
       <div className="pointer-events-auto relative mx-auto max-w-lg md:max-w-xl">
         {FULFILLMENT_MODE === "pickup" && pickupDiscount > 0 ? (
           <p className="mb-2 text-center text-[11px] font-medium text-[#93c5fd]">
-            самовывоз −10% · экономия {formatPrice(pickupDiscount)}
+            самовывоз −{pickupDiscountPercent}% · экономия{" "}
+            {formatPrice(pickupDiscount)}
           </p>
         ) : null}
 

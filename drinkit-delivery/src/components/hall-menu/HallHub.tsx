@@ -96,10 +96,10 @@ export function HallHub() {
               С собой
             </span>
             <span className="font-serif mt-2 text-4xl leading-none">
-              Заказ −10%
+              Заказ −10%/−20%
             </span>
             <span className="mt-3 max-w-sm text-sm text-[#e7e5e4]">
-              Самовывоз в Алабуге: кофе, еда и комбо. Скидка 10% уже в корзине.
+              Самовывоз в Алабуге. −10% всегда, с 11:30 до 13:30 −20%.
             </span>
             <span className="mt-5 text-sm font-semibold text-white">
               Заказать онлайн →

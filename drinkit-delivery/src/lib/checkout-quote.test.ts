@@ -41,7 +41,7 @@ function orderPayload(overrides: Record<string, unknown> = {}) {
 }
 
 describe("quoteCheckout", () => {
-  it("reprices from the catalog and keeps the 10% pickup discount", () => {
+  it("reprices from the catalog and keeps the current pickup discount", () => {
     if (!americano) throw new Error("americano missing from catalog");
     const quoted = quoteCheckout(orderPayload(), DEFAULT_MENU, { requireAmount: true });
     const expectedUnit = getProductPrice(americano, { size: "m", milk: "regular" });

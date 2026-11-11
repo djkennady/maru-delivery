@@ -64,7 +64,7 @@ export function HeroBanner() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-2 text-xs font-semibold backdrop-blur-md">
                   <Percent className="h-3.5 w-3.5" />
-                  Скидка 10% при самовывозе
+                  Самовывоз −10%, с 11:30 до 13:30 −20%
                 </span>
                 <Link
                   href="/menu"

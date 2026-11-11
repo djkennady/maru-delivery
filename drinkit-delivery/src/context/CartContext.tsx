@@ -17,6 +17,7 @@ import {
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { runDeferred } from "@/lib/run-deferred";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
+import { usePickupDiscountPercent } from "@/lib/use-pickup-discount";
 import {
   createCartItemId,
   getCartItemCount,
@@ -35,6 +36,7 @@ interface CartContextValue {
   itemCount: number;
   subtotal: number;
   pickupDiscount: number;
+  pickupDiscountPercent: number;
   deliveryFee: number;
   total: number;
   isFreeDelivery: boolean;
@@ -64,6 +66,7 @@ function loadStoredItems(): CartItem[] {
 export function CartProvider({ children }: { children: ReactNode }) {
   const { settings, getProduct } = useMenu();
   const breakfastOpen = useBreakfastMenuOpen();
+  const pickupDiscountPercent = usePickupDiscountPercent();
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
@@ -156,6 +159,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       itemCount,
       subtotal,
       pickupDiscount,
+      pickupDiscountPercent,
       deliveryFee,
       total,
       isFreeDelivery,
@@ -169,6 +173,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       itemCount,
       subtotal,
       pickupDiscount,
+      pickupDiscountPercent,
       deliveryFee,
       total,
       isFreeDelivery,

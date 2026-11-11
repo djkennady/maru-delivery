@@ -106,7 +106,7 @@ export function HallMenuExperience() {
                 href={PICKUP_SITE_URL}
                 className="rounded-full bg-[#f3ead8] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#171611] transition hover:bg-white"
               >
-                Самовывоз −10%
+                Самовывоз −10%/−20%
               </Link>
             </div>
           </nav>
@@ -297,10 +297,10 @@ export function HallMenuExperience() {
               Не в зале — с собой
             </p>
             <p className="font-serif mt-2 text-3xl leading-tight">
-              Самовывоз со скидкой 10%
+              Самовывоз −10%, в обед −20%
             </p>
             <p className="mt-2 max-w-md text-sm text-[#cfc6b6]">
-              То же МАРУ, только заказать можно онлайн и забрать в Алабуге.
+              С 11:30 до 13:30 скидка 20%, в остальное время — 10%.
             </p>
           </div>
           <Link

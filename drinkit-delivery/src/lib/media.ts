@@ -114,7 +114,7 @@ export const promos = [
   {
     id: "happy-hours",
     title: "Счастливые часы",
-    subtitle: "С 11:00 до 14:00",
+    subtitle: "−20% с 11:30 до 13:30",
     gradient: "from-emerald-500 to-teal-500",
     emoji: "⏰",
     image: "/hall-menu/dishes/0005.webp",
@@ -122,7 +122,7 @@ export const promos = [
   {
     id: "pickup",
     title: "Скидка 10%",
-    subtitle: "При самовывозе с каждого заказа",
+    subtitle: "Самовывоз в остальное время",
     gradient: "from-violet-500 to-purple-600",
     emoji: "🛍️",
     image: "/hall-menu/dishes/0013.webp",
