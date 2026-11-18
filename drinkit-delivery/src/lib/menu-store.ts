@@ -111,6 +111,7 @@ function normalizeProduct(product: Partial<Product>): Product {
     imageUrl: product.imageUrl,
     group: product.group?.trim() || undefined,
     rkeeperCode: product.rkeeperCode?.trim() || undefined,
+    stopped: Boolean(product.stopped) || undefined,
   };
 }
 

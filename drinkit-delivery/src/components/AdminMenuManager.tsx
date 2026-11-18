@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {
+  Ban,
+  CircleCheck,
   ImagePlus,
   Pencil,
   Plus,
@@ -14,6 +16,7 @@ import { getAdminAuthHeaders, getAdminHeaders } from "@/lib/admin-client";
 import { runDeferred } from "@/lib/run-deferred";
 import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
+import { isProductStopped } from "@/lib/stop-list";
 import type { Category, Product, ProductInput, ProductTag } from "@/types/menu";
 
 const EMPTY_FORM: ProductInput = {
@@ -44,6 +47,8 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
   const [form, setForm] = useState<ProductInput>(EMPTY_FORM);
   const [hasSizes, setHasSizes] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
+  const [listFilter, setListFilter] = useState<"all" | "stopped">("all");
+  const [togglingId, setTogglingId] = useState<string | null>(null);
 
   const loadMenu = useCallback(async () => {
     setLoading(true);
@@ -118,18 +123,58 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
         : [],
       imageUrl: product.imageUrl ?? "",
       rkeeperCode: product.rkeeperCode ?? "",
+      stopped: product.stopped,
     });
     setHasSizes(Boolean(product.sizes && Object.keys(product.sizes).length));
     setEditingId(product.id);
     setShowForm(true);
   };
 
+  const stoppedProducts = useMemo(
+    () => products.filter((product) => isProductStopped(product)),
+    [products],
+  );
+
+  const handleToggleStopped = async (product: Product) => {
+    setTogglingId(product.id);
+    setError("");
+    try {
+      const res = await fetch(`/api/admin/menu/products/${product.id}`, {
+        method: "PATCH",
+        headers: getAdminHeaders(),
+        body: JSON.stringify({ stopped: !isProductStopped(product) }),
+      });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(data?.error ?? "toggle failed");
+      }
+      await loadMenu();
+      onMenuChanged?.();
+    } catch (err) {
+      setError(
+        err instanceof Error && err.message !== "toggle failed"
+          ? `Не удалось обновить стоп-лист: ${err.message}`
+          : "Не удалось обновить стоп-лист",
+      );
+    } finally {
+      setTogglingId(null);
+    }
+  };
+
   const groupedProducts = useMemo(() => {
-    return categories.map((category) => ({
-      category,
-      items: products.filter((product) => product.categoryId === category.id),
-    }));
-  }, [categories, products]);
+    const visible =
+      listFilter === "stopped"
+        ? products.filter((product) => isProductStopped(product))
+        : products;
+    return categories
+      .map((category) => ({
+        category,
+        items: visible.filter((product) => product.categoryId === category.id),
+      }))
+      .filter((group) => listFilter === "all" || group.items.length > 0);
+  }, [categories, listFilter, products]);
 
   const toggleTag = (tag: ProductTag) => {
     setForm((prev) => {
@@ -271,6 +316,9 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
           <h2 className="text-lg font-bold text-[var(--text)]">Меню</h2>
           <p className="mt-1 text-sm text-[var(--muted)]">
             {products.length} позиций · {categories.length} категорий
+            {stoppedProducts.length > 0
+              ? ` · ${stoppedProducts.length} в стопе`
+              : ""}
           </p>
         </div>
         <div className="flex gap-2">
@@ -299,6 +347,32 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
           {error}
         </p>
       )}
+
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={() => setListFilter("all")}
+          className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+            listFilter === "all"
+              ? "bg-[#3b82f6] text-white"
+              : "bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)]"
+          }`}
+        >
+          Все позиции
+        </button>
+        <button
+          type="button"
+          onClick={() => setListFilter("stopped")}
+          className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+            listFilter === "stopped"
+              ? "bg-red-500 text-white"
+              : "bg-[var(--surface)] text-[var(--muted)] hover:text-[var(--text)]"
+          }`}
+        >
+          Стоп-лист
+          {stoppedProducts.length > 0 ? ` · ${stoppedProducts.length}` : ""}
+        </button>
+      </div>
 
       <form
         onSubmit={handleAddCategory}
@@ -565,6 +639,10 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
         <p className="py-8 text-center text-sm text-[var(--muted)]">
           Загрузка меню...
         </p>
+      ) : listFilter === "stopped" && stoppedProducts.length === 0 ? (
+        <p className="rounded-2xl border border-dashed border-[var(--border)] px-4 py-10 text-center text-sm text-[var(--muted)]">
+          Стоп-лист пуст — все позиции доступны к заказу
+        </p>
       ) : (
         <div className="space-y-5">
           {groupedProducts.map(({ category, items }) => (
@@ -578,56 +656,97 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                 </p>
               ) : (
                 <div className="space-y-2">
-                  {items.map((product) => (
-                    <article
-                      key={product.id}
-                      className="flex items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-3"
-                    >
-                      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
-                        {getProductImage(product.id, product.imageUrl) ? (
-                          <Image
-                            src={getProductImage(product.id, product.imageUrl)}
-                            alt={product.name}
-                            fill
-                            className="object-cover"
-                            sizes="56px"
-                            quality={95}
-                          />
-                        ) : (
-                          <div className="flex h-full items-center justify-center bg-[#161616] text-[9px] uppercase text-white/30">
-                            нет
-                          </div>
-                        )}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-[var(--text)]">
-                          {product.emoji} {product.name}
-                        </p>
-                        <p className="text-sm text-[var(--muted)]">
-                          {formatPrice(product.basePrice)}
-                          {product.tags?.includes("hit") ? " · Хит" : ""}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 gap-1">
-                        <button
-                          type="button"
-                          onClick={() => openEditForm(product)}
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-[var(--text)]"
-                          aria-label="Редактировать"
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => void handleDeleteProduct(product.id)}
-                          className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-red-300"
-                          aria-label="Удалить"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </article>
-                  ))}
+                  {items.map((product) => {
+                    const stopped = isProductStopped(product);
+                    return (
+                      <article
+                        key={product.id}
+                        className={`flex items-center gap-3 rounded-2xl border p-3 ${
+                          stopped
+                            ? "border-red-400/30 bg-red-500/10"
+                            : "border-[var(--border)] bg-[var(--card)]"
+                        }`}
+                      >
+                        <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+                          {getProductImage(product.id, product.imageUrl) ? (
+                            <Image
+                              src={getProductImage(
+                                product.id,
+                                product.imageUrl,
+                              )}
+                              alt={product.name}
+                              fill
+                              className={`object-cover ${stopped ? "opacity-50 grayscale" : ""}`}
+                              sizes="56px"
+                              quality={95}
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center bg-[#161616] text-[9px] uppercase text-white/30">
+                              нет
+                            </div>
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-[var(--text)]">
+                            {product.emoji} {product.name}
+                          </p>
+                          <p className="text-sm text-[var(--muted)]">
+                            {formatPrice(product.basePrice)}
+                            {product.tags?.includes("hit") ? " · Хит" : ""}
+                            {stopped ? (
+                              <span className="ml-1 font-semibold text-red-300">
+                                · стоп
+                              </span>
+                            ) : null}
+                          </p>
+                        </div>
+                        <div className="flex shrink-0 gap-1">
+                          <button
+                            type="button"
+                            onClick={() => void handleToggleStopped(product)}
+                            disabled={togglingId === product.id || saving}
+                            className={`flex h-9 w-9 items-center justify-center rounded-full transition disabled:opacity-50 ${
+                              stopped
+                                ? "bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30"
+                                : "bg-[var(--surface)] text-[var(--muted)] hover:text-red-300"
+                            }`}
+                            aria-label={
+                              stopped
+                                ? "Убрать со стоп-листа"
+                                : "Поставить в стоп"
+                            }
+                            title={
+                              stopped
+                                ? "Убрать со стоп-листа"
+                                : "Поставить в стоп"
+                            }
+                          >
+                            {stopped ? (
+                              <CircleCheck className="h-4 w-4" />
+                            ) : (
+                              <Ban className="h-4 w-4" />
+                            )}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => openEditForm(product)}
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-[var(--text)]"
+                            aria-label="Редактировать"
+                          >
+                            <Pencil className="h-4 w-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void handleDeleteProduct(product.id)}
+                            className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--surface)] text-[var(--muted)] transition hover:text-red-300"
+                            aria-label="Удалить"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
               )}
             </section>

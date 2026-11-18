@@ -8,6 +8,7 @@ import {
   BREAKFAST_UNAVAILABLE_MESSAGE,
   isBreakfastProduct,
 } from "@/lib/breakfast-hours";
+import { STOPPED_UNAVAILABLE_MESSAGE } from "@/lib/stop-list";
 import { getProductImage, isHallCatalogImage } from "@/lib/media";
 import { getProductTheme } from "@/lib/product-theme";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
@@ -53,7 +54,8 @@ function ProductModalBody({
 }) {
   const { addItem } = useCart();
   const breakfastOpen = useBreakfastMenuOpen();
-  const canOrder = !isBreakfastProduct(product) || breakfastOpen;
+  const canOrder =
+    !product.stopped && (!isBreakfastProduct(product) || breakfastOpen);
   const theme = useMemo(() => getProductTheme(product.id), [product.id]);
   const imageSrc = getProductImage(product.id, product.imageUrl);
   const [options, setOptions] = useState<CartItemOptions>(
@@ -253,7 +255,9 @@ function ProductModalBody({
             </div>
           ) : (
             <p className="rounded-2xl bg-white/8 px-4 py-3 text-center text-sm text-white/55">
-              {BREAKFAST_UNAVAILABLE_MESSAGE}
+              {product.stopped
+                ? STOPPED_UNAVAILABLE_MESSAGE
+                : BREAKFAST_UNAVAILABLE_MESSAGE}
             </p>
           )}
         </div>

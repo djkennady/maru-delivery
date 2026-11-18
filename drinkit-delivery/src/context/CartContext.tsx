@@ -16,6 +16,7 @@ import {
 } from "@/lib/breakfast-hours";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { runDeferred } from "@/lib/run-deferred";
+import { canOrderProduct } from "@/lib/stop-list";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
 import { usePickupDiscountPercent } from "@/lib/use-pickup-discount";
 import {
@@ -83,15 +84,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items, hydrated]);
 
   const shopItems = useMemo(() => {
-    if (breakfastOpen) return items;
-    return items.filter(
-      (item) => !isBreakfastProduct(getProduct(item.productId)),
-    );
+    return items.filter((item) => {
+      const product = getProduct(item.productId);
+      if (!product) return false;
+      if (!breakfastOpen && isBreakfastProduct(product)) return false;
+      return canOrderProduct(product);
+    });
   }, [breakfastOpen, getProduct, items]);
 
   const addItem = useCallback(
     (product: Product, options?: CartItemOptions) => {
       if (!canOrderBreakfastProduct(product)) return;
+      if (!canOrderProduct(product)) return;
       const resolvedOptions = options ?? getDefaultOptions(product);
       const key = getCartItemKey(product.id, resolvedOptions);
       const unitPrice = getProductPrice(product, resolvedOptions);

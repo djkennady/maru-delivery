@@ -6,6 +6,10 @@ import {
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { getProductPrice } from "@/lib/pricing";
 import { isValidRuPhone, normalizeRuPhone } from "@/lib/phone";
+import {
+  canOrderProduct,
+  STOPPED_UNAVAILABLE_MESSAGE,
+} from "@/lib/stop-list";
 import type {
   CartItem,
   CartItemOptions,
@@ -77,6 +81,9 @@ function quoteItem(
   }
   if (!canOrderBreakfastProduct(product, now)) {
     throw new ClientError(BREAKFAST_UNAVAILABLE_MESSAGE);
+  }
+  if (!canOrderProduct(product)) {
+    throw new ClientError(STOPPED_UNAVAILABLE_MESSAGE);
   }
 
   const quantity = item.quantity;
@@ -165,7 +172,7 @@ export function quoteCheckout(
   }
 
   const pickupDiscount =
-    FULFILLMENT_MODE === "pickup" ? getPickupDiscount(subtotal) : 0;
+    FULFILLMENT_MODE === "pickup" ? getPickupDiscount(subtotal, now) : 0;
   const deliveryFee = 0;
   const total = Math.max(0, subtotal - pickupDiscount) + deliveryFee;
   if (!(total > 0)) {

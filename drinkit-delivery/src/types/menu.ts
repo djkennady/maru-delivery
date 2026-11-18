@@ -26,6 +26,8 @@ export interface Product {
   group?: string;
   /** Код блюда в R-Keeper (опционально, для будущей интеграции) */
   rkeeperCode?: string;
+  /** В стоп-листе — скрыто из витрины, нельзя заказать */
+  stopped?: boolean;
 }
 
 export interface MenuSettings {
