@@ -1,4 +1,7 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 import { getAdminPassword } from "@/lib/admin-auth";
+import { dataFile } from "@/lib/data-file";
 import { getMenu } from "@/lib/menu-store";
 import { ORDER_STATUS_LABELS } from "@/lib/order-status";
 import { getPaymentLabel } from "@/lib/payment";
@@ -304,21 +307,159 @@ async function sendToChat(
 
 const NOTIFIED_PREFIX = "telegram_notified:";
 const notifiedOrderIds = new Set<string>();
+/** In-flight claim promises so concurrent fulfill paths share one winner. */
+const claimLocks = new Map<string, Promise<boolean>>();
 
-async function wasOrderNotified(orderId: string): Promise<boolean> {
-  if (!orderId) return false;
-  if (notifiedOrderIds.has(orderId)) return true;
-  const stored = await readState<boolean>(`${NOTIFIED_PREFIX}${orderId}`, false);
-  return stored === true;
+function notifiedStateKey(claimKey: string): string {
+  return `${NOTIFIED_PREFIX}${claimKey}`;
 }
 
-async function markOrderNotified(orderId: string): Promise<void> {
-  notifiedOrderIds.add(orderId);
+function notificationClaimKey(order: OrderRecord): string {
+  return order.paymentId ? `pay:${order.paymentId}` : order.id;
+}
+
+function fileClaimPath(claimKey: string): string {
+  return dataFile(
+    `telegram-notified-${claimKey.replace(/[^a-zA-Z0-9._-]+/g, "_")}.claim`,
+  );
+}
+
+async function wasOrderNotified(claimKey: string): Promise<boolean> {
+  if (!claimKey) return false;
+  if (notifiedOrderIds.has(claimKey)) return true;
+  const stored = await readState<boolean>(notifiedStateKey(claimKey), false);
+  if (stored === true) return true;
+  if (isSupabaseEnabled()) return false;
   try {
-    await writeState(`${NOTIFIED_PREFIX}${orderId}`, true);
+    await fs.access(fileClaimPath(claimKey));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function markOrderNotified(claimKey: string): Promise<void> {
+  notifiedOrderIds.add(claimKey);
+  try {
+    await writeState(notifiedStateKey(claimKey), true);
   } catch (error) {
     console.error(
       "[telegram] notified flag",
+      error instanceof Error ? error.message : error,
+    );
+  }
+}
+
+async function tryInsertSupabaseClaim(
+  claimKey: string,
+): Promise<"claimed" | "exists" | "unavailable"> {
+  if (!isSupabaseEnabled()) return "unavailable";
+  const supabase = getSupabaseServerClient();
+  if (!supabase) return "unavailable";
+
+  const { error } = await supabase.from("app_state").insert({
+    key: notifiedStateKey(claimKey),
+    value: true,
+    updated_at: new Date().toISOString(),
+  });
+
+  if (!error) return "claimed";
+  if (error.code === "23505") return "exists";
+
+  const existing = await readState<boolean>(notifiedStateKey(claimKey), false);
+  if (existing === true) return "exists";
+
+  console.error("[telegram] claim insert", error.message);
+  return "unavailable";
+}
+
+async function tryClaimFile(claimKey: string): Promise<boolean> {
+  const lockPath = fileClaimPath(claimKey);
+  await fs.mkdir(path.dirname(lockPath), { recursive: true });
+  try {
+    await fs.writeFile(lockPath, new Date().toISOString(), { flag: "wx" });
+    return true;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "EEXIST") return false;
+    throw error;
+  }
+}
+
+async function releaseFileClaim(claimKey: string): Promise<void> {
+  await fs.unlink(fileClaimPath(claimKey)).catch(() => undefined);
+}
+
+/**
+ * Atomically claim the right to send a Telegram notification.
+ * Must run before sendMessage — check-then-send races when the SBP webhook
+ * and /api/order both call fulfillPaidPayment for the same payment.
+ */
+async function claimNotification(claimKey: string): Promise<boolean> {
+  if (!claimKey) return false;
+  if (notifiedOrderIds.has(claimKey)) return false;
+
+  const inflight = claimLocks.get(claimKey);
+  if (inflight) {
+    await inflight;
+    return false;
+  }
+
+  let resolveLock!: (value: boolean) => void;
+  const lockPromise = new Promise<boolean>((resolve) => {
+    resolveLock = resolve;
+  });
+  claimLocks.set(claimKey, lockPromise);
+
+  try {
+    if (await wasOrderNotified(claimKey)) {
+      resolveLock(false);
+      return false;
+    }
+
+    const supabaseResult = await tryInsertSupabaseClaim(claimKey);
+    if (supabaseResult === "exists") {
+      notifiedOrderIds.add(claimKey);
+      resolveLock(false);
+      return false;
+    }
+    if (supabaseResult === "claimed") {
+      notifiedOrderIds.add(claimKey);
+      resolveLock(true);
+      return true;
+    }
+
+    const claimed = await tryClaimFile(claimKey);
+    if (claimed) notifiedOrderIds.add(claimKey);
+    resolveLock(claimed);
+    return claimed;
+  } catch (error) {
+    resolveLock(false);
+    throw error;
+  } finally {
+    claimLocks.delete(claimKey);
+  }
+}
+
+async function releaseNotificationClaim(claimKey: string): Promise<void> {
+  notifiedOrderIds.delete(claimKey);
+  try {
+    if (isSupabaseEnabled()) {
+      const supabase = getSupabaseServerClient();
+      if (supabase) {
+        const { error } = await supabase
+          .from("app_state")
+          .delete()
+          .eq("key", notifiedStateKey(claimKey));
+        if (error) {
+          throw new Error(error.message);
+        }
+        return;
+      }
+    }
+    await releaseFileClaim(claimKey);
+  } catch (error) {
+    console.error(
+      "[telegram] release claim",
       error instanceof Error ? error.message : error,
     );
   }
@@ -369,9 +510,28 @@ export async function notifyAdminsAboutOrder(order: OrderRecord): Promise<boolea
 export async function ensureAdminsNotifiedAboutOrder(
   order: OrderRecord,
 ): Promise<void> {
+  if (!order?.id) return;
+
+  // Older deploys claimed by order id only — keep that skip path.
   if (await wasOrderNotified(order.id)) return;
+
+  const claimKey = notificationClaimKey(order);
+  if (!(await claimNotification(claimKey))) return;
+
+  if (claimKey !== order.id) {
+    notifiedOrderIds.add(order.id);
+  }
+
   const sent = await notifyAdminsAboutOrder(order);
-  if (sent) await markOrderNotified(order.id);
+  if (!sent) {
+    await releaseNotificationClaim(claimKey);
+    notifiedOrderIds.delete(order.id);
+    return;
+  }
+
+  if (claimKey !== order.id) {
+    await markOrderNotified(order.id);
+  }
 }
 
 async function isAuthorizedChat(chatId: number): Promise<boolean> {
