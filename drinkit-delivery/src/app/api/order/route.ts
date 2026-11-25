@@ -37,6 +37,13 @@ export async function POST(request: Request) {
           { status: 402 },
         );
       }
+
+      // confirmSbpSession already fulfills when paid — reuse that order
+      // instead of calling fulfillPaidPayment again (duplicate Telegram risk).
+      const afterConfirm = await getOrderByPaymentId(paymentId);
+      if (afterConfirm) {
+        return NextResponse.json({ order: afterConfirm });
+      }
     }
 
     const fulfilled = await fulfillPaidPayment(paymentId);

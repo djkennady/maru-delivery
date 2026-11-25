@@ -391,6 +391,7 @@ export async function syncSbpSessionWithBank(
   const session = await getSbpSession(id);
   if (!session) return null;
   if (session.status === "paid") {
+    // Ensure order exists (webhook/client may race). Notify is idempotent.
     await fulfillPaidSession(id);
     return session;
   }

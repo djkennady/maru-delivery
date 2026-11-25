@@ -357,19 +357,28 @@ async function tryInsertSupabaseClaim(
   const supabase = getSupabaseServerClient();
   if (!supabase) return "unavailable";
 
-  const { error } = await supabase.from("app_state").insert({
+  const row = {
     key: notifiedStateKey(claimKey),
     value: true,
     updated_at: new Date().toISOString(),
-  });
+  };
 
-  if (!error) return "claimed";
+  // ignoreDuplicates + select: only the winner gets a returned row.
+  const { data, error } = await supabase
+    .from("app_state")
+    .upsert(row, { onConflict: "key", ignoreDuplicates: true })
+    .select("key");
+
+  if (!error) {
+    return Array.isArray(data) && data.length > 0 ? "claimed" : "exists";
+  }
+
   if (error.code === "23505") return "exists";
 
   const existing = await readState<boolean>(notifiedStateKey(claimKey), false);
   if (existing === true) return "exists";
 
-  console.error("[telegram] claim insert", error.message);
+  console.error("[telegram] claim upsert", error.message);
   return "unavailable";
 }
 
@@ -426,6 +435,17 @@ async function claimNotification(claimKey: string): Promise<boolean> {
       notifiedOrderIds.add(claimKey);
       resolveLock(true);
       return true;
+    }
+
+    // On Netlify each function has its own disk — file claims do not
+    // coordinate across instances. Prefer missing a retry over a duplicate.
+    if (isSupabaseEnabled()) {
+      console.error(
+        "[telegram] shared claim unavailable; skip send to avoid duplicate",
+        claimKey,
+      );
+      resolveLock(false);
+      return false;
     }
 
     const claimed = await tryClaimFile(claimKey);

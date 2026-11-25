@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { fulfillPaidPayment } from "@/lib/fulfill-paid-order";
 import { syncSbpSessionByAlfaIds } from "@/lib/sbp-payments-store";
 
 export const runtime = "nodejs";
@@ -75,10 +74,9 @@ async function handleCallback(request: Request) {
       return NextResponse.json({ ok: false, error: "missing order" }, { status: 200 });
     }
 
-    const session = await syncSbpSessionByAlfaIds({ orderNumber, orderId });
-    if (session?.id && session.status === "paid") {
-      await fulfillPaidPayment(session.id);
-    }
+    // syncSbpSessionByAlfaIds already fulfills (creates order + Telegram)
+    // when the session becomes/is paid — do not fulfill again here.
+    await syncSbpSessionByAlfaIds({ orderNumber, orderId });
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error(
