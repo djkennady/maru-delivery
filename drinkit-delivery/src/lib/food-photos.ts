@@ -9,7 +9,7 @@
 const hall = (id: string) => `/hall-menu/dishes/${id}.webp`;
 const studio = (id: string) => `/hall-menu/dishes/studio/${id}.webp`;
 
-const FOOD_CATEGORIES = new Set(["breakfast", "food", "desserts"]);
+const FOOD_CATEGORIES = new Set(["breakfast", "business-lunch", "food", "desserts"]);
 
 export function isFoodCategoryId(categoryId: string): boolean {
   return FOOD_CATEGORIES.has(categoryId);
@@ -17,9 +17,6 @@ export function isFoodCategoryId(categoryId: string): boolean {
 
 /** Hall numbered — one primary photo per product (from hall menu pairs). */
 const HALL_FOOD_PHOTOS: Record<string, string> = {
-  "english-breakfast": hall("0005"),
-  "french-breakfast": hall("0003"),
-  "russian-breakfast": hall("0001"),
   "sandwich-crispy-chicken": hall("0013"),
   "sandwich-roastbeef": hall("0015"),
   "croissant-caesar-salmon": hall("0011"),

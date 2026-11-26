@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DEFAULT_MENU } from "@/data/menu-defaults";
 import { getPickupDiscount } from "@/lib/fulfillment";
 import { getProductPrice } from "@/lib/pricing";
@@ -48,11 +48,14 @@ vi.mock("qrcode", () => ({
   },
 }));
 
+/** Fixed Moscow evening — outside 11:30–13:30 happy hours (20%). */
+const OUTSIDE_HAPPY_HOURS = new Date(Date.UTC(2026, 5, 15, 15, 0, 0)); // 18:00 MSK
+
 function catalogTotal() {
   const product = DEFAULT_MENU.products.find((item) => item.id === "americano");
   if (!product) throw new Error("americano missing");
   const unit = getProductPrice(product, { size: "m", milk: "regular" });
-  return { unit, total: unit - getPickupDiscount(unit) };
+  return { unit, total: unit - getPickupDiscount(unit, OUTSIDE_HAPPY_HOURS) };
 }
 
 function checkoutBody(amount: number, extra: Record<string, unknown> = {}) {
@@ -83,8 +86,14 @@ function checkoutBody(amount: number, extra: Record<string, unknown> = {}) {
 
 describe("payment and order APIs", () => {
   beforeEach(() => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(OUTSIDE_HAPPY_HOURS);
     vi.clearAllMocks();
     getMenu.mockResolvedValue(DEFAULT_MENU);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it("rejects amount=1 when the catalog total is 207", async () => {

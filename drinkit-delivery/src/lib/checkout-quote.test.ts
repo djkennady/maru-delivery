@@ -194,9 +194,9 @@ describe("quoteCheckout", () => {
 
   it("rejects breakfast after 11:00 MSK and allows it during the window", () => {
     const breakfast = DEFAULT_MENU.products.find(
-      (product) => product.id === "english-breakfast",
+      (product) => product.id === "fried-eggs-beefsteak",
     );
-    if (!breakfast) throw new Error("english-breakfast missing from catalog");
+    if (!breakfast) throw new Error("fried-eggs-beefsteak missing from catalog");
 
     const unitPrice = breakfast.basePrice;
     const breakfastOpenAt = new Date("2026-10-06T05:00:00.000Z"); // 08:00 MSK
@@ -211,7 +211,7 @@ describe("quoteCheckout", () => {
         items: [
           {
             id: "line-1",
-            productId: "english-breakfast",
+            productId: "fried-eggs-beefsteak",
             quantity: 1,
             options: { size: "m", milk: "regular" },
             unitPrice: 1,
@@ -233,7 +233,52 @@ describe("quoteCheckout", () => {
       requireAmount: true,
       now: breakfastOpenAt,
     });
-    expect(quoted.draft.items[0].productId).toBe("english-breakfast");
+    expect(quoted.draft.items[0].productId).toBe("fried-eggs-beefsteak");
+    expect(quoted.amount).toBe(total);
+  });
+
+  it("rejects business lunch outside 11:30–14:00 MSK", () => {
+    const combo = DEFAULT_MENU.products.find(
+      (product) => product.id === "business-combo-1",
+    );
+    if (!combo) throw new Error("business-combo-1 missing from catalog");
+
+    const unitPrice = combo.basePrice;
+    const openAt = new Date("2026-10-06T08:30:00.000Z"); // 11:30 MSK
+    const total = unitPrice - getPickupDiscount(unitPrice, openAt);
+    const order = {
+      amount: total,
+      phone: "+79990001122",
+      order: {
+        name: "Тест",
+        phone: "+79990001122",
+        address: "Самовывоз",
+        items: [
+          {
+            id: "line-1",
+            productId: "business-combo-1",
+            quantity: 1,
+            options: {},
+            unitPrice: 1,
+          },
+        ],
+        total: 1,
+        paymentMethod: "sbp",
+      },
+    };
+
+    expect(() =>
+      quoteCheckout(order, DEFAULT_MENU, {
+        requireAmount: true,
+        now: new Date("2026-10-06T08:00:00.000Z"), // 11:00 MSK
+      }),
+    ).toThrow(/Бизнес-ланч доступен/);
+
+    const quoted = quoteCheckout(order, DEFAULT_MENU, {
+      requireAmount: true,
+      now: openAt,
+    });
+    expect(quoted.draft.items[0].productId).toBe("business-combo-1");
     expect(quoted.amount).toBe(total);
   });
 

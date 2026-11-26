@@ -1,4 +1,8 @@
 import type { Category, Product } from "@/types/menu";
+import {
+  filterBusinessLunchCategories,
+  filterBusinessLunchProducts,
+} from "@/lib/business-lunch-hours";
 
 export const BREAKFAST_CATEGORY_ID = "breakfast";
 export const MOSCOW_TIME_ZONE = "Europe/Moscow";
@@ -52,14 +56,18 @@ export function filterShopCategories<T extends Pick<Category, "id">>(
   categories: T[],
   now: Date = new Date(),
 ): T[] {
-  if (isBreakfastMenuOpen(now)) return categories;
-  return categories.filter((category) => !isBreakfastCategory(category.id));
+  const withoutClosedBreakfast = isBreakfastMenuOpen(now)
+    ? categories
+    : categories.filter((category) => !isBreakfastCategory(category.id));
+  return filterBusinessLunchCategories(withoutClosedBreakfast, now);
 }
 
 export function filterShopProducts<T extends Pick<Product, "categoryId">>(
   products: T[],
   now: Date = new Date(),
 ): T[] {
-  if (isBreakfastMenuOpen(now)) return products;
-  return products.filter((product) => !isBreakfastProduct(product));
+  const withoutClosedBreakfast = isBreakfastMenuOpen(now)
+    ? products
+    : products.filter((product) => !isBreakfastProduct(product));
+  return filterBusinessLunchProducts(withoutClosedBreakfast, now);
 }

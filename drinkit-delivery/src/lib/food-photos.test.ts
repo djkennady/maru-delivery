@@ -41,7 +41,7 @@ describe("food photo assignments", () => {
     expect(getProductImage("steak-butcher")).toBe("");
     expect(getProductImage("steak-butcher", "https://images.pexels.com/x.jpg")).toBe("");
     expect(getProductImage("croissant-chocolate")).toBe("");
-    expect(getProductImage("build-your-breakfast")).toBe("");
+    expect(getProductImage("fried-eggs-beefsteak")).toBe("");
   });
 
   it("keeps dedicated studio/hall frames", () => {
@@ -49,7 +49,9 @@ describe("food photo assignments", () => {
       "/hall-menu/dishes/studio/pizza-pepperoni.webp",
     );
     expect(getProductImage("fries")).toBe("/hall-menu/dishes/studio/fries.webp");
-    expect(getProductImage("english-breakfast")).toBe("/hall-menu/dishes/0005.webp");
+    expect(getProductImage("sandwich-crispy-chicken")).toBe(
+      "/hall-menu/dishes/0013.webp",
+    );
     expect(getProductImage("shashlik-beef")).toBe("/hall-menu/dishes/0110.webp");
   });
 });

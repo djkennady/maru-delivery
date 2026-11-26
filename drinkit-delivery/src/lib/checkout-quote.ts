@@ -3,6 +3,10 @@ import {
   BREAKFAST_UNAVAILABLE_MESSAGE,
   canOrderBreakfastProduct,
 } from "@/lib/breakfast-hours";
+import {
+  BUSINESS_LUNCH_UNAVAILABLE_MESSAGE,
+  canOrderBusinessLunchProduct,
+} from "@/lib/business-lunch-hours";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { getProductPrice } from "@/lib/pricing";
 import { isValidRuPhone, normalizeRuPhone } from "@/lib/phone";
@@ -81,6 +85,9 @@ function quoteItem(
   }
   if (!canOrderBreakfastProduct(product, now)) {
     throw new ClientError(BREAKFAST_UNAVAILABLE_MESSAGE);
+  }
+  if (!canOrderBusinessLunchProduct(product, now)) {
+    throw new ClientError(BUSINESS_LUNCH_UNAVAILABLE_MESSAGE);
   }
   if (!canOrderProduct(product)) {
     throw new ClientError(STOPPED_UNAVAILABLE_MESSAGE);

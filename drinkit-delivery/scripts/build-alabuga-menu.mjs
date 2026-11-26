@@ -31,60 +31,38 @@ function imageFor(pool, id) {
 
 /** @type {{ id: string, name: string, cat: string, emoji: string, desc?: string, price?: number, sizes?: { s?: number, m?: number, l?: number }, pool?: string, tags?: string[], customizable?: boolean }} */
 const RAW = [
-  // ——— Завтраки ———
+  // ——— Завтраки (source of truth: data/menu.json) ———
   {
-    id: "english-breakfast",
-    name: "Английский завтрак",
+    id: "fried-eggs-beefsteak",
+    name: "Глазунья с бифштексом",
     cat: "breakfast",
     emoji: "🍳",
-    price: 599,
+    price: 590,
     pool: "breakfast",
     tags: ["hit"],
-    desc: "Яичница глазунья из трёх яиц, куриная колбаска, фасоль в соусе BBQ, хашбраун, тост, руккола, томаты черри, сметана",
+    desc: "Глазунья из 3 яиц, говяжий бифштекс, лук фри, руккола, томаты черри, соус релиш, авокадо, чиабатта",
   },
   {
-    id: "french-breakfast",
-    name: "Французский завтрак",
+    id: "scramble-salmon",
+    name: "Скрэмбл с лососем",
     cat: "breakfast",
-    emoji: "🥐",
-    price: 699,
-    pool: "breakfast",
-    desc: "Омлет из трёх яиц, круассан, слабосолёный лосось, трюфельный крем, хашбраун, шпинат, томаты черри, сметана, джем",
-  },
-  {
-    id: "russian-breakfast",
-    name: "Русский завтрак",
-    cat: "breakfast",
-    emoji: "🥞",
-    price: 599,
-    pool: "breakfast",
-    desc: "Скрэмбл из трёх яиц, ветчина из индейки, блинчик, тост, огурцы, помидоры, сметана, сливочное масло, джем",
-  },
-  {
-    id: "build-your-breakfast",
-    name: "Собери свой завтрак",
-    cat: "breakfast",
-    emoji: "🍽️",
-    price: 399,
-    pool: "breakfast",
-    desc: "Омлет / скрэмбл / глазунья из трёх яиц + тост и сливочное масло",
-  },
-  {
-    id: "blinchiki",
-    name: "Блинчики",
-    cat: "breakfast",
-    emoji: "🥞",
-    price: 199,
-    pool: "breakfast",
-  },
-  {
-    id: "syrniki",
-    name: "Сырники",
-    cat: "breakfast",
-    emoji: "🧀",
-    price: 279,
+    emoji: "🍳",
+    price: 590,
     pool: "breakfast",
     tags: ["hit"],
+    desc: "Скрэмбл из 3 яиц, руккола, огурцы, томаты черри, трюфельный соус, слабосолёная сёмга, чиабатта",
+  },
+
+  // ——— Бизнес-ланч ———
+  {
+    id: "business-combo-1",
+    name: "Комбо 1",
+    cat: "business-lunch",
+    emoji: "🍱",
+    price: 690,
+    pool: "food",
+    tags: ["hit"],
+    desc: "Цезарь с курицей · домашняя куриная лапша · паста с куриным филе",
   },
 
   // ——— Сэндвичи ———
@@ -427,6 +405,7 @@ const RAW = [
 
 const categories = [
   { id: "breakfast", name: "Завтраки", imageUrl: pexels(1640777, 800) },
+  { id: "business-lunch", name: "Бизнес-ланч", imageUrl: pexels(958545, 800) },
   { id: "coffee", name: "Кофе", imageUrl: pexels(302899, 800) },
   { id: "drinks", name: "Чай и напитки", imageUrl: pexels(1417945, 800) },
   { id: "food", name: "Еда", imageUrl: pexels(1279330, 800) },

@@ -2,9 +2,10 @@
 
 import { useMemo, useRef, useState } from "react";
 import { useMenu } from "@/context/MenuContext";
-import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
+import { filterShopCategories, filterShopProducts } from "@/lib/breakfast-hours";
 import { hasProductCutout } from "@/lib/cutouts";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
+import { useBusinessLunchMenuOpen } from "@/lib/use-business-lunch-menu-open";
 import { CategoryHero } from "./CategoryHero";
 import { ProductCard } from "./ProductCard";
 import { FeaturedHits } from "./FeaturedHits";
@@ -54,19 +55,14 @@ function pickHeroProduct(products: Product[]): Product | null {
 export function MenuSection({ onSelect }: MenuSectionProps) {
   const { categories, products } = useMenu();
   const breakfastOpen = useBreakfastMenuOpen();
+  const businessLunchOpen = useBusinessLunchMenuOpen();
   const shopCategories = useMemo(
-    () =>
-      breakfastOpen
-        ? categories
-        : categories.filter((category) => category.id !== BREAKFAST_CATEGORY_ID),
-    [categories, breakfastOpen],
+    () => filterShopCategories(categories),
+    [categories, breakfastOpen, businessLunchOpen],
   );
   const shopProducts = useMemo(
-    () =>
-      breakfastOpen
-        ? products
-        : products.filter((product) => product.categoryId !== BREAKFAST_CATEGORY_ID),
-    [products, breakfastOpen],
+    () => filterShopProducts(products),
+    [products, breakfastOpen, businessLunchOpen],
   );
 
   const tabs = useMemo(

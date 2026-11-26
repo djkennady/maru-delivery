@@ -69,7 +69,7 @@ export function HallHub() {
             </span>
             <span className="font-serif mt-2 text-4xl leading-none">Меню</span>
             <span className="mt-3 max-w-sm text-sm text-[#ddd4c5]">
-              Завтраки, хоспер, пицца, роллы, десерты и кофе — с живыми
+              Завтраки, бизнес-ланч, хоспер, пицца, роллы, десерты и кофе — с живыми
               фотографиями блюд.
             </span>
             <span className="mt-5 text-sm font-semibold text-[#f3ead8]">

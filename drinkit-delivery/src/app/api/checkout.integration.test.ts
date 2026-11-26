@@ -35,11 +35,14 @@ vi.mock("@/lib/telegram", () => ({
   notifyAdminsAboutOrder: telegram.notifyAdminsAboutOrder,
 }));
 
+/** Fixed Moscow evening — outside 11:30–13:30 happy hours (20%). */
+const OUTSIDE_HAPPY_HOURS = new Date(Date.UTC(2026, 5, 15, 15, 0, 0)); // 18:00 MSK
+
 function catalogQuote() {
   const product = DEFAULT_MENU.products.find((item) => item.id === "americano");
   if (!product) throw new Error("americano missing");
   const unit = getProductPrice(product, { size: "m", milk: "regular" });
-  return { unit, total: unit - getPickupDiscount(unit) };
+  return { unit, total: unit - getPickupDiscount(unit, OUTSIDE_HAPPY_HOURS) };
 }
 
 function checkoutBody(amount: number, paymentMethod: "sbp" | "card") {
@@ -75,6 +78,8 @@ describe("checkout payment integration", () => {
   let dataDir = "";
 
   beforeEach(async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(OUTSIDE_HAPPY_HOURS);
     dataDir = await mkdtemp(path.join(tmpdir(), "maru-checkout-"));
     process.env.MARU_DATA_DIR = dataDir;
     delete process.env.SUPABASE_URL;
@@ -115,6 +120,7 @@ describe("checkout payment integration", () => {
   });
 
   afterEach(async () => {
+    vi.useRealTimers();
     delete process.env.MARU_DATA_DIR;
     if (dataDir) await rm(dataDir, { recursive: true, force: true });
   });

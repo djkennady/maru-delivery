@@ -6,7 +6,6 @@ const CUTOUT_IDS = new Set([
   "beef-stroganoff",
   "burger-beef",
   "cappuccino",
-  "english-breakfast",
   "espresso-tonic",
   "filter-coffee",
   "honey-cake",
@@ -20,7 +19,6 @@ const CUTOUT_IDS = new Set([
   "shashlik-beef",
   "soup-borscht",
   "steak-beef-tenderloin",
-  "syrniki",
 ]);
 
 export function hasProductCutout(productId: string): boolean {

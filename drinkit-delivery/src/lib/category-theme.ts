@@ -14,6 +14,13 @@ const BY_ID: Record<string, CategoryTheme> = {
     glow: "rgba(251, 191, 36, 0.28)",
     accent: "#fbbf24",
   },
+  "business-lunch": {
+    from: "#1c2418",
+    mid: "#121810",
+    to: "#050505",
+    glow: "rgba(132, 204, 22, 0.26)",
+    accent: "#a3e635",
+  },
   coffee: {
     from: "#3a1e0c",
     mid: "#1c1008",

@@ -14,10 +14,15 @@ import {
   canOrderBreakfastProduct,
   isBreakfastProduct,
 } from "@/lib/breakfast-hours";
+import {
+  canOrderBusinessLunchProduct,
+  isBusinessLunchProduct,
+} from "@/lib/business-lunch-hours";
 import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
 import { runDeferred } from "@/lib/run-deferred";
 import { canOrderProduct } from "@/lib/stop-list";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
+import { useBusinessLunchMenuOpen } from "@/lib/use-business-lunch-menu-open";
 import { usePickupDiscountPercent } from "@/lib/use-pickup-discount";
 import {
   createCartItemId,
@@ -67,6 +72,7 @@ function loadStoredItems(): CartItem[] {
 export function CartProvider({ children }: { children: ReactNode }) {
   const { settings, getProduct } = useMenu();
   const breakfastOpen = useBreakfastMenuOpen();
+  const businessLunchOpen = useBusinessLunchMenuOpen();
   const pickupDiscountPercent = usePickupDiscountPercent();
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
@@ -88,13 +94,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
       const product = getProduct(item.productId);
       if (!product) return false;
       if (!breakfastOpen && isBreakfastProduct(product)) return false;
+      if (!businessLunchOpen && isBusinessLunchProduct(product)) return false;
       return canOrderProduct(product);
     });
-  }, [breakfastOpen, getProduct, items]);
+  }, [breakfastOpen, businessLunchOpen, getProduct, items]);
 
   const addItem = useCallback(
     (product: Product, options?: CartItemOptions) => {
       if (!canOrderBreakfastProduct(product)) return;
+      if (!canOrderBusinessLunchProduct(product)) return;
       if (!canOrderProduct(product)) return;
       const resolvedOptions = options ?? getDefaultOptions(product);
       const key = getCartItemKey(product.id, resolvedOptions);

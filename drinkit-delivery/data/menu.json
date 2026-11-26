@@ -1,10 +1,15 @@
 {
-  "menuVersion": 12,
+  "menuVersion": 13,
   "categories": [
     {
       "id": "breakfast",
       "name": "Завтраки",
       "imageUrl": "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800"
+    },
+    {
+      "id": "business-lunch",
+      "name": "Бизнес-ланч",
+      "imageUrl": "https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=800"
     },
     {
       "id": "coffee",
@@ -29,70 +34,229 @@
   ],
   "products": [
     {
-      "id": "english-breakfast",
+      "id": "fried-eggs-beefsteak",
       "categoryId": "breakfast",
-      "name": "Английский завтрак",
-      "description": "Яичница глазунья из трёх яиц, куриная колбаска, фасоль в соусе BBQ, хашбраун, тост, руккола, томаты черри, сметана",
+      "name": "Глазунья с бифштексом",
+      "description": "Глазунья из 3 яиц, говяжий бифштекс, лук фри, руккола, томаты черри, соус релиш, авокадо, чиабатта",
       "emoji": "🍳",
-      "basePrice": 599,
-      "imageUrl": "/uploads/menu/english-breakfast.jpg",
+      "basePrice": 590,
       "group": "Завтраки",
       "tags": [
         "hit"
       ]
     },
     {
-      "id": "french-breakfast",
+      "id": "fried-eggs-sausages",
       "categoryId": "breakfast",
-      "name": "Французский завтрак",
-      "description": "Омлет из трёх яиц, круассан, слабосолёный лосось, трюфельный крем, хашбраун, шпинат, томаты черри, сметана, джем",
-      "emoji": "🥐",
-      "basePrice": 699,
-      "imageUrl": "/uploads/menu/french-breakfast.jpg",
+      "name": "Глазунья с колбасками",
+      "description": "Глазунья из 3 яиц, куриная колбаска, куриная ветчина, руккола, томаты черри, хашбраун, горчичный соус",
+      "emoji": "🍳",
+      "basePrice": 590,
       "group": "Завтраки"
     },
     {
-      "id": "russian-breakfast",
+      "id": "fried-eggs-light-salad",
       "categoryId": "breakfast",
-      "name": "Русский завтрак",
-      "description": "Скрэмбл из трёх яиц, ветчина из индейки, блинчик, тост, огурцы, помидоры, сметана, сливочное масло, джем",
-      "emoji": "🥞",
-      "basePrice": 599,
-      "imageUrl": "/uploads/menu/russian-breakfast.jpg",
+      "name": "Глазунья с лёгким салатом",
+      "description": "Глазунья из 3 яиц, руккола, томаты черри, брынза, базиликовый соус",
+      "emoji": "🍳",
+      "basePrice": 330,
       "group": "Завтраки"
     },
     {
-      "id": "build-your-breakfast",
+      "id": "shakshuka-poached",
       "categoryId": "breakfast",
-      "name": "Собери свой завтрак",
-      "description": "Омлет / скрэмбл / глазунья из трёх яиц + тост и сливочное масло",
-      "emoji": "🍽️",
-      "basePrice": 399,
-      "imageUrl": "https://images.pexels.com/photos/2137807/pexels-photo-2137807.jpeg?auto=compress&cs=tinysrgb&w=600",
+      "name": "Шакшука с яйцом пашот",
+      "description": "Томатный соус, репчатый лук, болгарский перец, томаты, яйца пашот, петрушка, кинза, чиабатта",
+      "emoji": "🍅",
+      "basePrice": 410,
       "group": "Завтраки"
     },
     {
-      "id": "blinchiki",
+      "id": "scramble-chicken",
       "categoryId": "breakfast",
-      "name": "Блинчики",
-      "description": "Тонкие блинчики со сметаной",
-      "emoji": "🥞",
-      "basePrice": 199,
-      "imageUrl": "/uploads/menu/blinchiki.jpg",
-      "group": "Сырники и блинчики"
+      "name": "Скрэмбл с курицей",
+      "description": "Скрэмбл из 3 яиц, руккола, огурцы, томаты черри, трюфельный соус, куриное филе, чиабатта",
+      "emoji": "🍳",
+      "basePrice": 490,
+      "group": "Завтраки"
     },
     {
-      "id": "syrniki",
+      "id": "scramble-salmon",
       "categoryId": "breakfast",
-      "name": "Сырники",
-      "description": "Нежные сырники со сметаной и ягодами",
-      "emoji": "🧀",
-      "basePrice": 279,
-      "imageUrl": "/uploads/menu/syrniki.jpg",
-      "group": "Сырники и блинчики",
+      "name": "Скрэмбл с лососем",
+      "description": "Скрэмбл из 3 яиц, руккола, огурцы, томаты черри, трюфельный соус, слабосолёная сёмга, чиабатта",
+      "emoji": "🍳",
+      "basePrice": 590,
+      "group": "Завтраки",
       "tags": [
         "hit"
       ]
+    },
+    {
+      "id": "scramble-shrimp",
+      "categoryId": "breakfast",
+      "name": "Скрэмбл с креветкой",
+      "description": "Скрэмбл из 3 яиц, руккола, огурцы, томаты черри, трюфельный соус, тигровые креветки, чиабатта",
+      "emoji": "🍳",
+      "basePrice": 590,
+      "group": "Завтраки"
+    },
+    {
+      "id": "scramble-chicken-sausage",
+      "categoryId": "breakfast",
+      "name": "Скрэмбл с куриной колбаской",
+      "description": "Скрэмбл из 3 яиц, руккола, огурцы, томаты черри, трюфельный соус, куриная колбаска, чиабатта",
+      "emoji": "🍳",
+      "basePrice": 450,
+      "group": "Завтраки"
+    },
+    {
+      "id": "croissant-salmon-poached",
+      "categoryId": "breakfast",
+      "name": "Круассан с сёмгой и яйцом пашот",
+      "description": "Круассан, трюфельный соус, огурцы, слабосолёная сёмга, яйцо пашот, семена чиа",
+      "emoji": "🥐",
+      "basePrice": 390,
+      "group": "Завтраки"
+    },
+    {
+      "id": "draniki-salmon-poached",
+      "categoryId": "breakfast",
+      "name": "Драники с сёмгой и яйцом пашот",
+      "description": "Драники хашбраун, сметана, яйцо пашот, руккола, слабосолёная сёмга",
+      "emoji": "🥔",
+      "basePrice": 490,
+      "group": "Завтраки"
+    },
+    {
+      "id": "porridge-rice",
+      "categoryId": "breakfast",
+      "name": "Рисовая каша",
+      "description": "Джем в ассортименте",
+      "emoji": "🥣",
+      "basePrice": 250,
+      "group": "Каши"
+    },
+    {
+      "id": "porridge-oat",
+      "categoryId": "breakfast",
+      "name": "Овсяная каша",
+      "description": "Джем в ассортименте",
+      "emoji": "🥣",
+      "basePrice": 250,
+      "group": "Каши"
+    },
+    {
+      "id": "pancakes-salmon-poached",
+      "categoryId": "breakfast",
+      "name": "Блины с сёмгой и яйцом пашот",
+      "description": "",
+      "emoji": "🥞",
+      "basePrice": 390,
+      "group": "Блины"
+    },
+    {
+      "id": "pancakes-ham-cheese",
+      "categoryId": "breakfast",
+      "name": "Блины с ветчиной и сыром",
+      "description": "",
+      "emoji": "🥞",
+      "basePrice": 350,
+      "group": "Блины"
+    },
+    {
+      "id": "pancakes-mushrooms",
+      "categoryId": "breakfast",
+      "name": "Блины с грибами",
+      "description": "",
+      "emoji": "🥞",
+      "basePrice": 300,
+      "group": "Блины"
+    },
+    {
+      "id": "pancakes-jam",
+      "categoryId": "breakfast",
+      "name": "Блины с джемом",
+      "description": "",
+      "emoji": "🥞",
+      "basePrice": 230,
+      "group": "Блины"
+    },
+    {
+      "id": "pancakes-nutella-banana",
+      "categoryId": "breakfast",
+      "name": "Блины с нутеллой и бананом",
+      "description": "",
+      "emoji": "🥞",
+      "basePrice": 320,
+      "group": "Блины"
+    },
+    {
+      "id": "business-combo-1",
+      "categoryId": "business-lunch",
+      "name": "Комбо 1",
+      "description": "Салат «Цезарь с курицей» 150 г · Домашняя куриная лапша 250 г · Паста с куриным филе 210 г",
+      "emoji": "🍱",
+      "basePrice": 690,
+      "group": "Комбо",
+      "tags": [
+        "hit"
+      ]
+    },
+    {
+      "id": "business-combo-2",
+      "categoryId": "business-lunch",
+      "name": "Комбо 2",
+      "description": "Греческий салат 185 г · Грибной крем-суп 250 г · Булгур со сливочным цыплёнком 250 г",
+      "emoji": "🍱",
+      "basePrice": 690,
+      "group": "Комбо"
+    },
+    {
+      "id": "business-combo-3",
+      "categoryId": "business-lunch",
+      "name": "Комбо 3",
+      "description": "Салат чука с огурцом 150 г · Мисо-суп с шиитаке 250 г · Цезарь-ролл 300 г",
+      "emoji": "🍱",
+      "basePrice": 690,
+      "group": "Комбо"
+    },
+    {
+      "id": "business-orange-fresh",
+      "categoryId": "business-lunch",
+      "name": "Апельсиновый фреш",
+      "description": "К бизнес-ланчу",
+      "emoji": "🍊",
+      "basePrice": 190,
+      "group": "Напитки и хлеб"
+    },
+    {
+      "id": "business-filter-coffee",
+      "categoryId": "business-lunch",
+      "name": "Фильтр-кофе",
+      "description": "К бизнес-ланчу",
+      "emoji": "☕",
+      "basePrice": 90,
+      "group": "Напитки и хлеб"
+    },
+    {
+      "id": "business-mors",
+      "categoryId": "business-lunch",
+      "name": "Морс",
+      "description": "К бизнес-ланчу",
+      "emoji": "🍒",
+      "basePrice": 45,
+      "group": "Напитки и хлеб"
+    },
+    {
+      "id": "business-bread",
+      "categoryId": "business-lunch",
+      "name": "Хлеб",
+      "description": "Бородинский, чиабатта или тостовый",
+      "emoji": "🍞",
+      "basePrice": 50,
+      "group": "Напитки и хлеб"
     },
     {
       "id": "sandwich-crispy-chicken",

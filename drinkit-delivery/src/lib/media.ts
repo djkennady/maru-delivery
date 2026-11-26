@@ -35,6 +35,7 @@ const fallbackProductImage = pexels(302899);
 
 const categoryFallbacks: Record<string, string> = {
   breakfast: pexels(1640777, 800),
+  "business-lunch": pexels(958545, 800),
   coffee: pexels(302899, 800),
   drinks: pexels(1417945, 800),
   food: pexels(1279330, 800),

@@ -7,10 +7,12 @@ import { useCart } from "@/context/CartContext";
 import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
 import { BREAKFAST_CATEGORY_ID } from "@/lib/breakfast-hours";
+import { BUSINESS_LUNCH_CATEGORY_ID } from "@/lib/business-lunch-hours";
 import { getFirstName, getPaidOrders } from "@/lib/loyalty";
 import { getProductImage, isHallCatalogImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
+import { useBusinessLunchMenuOpen } from "@/lib/use-business-lunch-menu-open";
 import type { CartItemOptions, Product } from "@/types/menu";
 
 interface PersonalizedGreetingProps {
@@ -22,6 +24,7 @@ function useUsualOrder() {
   const { profile, orders, hasProfile } = useUser();
   const { getProduct } = useMenu();
   const breakfastOpen = useBreakfastMenuOpen();
+  const businessLunchOpen = useBusinessLunchMenuOpen();
 
   return useMemo(() => {
     if (!hasProfile) return null;
@@ -63,6 +66,12 @@ function useUsualOrder() {
       if (!breakfastOpen && product.categoryId === BREAKFAST_CATEGORY_ID) {
         continue;
       }
+      if (
+        !businessLunchOpen &&
+        product.categoryId === BUSINESS_LUNCH_CATEGORY_ID
+      ) {
+        continue;
+      }
       const last = lastOptionsById.get(productId);
       if (!last) continue;
       return {
@@ -73,7 +82,14 @@ function useUsualOrder() {
       };
     }
     return null;
-  }, [hasProfile, orders, getProduct, breakfastOpen, profile.name]);
+  }, [
+    hasProfile,
+    orders,
+    getProduct,
+    breakfastOpen,
+    businessLunchOpen,
+    profile.name,
+  ]);
 }
 
 export function PersonalizedGreeting({ onSelect }: PersonalizedGreetingProps) {
