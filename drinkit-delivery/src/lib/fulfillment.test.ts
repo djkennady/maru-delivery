@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   getPickupDiscount,
+  getPickupDiscountForLines,
   getPickupDiscountPercent,
   getPickupDiscountRate,
+  isExcludedFromPickupDiscount,
   isPickupHappyHour,
   PICKUP_DISCOUNT_RATE,
   PICKUP_HAPPY_HOUR_RATE,
@@ -31,5 +33,29 @@ describe("pickup discount happy hours", () => {
     expect(getPickupDiscountRate(atMoscow(12, 15))).toBe(PICKUP_HAPPY_HOUR_RATE);
     expect(getPickupDiscountPercent(atMoscow(12, 15))).toBe(20);
     expect(getPickupDiscount(1000, atMoscow(12, 15))).toBe(200);
+  });
+
+  it("excludes breakfast and business lunch from pickup discount", () => {
+    expect(isExcludedFromPickupDiscount("breakfast")).toBe(true);
+    expect(isExcludedFromPickupDiscount("business-lunch")).toBe(true);
+    expect(isExcludedFromPickupDiscount("coffee")).toBe(false);
+
+    const now = atMoscow(18, 0);
+    expect(
+      getPickupDiscountForLines(
+        [
+          { unitPrice: 590, quantity: 1, categoryId: "breakfast" },
+          { unitPrice: 690, quantity: 1, categoryId: "business-lunch" },
+          { unitPrice: 230, quantity: 1, categoryId: "coffee" },
+        ],
+        now,
+      ),
+    ).toBe(23);
+    expect(
+      getPickupDiscountForLines(
+        [{ unitPrice: 590, quantity: 2, categoryId: "breakfast" }],
+        now,
+      ),
+    ).toBe(0);
   });
 });

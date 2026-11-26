@@ -1,4 +1,8 @@
-import { getMoscowMinutes } from "@/lib/breakfast-hours";
+import {
+  BREAKFAST_CATEGORY_ID,
+  getMoscowMinutes,
+} from "@/lib/breakfast-hours";
+import { BUSINESS_LUNCH_CATEGORY_ID } from "@/lib/business-lunch-hours";
 
 /** Pickup-only mode until delivery and the new bonus program are ready. */
 export const FULFILLMENT_MODE = "pickup" as const;
@@ -12,6 +16,16 @@ export const PICKUP_HAPPY_HOUR_RATE = 0.2;
 export const PICKUP_HAPPY_HOUR_START_MINUTES = 11 * 60 + 30;
 /** Exclusive end: 13:30 MSK. */
 export const PICKUP_HAPPY_HOUR_END_MINUTES = 13 * 60 + 30;
+
+/** Breakfast and business lunch are full price — no pickup discount. */
+export function isExcludedFromPickupDiscount(
+  categoryId: string | undefined,
+): boolean {
+  return (
+    categoryId === BREAKFAST_CATEGORY_ID ||
+    categoryId === BUSINESS_LUNCH_CATEGORY_ID
+  );
+}
 
 export function isPickupHappyHour(now: Date = new Date()): boolean {
   const minutes = getMoscowMinutes(now);
@@ -37,4 +51,22 @@ export function getPickupDiscountLabel(now: Date = new Date()): string {
 export function getPickupDiscount(subtotal: number, now: Date = new Date()): number {
   const value = Number.isFinite(subtotal) ? subtotal : 0;
   return Math.round(value * getPickupDiscountRate(now));
+}
+
+/** Discount only lines that are not breakfast / business lunch. */
+export function getPickupDiscountForLines(
+  lines: Array<{
+    unitPrice: number;
+    quantity: number;
+    categoryId?: string;
+  }>,
+  now: Date = new Date(),
+): number {
+  const eligible = lines.reduce((sum, line) => {
+    if (isExcludedFromPickupDiscount(line.categoryId)) return sum;
+    const unit = Number.isFinite(line.unitPrice) ? line.unitPrice : 0;
+    const qty = Number.isFinite(line.quantity) ? line.quantity : 0;
+    return sum + unit * qty;
+  }, 0);
+  return getPickupDiscount(eligible, now);
 }

@@ -7,7 +7,10 @@ import {
   BUSINESS_LUNCH_UNAVAILABLE_MESSAGE,
   canOrderBusinessLunchProduct,
 } from "@/lib/business-lunch-hours";
-import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
+import {
+  FULFILLMENT_MODE,
+  getPickupDiscountForLines,
+} from "@/lib/fulfillment";
 import { getProductPrice } from "@/lib/pricing";
 import { isValidRuPhone, normalizeRuPhone } from "@/lib/phone";
 import {
@@ -179,7 +182,16 @@ export function quoteCheckout(
   }
 
   const pickupDiscount =
-    FULFILLMENT_MODE === "pickup" ? getPickupDiscount(subtotal, now) : 0;
+    FULFILLMENT_MODE === "pickup"
+      ? getPickupDiscountForLines(
+          items.map((item) => ({
+            unitPrice: item.unitPrice,
+            quantity: item.quantity,
+            categoryId: catalog.get(item.productId)?.categoryId,
+          })),
+          now,
+        )
+      : 0;
   const deliveryFee = 0;
   const total = Math.max(0, subtotal - pickupDiscount) + deliveryFee;
   if (!(total > 0)) {

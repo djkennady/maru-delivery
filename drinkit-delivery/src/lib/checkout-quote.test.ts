@@ -200,7 +200,8 @@ describe("quoteCheckout", () => {
 
     const unitPrice = breakfast.basePrice;
     const breakfastOpenAt = new Date("2026-10-06T05:00:00.000Z"); // 08:00 MSK
-    const total = unitPrice - getPickupDiscount(unitPrice, breakfastOpenAt);
+    // Breakfast is excluded from pickup discount.
+    const total = unitPrice;
     const breakfastOrder = {
       amount: total,
       phone: "+79990001122",
@@ -245,7 +246,8 @@ describe("quoteCheckout", () => {
 
     const unitPrice = combo.basePrice;
     const openAt = new Date("2026-10-06T08:30:00.000Z"); // 11:30 MSK
-    const total = unitPrice - getPickupDiscount(unitPrice, openAt);
+    // Business lunch is excluded from pickup discount.
+    const total = unitPrice;
     const order = {
       amount: total,
       phone: "+79990001122",

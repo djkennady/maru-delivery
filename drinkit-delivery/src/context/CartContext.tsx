@@ -18,7 +18,10 @@ import {
   canOrderBusinessLunchProduct,
   isBusinessLunchProduct,
 } from "@/lib/business-lunch-hours";
-import { FULFILLMENT_MODE, getPickupDiscount } from "@/lib/fulfillment";
+import {
+  FULFILLMENT_MODE,
+  getPickupDiscountForLines,
+} from "@/lib/fulfillment";
 import { runDeferred } from "@/lib/run-deferred";
 import { canOrderProduct } from "@/lib/stop-list";
 import { useBreakfastMenuOpen } from "@/lib/use-breakfast-menu-open";
@@ -156,8 +159,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const clearCart = useCallback(() => setItems([]), []);
 
   const subtotal = useMemo(() => getCartSubtotal(shopItems), [shopItems]);
-  const pickupDiscount =
-    FULFILLMENT_MODE === "pickup" ? getPickupDiscount(subtotal) : 0;
+  const pickupDiscount = useMemo(() => {
+    if (FULFILLMENT_MODE !== "pickup") return 0;
+    return getPickupDiscountForLines(
+      shopItems.map((item) => ({
+        unitPrice: item.unitPrice,
+        quantity: item.quantity,
+        categoryId: getProduct(item.productId)?.categoryId,
+      })),
+    );
+  }, [shopItems, getProduct]);
   const isFreeDelivery =
     FULFILLMENT_MODE === "pickup" || subtotal >= settings.freeDeliveryFrom;
   const deliveryFee =
