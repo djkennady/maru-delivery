@@ -55,6 +55,9 @@ const HALL_FOOD_PHOTOS: Record<string, string> = {
 
 /** Owner studio pack — one frame, one product id (file stem = productId). */
 export const STUDIO_FOOD_PHOTOS: { productId: string; path: string }[] = [
+  { productId: "business-combo-1", path: studio("business-combo-1") },
+  { productId: "business-combo-2", path: studio("business-combo-2") },
+  { productId: "business-combo-3", path: studio("business-combo-3") },
   { productId: "roll-dragon", path: studio("roll-dragon") },
   { productId: "pizza-pepperoni", path: studio("pizza-pepperoni") },
   { productId: "pizza-margherita", path: studio("pizza-margherita") },

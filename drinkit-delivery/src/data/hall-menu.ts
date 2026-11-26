@@ -51,9 +51,9 @@ export const HALL_SECTIONS: HallSection[] = [
     kind: "food",
     note: "С 11:30 до 14:00 · салат + суп + горячее за 690 ₽",
     items: [
-      { name: "Комбо 1", price: "690 ₽", desc: "Цезарь с курицей · домашняя куриная лапша · паста с куриным филе" },
-      { name: "Комбо 2", price: "690 ₽", desc: "Греческий салат · грибной крем-суп · булгур со сливочным цыплёнком" },
-      { name: "Комбо 3", price: "690 ₽", desc: "Салат чука с огурцом · мисо-суп с шиитаке · цезарь-ролл" },
+      { name: "Комбо 1", price: "690 ₽", desc: "Цезарь с курицей · домашняя куриная лапша · паста с куриным филе", photo: "/hall-menu/dishes/studio/business-combo-1.webp" },
+      { name: "Комбо 2", price: "690 ₽", desc: "Греческий салат · грибной крем-суп · булгур со сливочным цыплёнком", photo: "/hall-menu/dishes/studio/business-combo-2.webp" },
+      { name: "Комбо 3", price: "690 ₽", desc: "Салат чука с огурцом · мисо-суп с шиитаке · цезарь-ролл", photo: "/hall-menu/dishes/studio/business-combo-3.webp" },
       { name: "Апельсиновый фреш", price: "190 ₽" },
       { name: "Фильтр-кофе", price: "90 ₽" },
       { name: "Морс", price: "45 ₽" },
