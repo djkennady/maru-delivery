@@ -99,7 +99,8 @@ export function HallHub() {
               Заказ −10%/−20%
             </span>
             <span className="mt-3 max-w-sm text-sm text-[#e7e5e4]">
-              Самовывоз в Алабуге. −10%/−20%, кроме завтраков и бизнес-ланча.
+              Самовывоз в Алабуге ежедневно 8:00–18:30. −10%/−20%, кроме
+              завтраков и бизнес-ланча.
             </span>
             <span className="mt-5 text-sm font-semibold text-white">
               Заказать онлайн →

@@ -7,12 +7,15 @@ import { useCart } from "@/context/CartContext";
 import { useMenu } from "@/context/MenuContext";
 import { FULFILLMENT_MODE } from "@/lib/fulfillment";
 import { getProductImage } from "@/lib/media";
+import { PICKUP_CLOSED_MESSAGE } from "@/lib/pickup-hours";
 import { formatPrice } from "@/lib/pricing";
+import { usePickupOpen } from "@/lib/use-pickup-open";
 
 export function CartBar() {
   const { items, itemCount, subtotal, pickupDiscount, pickupDiscountPercent, total } =
     useCart();
   const { getProduct } = useMenu();
+  const pickupOpen = usePickupOpen();
 
   if (itemCount === 0) return null;
 
@@ -22,7 +25,11 @@ export function CartBar() {
     <div className="drinkit-cart-in pointer-events-none fixed inset-x-0 bottom-0 z-50 px-3 pb-4 pt-10 md:px-6">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black via-black/80 to-transparent" />
       <div className="pointer-events-auto relative mx-auto max-w-lg md:max-w-xl">
-        {FULFILLMENT_MODE === "pickup" && pickupDiscount > 0 ? (
+        {!pickupOpen ? (
+          <p className="mb-2 text-center text-[11px] font-medium text-amber-200/90">
+            {PICKUP_CLOSED_MESSAGE}
+          </p>
+        ) : FULFILLMENT_MODE === "pickup" && pickupDiscount > 0 ? (
           <p className="mb-2 text-center text-[11px] font-medium text-[#93c5fd]">
             самовывоз −{pickupDiscountPercent}% · экономия{" "}
             {formatPrice(pickupDiscount)}

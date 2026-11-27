@@ -12,6 +12,7 @@ import { useCart } from "@/context/CartContext";
 import { useMenu } from "@/context/MenuContext";
 import { useUser } from "@/context/UserContext";
 import { SHOW_LOYALTY_BONUSES } from "@/lib/fulfillment";
+import { PICKUP_CLOSED_MESSAGE } from "@/lib/pickup-hours";
 import { runDeferred } from "@/lib/run-deferred";
 import {
   buildGiftBonusItem,
@@ -21,6 +22,7 @@ import {
 import { getProductImage } from "@/lib/media";
 import { applyLoadedProfile, profileSnapshotKey } from "@/lib/checkout-profile-fields";
 import { formatPrice } from "@/lib/pricing";
+import { usePickupOpen } from "@/lib/use-pickup-open";
 import type { CartItem } from "@/types/menu";
 import type { AppliedGift, OrderRecord, PaymentMethod, PaymentOrderDraft } from "@/types/user";
 
@@ -172,6 +174,7 @@ export function CheckoutForm() {
   const { profile, prependOrder, updateProfile, availableGifts, redeemGift } =
     useUser();
   const { getProduct } = useMenu();
+  const pickupOpen = usePickupOpen();
 
   const [name, setName] = useState(profile.name);
   const [phone, setPhone] = useState(profile.phone);
@@ -383,6 +386,10 @@ export function CheckoutForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    if (!pickupOpen) {
+      setError(PICKUP_CLOSED_MESSAGE);
+      return;
+    }
     setSubmitting(true);
 
     try {
@@ -843,6 +850,12 @@ export function CheckoutForm() {
           </section>
         )}
 
+        {!pickupOpen ? (
+          <p className="rounded-2xl border border-amber-400/25 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
+            {PICKUP_CLOSED_MESSAGE}
+          </p>
+        ) : null}
+
         {error && (
           <p className="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">
             {error}
@@ -852,7 +865,7 @@ export function CheckoutForm() {
         {!sbpSession || paymentMethod === "card" ? (
           <button
             type="submit"
-            disabled={submitting}
+            disabled={submitting || !pickupOpen}
             className={`flex w-full items-center justify-center rounded-full px-5 py-4 font-semibold text-white shadow-lg transition hover:brightness-110 disabled:opacity-60 ${
               paymentMethod === "sbp"
                 ? "bg-[#7B2D8E] shadow-purple-500/20"
@@ -861,9 +874,11 @@ export function CheckoutForm() {
           >
             {submitting
               ? "Обработка…"
-              : paymentMethod === "sbp"
-                ? `Получить QR · ${formatPrice(total)}`
-                : `Оплатить картой · ${formatPrice(total)}`}
+              : !pickupOpen
+                ? "Самовывоз закрыт"
+                : paymentMethod === "sbp"
+                  ? `Получить QR · ${formatPrice(total)}`
+                  : `Оплатить картой · ${formatPrice(total)}`}
           </button>
         ) : null}
       </form>
