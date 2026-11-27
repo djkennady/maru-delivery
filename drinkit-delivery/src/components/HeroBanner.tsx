@@ -42,7 +42,7 @@ export function HeroBanner() {
 
               <p className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/25 px-3 py-1 text-xs font-semibold text-blue-100 ring-1 ring-blue-300/30">
                 <Sparkles className="h-3.5 w-3.5" />
-                Самовывоз в Алабуге · кухня, кофе и атмосфера
+                Самовывоз в Алабуге · ежедневно 8:00–18:30
               </p>
 
               <h1 className="font-display mt-3 text-[2rem] font-semibold leading-[1.05] tracking-tight md:text-4xl lg:text-5xl">

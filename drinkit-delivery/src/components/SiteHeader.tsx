@@ -46,7 +46,7 @@ export function SiteHeader({
                   </p>
                   <p className="flex items-center gap-1 truncate text-[11px] text-white/45">
                     <MapPin className="h-3 w-3 shrink-0" />
-                    Алабуга · самовывоз · −10% (не на завтраки/бизнес)
+                    Алабуга · самовывоз до 18:30 · −10%
                   </p>
                 </div>
               </>
@@ -109,7 +109,7 @@ export function SiteHeader({
                 ) : null}
                 <span className="flex items-center gap-1 truncate text-xs text-[var(--muted)]">
                   <MapPin className="h-3 w-3 shrink-0" />
-                  Алабуга · самовывоз
+                  Алабуга · самовывоз до 18:30
                 </span>
               </p>
             </>

@@ -17,6 +17,10 @@ import {
   canOrderProduct,
   STOPPED_UNAVAILABLE_MESSAGE,
 } from "@/lib/stop-list";
+import {
+  isPickupOpen,
+  PICKUP_CLOSED_MESSAGE,
+} from "@/lib/pickup-hours";
 import type {
   CartItem,
   CartItemOptions,
@@ -171,6 +175,9 @@ export function quoteCheckout(
   }
 
   const now = options.now ?? new Date();
+  if (!isPickupOpen(now)) {
+    throw new ClientError(PICKUP_CLOSED_MESSAGE);
+  }
   const catalog = new Map(menu.products.map((product) => [product.id, product]));
   const items = orderRaw.items.map((item) => quoteItem(item, catalog, now));
   const subtotal = items.reduce(

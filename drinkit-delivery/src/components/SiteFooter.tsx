@@ -24,7 +24,7 @@ export function SiteFooter() {
     return (
       <footer className="bg-black px-4 pb-28 pt-6">
         <div className="mx-auto max-w-7xl text-center text-[10px] leading-relaxed text-white/35">
-          <p>ООО «Мару» · самовывоз в Алабуге</p>
+          <p>ООО «Мару» · самовывоз в Алабуге · ежедневно 8:00–18:30</p>
           <p>ИНН 1650452447 · ОГРН 1261600020328</p>
         </div>
       </footer>

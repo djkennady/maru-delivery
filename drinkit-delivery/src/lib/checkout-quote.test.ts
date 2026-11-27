@@ -299,4 +299,13 @@ describe("quoteCheckout", () => {
       }),
     ).toThrow(/стоп-лист/);
   });
+
+  it("rejects checkout after pickup closes at 18:30 MSK", () => {
+    expect(() =>
+      quoteCheckout(orderPayload(), DEFAULT_MENU, {
+        requireAmount: true,
+        now: new Date("2026-10-06T15:30:00.000Z"), // 18:30 MSK
+      }),
+    ).toThrow(/18:30/);
+  });
 });
