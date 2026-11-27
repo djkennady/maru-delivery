@@ -6,7 +6,7 @@ import {
   FOOD_PHOTO_BY_PRODUCT_ID,
   STUDIO_FOOD_PHOTOS,
 } from "@/lib/food-photos";
-import { getProductImage } from "@/lib/media";
+import { catalogProductImageUrl, getProductImage } from "@/lib/media";
 
 describe("food photo assignments", () => {
   it("maps each entry to an existing pickup product and local webp", () => {
@@ -42,6 +42,17 @@ describe("food photo assignments", () => {
     expect(getProductImage("steak-butcher", "https://images.pexels.com/x.jpg")).toBe("");
     expect(getProductImage("croissant-chocolate")).toBe("");
     expect(getProductImage("fried-eggs-beefsteak")).toBe("");
+  });
+
+  it("preserves admin uploads instead of wiping food/drink images", () => {
+    const upload = "/uploads/menu/custom-breakfast.jpg";
+    const supabase =
+      "https://xyz.supabase.co/storage/v1/object/public/menu/photo.webp";
+    expect(catalogProductImageUrl("fried-eggs-beefsteak", upload, "breakfast")).toBe(
+      upload,
+    );
+    expect(catalogProductImageUrl("americano", supabase, "coffee")).toBe(supabase);
+    expect(getProductImage("sandwich-crispy-chicken", upload)).toBe(upload);
   });
 
   it("keeps dedicated studio/hall frames", () => {

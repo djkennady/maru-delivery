@@ -21,8 +21,18 @@ export async function PATCH(
     }
 
     return NextResponse.json({ product });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    console.error(
+      "[admin/menu PATCH]",
+      error instanceof Error ? error.message : error,
+    );
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Не удалось сохранить позицию",
+      },
+      { status: 500 },
+    );
   }
 }
 

@@ -23,7 +23,7 @@ function menuFile(): string {
 }
 const APP_STATE_TABLE = "app_state";
 const MENU_STATE_KEY = "menu";
-export const CURRENT_MENU_VERSION = 13;
+export const CURRENT_MENU_VERSION = 14;
 
 /** Retired SKUs — strip even if an older persisted menu still contains them. */
 const REMOVED_PRODUCT_IDS = new Set([
@@ -82,12 +82,15 @@ async function readMenuFromSupabase(): Promise<MenuData | null> {
 
 async function writeMenuToSupabase(menu: MenuData) {
   const supabase = getSupabaseServerClient();
-  if (!supabase) return;
+  if (!supabase) {
+    throw new Error("Supabase client unavailable for menu write");
+  }
 
   const { error } = await supabase.from(APP_STATE_TABLE).upsert(
     {
       key: MENU_STATE_KEY,
       value: menu,
+      updated_at: new Date().toISOString(),
     },
     { onConflict: "key" },
   );
@@ -179,6 +182,36 @@ function withCurrentMenuVersion(menu: MenuData): MenuData {
   });
 }
 
+/**
+ * Keep admin edits, but restore any categories/products that vanished from the
+ * stored catalog (e.g. business-lunch missing after a partial reseed).
+ */
+function reconcileMenuWithDefaults(menu: MenuData): MenuData {
+  const categories = [...menu.categories];
+  for (const category of DEFAULT_MENU.categories) {
+    if (!categories.some((item) => item.id === category.id)) {
+      categories.push(category);
+    }
+  }
+
+  const products = menu.products.filter(
+    (product) => !REMOVED_PRODUCT_IDS.has(product.id),
+  );
+  const ids = new Set(products.map((product) => product.id));
+  for (const product of DEFAULT_MENU.products) {
+    if (REMOVED_PRODUCT_IDS.has(product.id) || ids.has(product.id)) continue;
+    products.push(product);
+    ids.add(product.id);
+  }
+
+  return {
+    ...menu,
+    categories,
+    products,
+    menuVersion: CURRENT_MENU_VERSION,
+  };
+}
+
 function needsMenuReseed(menu: MenuData): boolean {
   if (menu.products.length === 0) return true;
   if ((menu.menuVersion ?? 1) < CURRENT_MENU_VERSION) return true;
@@ -192,9 +225,27 @@ function needsMenuReseed(menu: MenuData): boolean {
   return !hasGroupedProducts;
 }
 
+function needsMenuReconcile(menu: MenuData): boolean {
+  const missingCategory = DEFAULT_MENU.categories.some(
+    (category) => !menu.categories.some((item) => item.id === category.id),
+  );
+  if (missingCategory) return true;
+
+  return DEFAULT_MENU.products.some(
+    (product) =>
+      !REMOVED_PRODUCT_IDS.has(product.id) &&
+      !menu.products.some((item) => item.id === product.id),
+  );
+}
+
 async function writeMenu(menu: MenuData) {
+  const payload: MenuData = {
+    ...menu,
+    menuVersion: menu.menuVersion ?? CURRENT_MENU_VERSION,
+  };
+
   if (isSupabaseEnabled()) {
-    await writeMenuToSupabase(menu);
+    await writeMenuToSupabase(payload);
     return;
   }
 
@@ -202,7 +253,7 @@ async function writeMenu(menu: MenuData) {
 
   const dir = path.dirname(menuFile());
   await fs.mkdir(dir, { recursive: true });
-  await fs.writeFile(menuFile(), JSON.stringify(menu, null, 2), "utf-8");
+  await fs.writeFile(menuFile(), JSON.stringify(payload, null, 2), "utf-8");
 }
 
 export async function resetMenuToDefaults(): Promise<MenuData> {
@@ -219,11 +270,21 @@ export async function getMenu(): Promise<MenuData> {
   if (isSupabaseEnabled()) {
     try {
       const supabaseMenu = await readMenuFromSupabase();
-      if (supabaseMenu && !needsMenuReseed(supabaseMenu)) {
-        return applyCatalogPhotos(supabaseMenu);
+      if (!supabaseMenu || needsMenuReseed(supabaseMenu)) {
+        return await resetMenuToDefaults();
       }
 
-      return await resetMenuToDefaults();
+      if (needsMenuReconcile(supabaseMenu)) {
+        const reconciled = reconcileMenuWithDefaults(supabaseMenu);
+        try {
+          await writeMenu(reconciled);
+        } catch (error) {
+          console.error("getMenu reconcile write failed:", error);
+        }
+        return applyCatalogPhotos(reconciled);
+      }
+
+      return applyCatalogPhotos(supabaseMenu);
     } catch (error) {
       console.error("getMenu supabase error:", error);
       return withCurrentMenuVersion(DEFAULT_MENU);
@@ -236,6 +297,15 @@ export async function getMenu(): Promise<MenuData> {
     const parsed = normalizeMenu(JSON.parse(raw) as Partial<MenuData>);
     if (needsMenuReseed(parsed)) {
       return await resetMenuToDefaults();
+    }
+    if (needsMenuReconcile(parsed)) {
+      const reconciled = reconcileMenuWithDefaults(parsed);
+      try {
+        await writeMenu(reconciled);
+      } catch (error) {
+        console.error("getMenu reconcile write failed:", error);
+      }
+      return applyCatalogPhotos(reconciled);
     }
     return applyCatalogPhotos(parsed);
   } catch {

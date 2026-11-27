@@ -48,15 +48,30 @@ export const galleryImages = [
   { src: pexels(2074130, 500), alt: "Стойка с кофемашиной и зерном" },
 ];
 
+/** Admin uploads and other non-stock URLs must survive catalog photo apply. */
+function isPreservedMenuImage(imageUrl: string | undefined): boolean {
+  if (!imageUrl) return false;
+  if (imageUrl.startsWith("/uploads/")) return true;
+  if (/pexels\.com|unsplash\.com|\/hall-menu\/drinks\/stock\//i.test(imageUrl)) {
+    return false;
+  }
+  // Supabase Storage / CDN uploads from the admin panel.
+  if (/^https?:\/\//i.test(imageUrl)) return true;
+  return false;
+}
+
 /**
  * Prefer dedicated catalog photos. Food/drinks without a catalog frame stay
  * empty (no Pexels / stock / sibling fill-ins) so missing shots are obvious.
+ * Never wipe admin-uploaded images.
  */
 export function catalogProductImageUrl(
   productId: string,
   imageUrl?: string,
   categoryId?: string,
 ): string | undefined {
+  if (isPreservedMenuImage(imageUrl)) return imageUrl;
+
   const drink = DRINK_PHOTO_BY_PRODUCT_ID[productId];
   if (drink) return drink;
   const food = FOOD_PHOTO_BY_PRODUCT_ID[productId];
@@ -72,6 +87,9 @@ export function catalogProductImageUrl(
 
 /** Empty string = no photo yet (render blank tile). No Pexels/sibling fill-ins. */
 export function getProductImage(productId: string, imageUrl?: string): string {
+  // Admin uploads win over hardcoded catalog frames.
+  if (isPreservedMenuImage(imageUrl)) return imageUrl!;
+
   const drink = DRINK_PHOTO_BY_PRODUCT_ID[productId];
   if (drink) return drink;
   const food = FOOD_PHOTO_BY_PRODUCT_ID[productId];

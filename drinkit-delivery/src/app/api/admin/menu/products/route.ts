@@ -21,7 +21,17 @@ export async function POST(request: Request) {
 
     const product = await createProduct(body);
     return NextResponse.json({ product }, { status: 201 });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (error) {
+    console.error(
+      "[admin/menu POST]",
+      error instanceof Error ? error.message : error,
+    );
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Не удалось создать позицию",
+      },
+      { status: 500 },
+    );
   }
 }

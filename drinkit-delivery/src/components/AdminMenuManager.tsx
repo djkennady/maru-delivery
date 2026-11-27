@@ -28,6 +28,7 @@ const EMPTY_FORM: ProductInput = {
   customizable: false,
   tags: [],
   imageUrl: "",
+  group: "",
   rkeeperCode: "",
 };
 
@@ -122,6 +123,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
         ? product.tags.filter((tag) => tag === "hit" || tag === "new")
         : [],
       imageUrl: product.imageUrl ?? "",
+      group: product.group ?? "",
       rkeeperCode: product.rkeeperCode ?? "",
       stopped: product.stopped,
     });
@@ -230,6 +232,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
         ? form.tags.filter((tag) => tag === "hit" || tag === "new")
         : [],
       imageUrl: form.imageUrl?.trim() || undefined,
+      group: form.group?.trim() || undefined,
       rkeeperCode: form.rkeeperCode?.trim() || undefined,
     };
 
@@ -483,6 +486,20 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                     basePrice: Number(e.target.value),
                   }))
                 }
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
+              />
+            </label>
+
+            <label className="block sm:col-span-2">
+              <span className="mb-1.5 block text-sm font-medium">
+                Группа в категории
+              </span>
+              <input
+                value={form.group ?? ""}
+                onChange={(e) =>
+                  setForm((prev) => ({ ...prev, group: e.target.value }))
+                }
+                placeholder="Например: Комбо, Каши, Блины"
                 className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-[var(--text)] text-sm outline-none focus:border-[var(--accent)]"
               />
             </label>
