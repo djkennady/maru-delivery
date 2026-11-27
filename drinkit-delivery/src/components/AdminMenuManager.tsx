@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import {
   Ban,
@@ -18,6 +18,7 @@ import { getProductImage } from "@/lib/media";
 import { formatPrice } from "@/lib/pricing";
 import { isProductStopped } from "@/lib/stop-list";
 import type { Category, Product, ProductInput, ProductTag } from "@/types/menu";
+
 
 const EMPTY_FORM: ProductInput = {
   name: "",
@@ -48,6 +49,14 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
   const [form, setForm] = useState<ProductInput>(EMPTY_FORM);
   const [hasSizes, setHasSizes] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const revealForm = useCallback(() => {
+    setShowForm(true);
+    runDeferred(() => {
+      formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, []);
   const [listFilter, setListFilter] = useState<"all" | "stopped">("all");
   const [togglingId, setTogglingId] = useState<string | null>(null);
 
@@ -107,13 +116,13 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
     });
     setHasSizes(false);
     setEditingId(null);
-    setShowForm(true);
+    revealForm();
   };
 
   const openEditForm = (product: Product) => {
     setForm({
       name: product.name,
-      description: product.description,
+      description: product.description ?? "",
       categoryId: product.categoryId,
       emoji: product.emoji,
       basePrice: product.basePrice,
@@ -129,7 +138,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
     });
     setHasSizes(Boolean(product.sizes && Object.keys(product.sizes).length));
     setEditingId(product.id);
-    setShowForm(true);
+    revealForm();
   };
 
   const stoppedProducts = useMemo(
@@ -225,6 +234,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
 
     const payload: ProductInput = {
       ...form,
+      description: form.description?.trim() ?? "",
       basePrice: Number(form.basePrice) || 0,
       sizes: hasSizes ? form.sizes : undefined,
       customizable: hasSizes ? form.customizable : false,
@@ -403,6 +413,7 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
 
       {showForm && (
         <form
+          ref={formRef}
           onSubmit={handleSaveProduct}
           className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-4"
         >
@@ -433,9 +444,13 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
             </label>
 
             <label className="block sm:col-span-2">
-              <span className="mb-1.5 block text-sm font-medium">Описание</span>
+              <span className="mb-1.5 block text-sm font-medium">
+                Описание{" "}
+                <span className="font-normal text-[var(--muted)]">
+                  (необязательно)
+                </span>
+              </span>
               <textarea
-                required
                 rows={2}
                 value={form.description}
                 onChange={(e) =>
@@ -685,23 +700,44 @@ export function AdminMenuManager({ onMenuChanged }: AdminMenuManagerProps) {
                         }`}
                       >
                         <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl">
-                          {getProductImage(product.id, product.imageUrl) ? (
-                            <Image
-                              src={getProductImage(
-                                product.id,
-                                product.imageUrl,
-                              )}
-                              alt={product.name}
-                              fill
-                              className={`object-cover ${stopped ? "opacity-50 grayscale" : ""}`}
-                              sizes="56px"
-                              quality={95}
-                            />
-                          ) : (
-                            <div className="flex h-full items-center justify-center bg-[#161616] text-[9px] uppercase text-white/30">
-                              нет
-                            </div>
-                          )}
+                          {(() => {
+                            const src = getProductImage(
+                              product.id,
+                              product.imageUrl,
+                            );
+                            if (!src) {
+                              return (
+                                <div className="flex h-full items-center justify-center bg-[#161616] text-[9px] uppercase text-white/30">
+                                  нет
+                                </div>
+                              );
+                            }
+                            // Admin uploads / remote hosts: plain img avoids next/image
+                            // config crashes that would break the whole edit UI.
+                            if (
+                              src.startsWith("http") ||
+                              src.startsWith("/uploads/")
+                            ) {
+                              return (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={src}
+                                  alt={product.name}
+                                  className={`h-full w-full object-cover ${stopped ? "opacity-50 grayscale" : ""}`}
+                                />
+                              );
+                            }
+                            return (
+                              <Image
+                                src={src}
+                                alt={product.name}
+                                fill
+                                className={`object-cover ${stopped ? "opacity-50 grayscale" : ""}`}
+                                sizes="56px"
+                                quality={95}
+                              />
+                            );
+                          })()}
                         </div>
                         <div className="min-w-0 flex-1">
                           <p className="font-semibold text-[var(--text)]">
